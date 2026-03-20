@@ -21,7 +21,7 @@ let package = Package(
         .testTarget(
             name: "UIComponentsTests",
             dependencies: ["UIComponents"],
-            path: "Tests/UIComponentsTests"
+            path: "UIComponents/Tests/UIComponentsTests"
         )
     ]
 )
