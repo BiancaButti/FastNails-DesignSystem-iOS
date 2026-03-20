@@ -1,19 +1,69 @@
-# UIComponents
+# 🎨 FastNails Design System
 
-Biblioteca de componentes genéricos reutilizáveis para serem utilizados no projeto FastNails.
+**Status:** Em desenvolvimento 🚧  
+**Tipo:** Swift Package (SPM)  
+**Plataforma:** iOS  
 
-## Objetivo
+O **FastNails Design System** é uma biblioteca de componentes reutilizáveis desenvolvida em Swift, com o objetivo de padronizar a interface e acelerar o desenvolvimento do aplicativo FastNails.
 
-Centralizar componentes visuais reutilizáveis para promover consistência de interface, reaproveitamento de código e manutenção simplificada no projeto FastNails.
+Ele foi projetado como um módulo independente, permitindo evolução desacoplada e reutilização em diferentes contextos.
 
-## Estrutura dos Componentes
+---
 
-O pacote está organizado para concentrar os componentes em `Sources/UIComponents`, com implementações reutilizáveis de elementos de interface como campos de formulário, botões, indicadores visuais, avaliações e badges de status.
+## 🎯 Objetivos
 
-Os testes automatizados ficam em `Tests/UIComponentsTests`, permitindo validar o comportamento da library de forma isolada do aplicativo principal.
+- Garantir consistência visual entre telas  
+- Centralizar componentes de UI reutilizáveis  
+- Reduzir duplicação de código  
+- Aumentar velocidade de desenvolvimento  
+- Facilitar manutenção e evolução da interface  
 
-## Como Utilizar no FastNails
+---
 
-Adicione a library ao projeto FastNails como Swift Package e importe `UIComponents` nos módulos que precisarem reutilizar os componentes compartilhados.
+## 🧱 Estrutura
 
-Depois disso, utilize os componentes disponibilizados pelo pacote para montar telas e fluxos da aplicação com maior padronização visual e menor duplicação de código.
+O Design System é distribuído como um Swift Package e organizado por responsabilidade:
+
+- Componentes reutilizáveis  
+- Tokens de design (cores, tipografia, espaçamentos)  
+- Assets (imagens, ícones)  
+
+---
+
+## 📦 Como utilizar
+
+### 🔗 Adicionando ao projeto
+
+1. No Xcode:
+   - Vá em **File > Add Packages…**
+2. Insira a URL do repositório: https://github.com/BiancaButti/FastNails-DesignSystem-iOS
+4. 3. Selecione a versão desejada (ex: `1.0.0`)
+5. Adicione ao target do seu projeto
+
+---
+
+### 📥 Importação
+
+Para utilizar os componentes no código:
+
+```swift
+import SwiftUI
+import UIComponents
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            DSButton(title: "Continuar")
+            DSTextField(placeholder: "Digite seu nome")
+        }
+        .padding()
+    }
+}
+
+```
+---
+
+<p align="center">
+  <strong>Developed by Bianca Butti</strong><br/>
+  <sub>FastNails • iOS Engineering</sub>
+</p>
