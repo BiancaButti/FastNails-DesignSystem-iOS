@@ -1,18 +1,22 @@
 import SwiftUI
 
 public struct ComponentsCatalogView: View {
-    public init() {}
+    private let items: [CatalogComponentItem]
+
+    public init(items: [CatalogComponentItem]? = nil) {
+        self.items = items ?? CatalogComponentName.allCases.map { CatalogComponentItem(name: $0) }
+    }
 
     public var body: some View {
         NavigationStack {
-            List(ComponentCatalogItem.sortedItems) { item in
+            List(items) { item in
                 NavigationLink {
                     ComponentDetailView(item: item)
                 } label: {
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(item.title)
+                        Text(item.resolvedTitle)
                             .font(.body.weight(.medium))
-                        Text(item.summary)
+                        Text(item.resolvedSummary)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -24,70 +28,26 @@ public struct ComponentsCatalogView: View {
     }
 }
 
-private struct ComponentCatalogItem: Identifiable {
-    let kind: Kind
-
-    var id: String { title }
-    var title: String { kind.rawValue }
-
-    var summary: String {
-        switch kind {
-        case .errorLabel:
-            return "Mensagem visual de erro"
-        case .formSecureField:
-            return "Campo seguro com opção de mostrar senha"
-        case .formTextField:
-            return "Campo de texto reutilizável"
-        case .loadingView:
-            return "Indicador de carregamento"
-        case .manicuristPhotoView:
-            return "Avatar genérico de profissional"
-        case .otpField:
-            return "Campo para código de verificação"
-        case .orDivider:
-            return "Divisor visual com texto"
-        case .passwordStrengthBar:
-            return "Indicador de força da senha"
-        case .primaryButton:
-            return "Botão principal de ação"
-        case .ratingView:
-            return "Exibição de avaliação"
-        case .statusBadgeView:
-            return "Badge de status aberto ou fechado"
-        }
+private extension CatalogComponentItem {
+    var resolvedTitle: String {
+        title ?? name.rawValue
     }
 
-    static var sortedItems: [ComponentCatalogItem] {
-        Kind.allCases
-            .map(ComponentCatalogItem.init(kind:))
-            .sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
-    }
-
-    enum Kind: String, CaseIterable {
-        case errorLabel = "ErrorLabel"
-        case formSecureField = "FormSecureField"
-        case formTextField = "FormTextField"
-        case loadingView = "LoadingView"
-        case manicuristPhotoView = "ManicuristPhotoView"
-        case otpField = "OTPField"
-        case orDivider = "OrDivider"
-        case passwordStrengthBar = "PasswordStrengthBar"
-        case primaryButton = "PrimaryButton"
-        case ratingView = "RatingView"
-        case statusBadgeView = "StatusBadgeView"
+    var resolvedSummary: String {
+        summary ?? name.defaultSummary
     }
 }
 
 private struct ComponentDetailView: View {
-    let item: ComponentCatalogItem
+    let item: CatalogComponentItem
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(item.title)
+                    Text(item.resolvedTitle)
                         .font(.title2.weight(.semibold))
-                    Text(item.summary)
+                    Text(item.resolvedSummary)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
@@ -105,73 +65,96 @@ private struct ComponentDetailView: View {
             .padding()
         }
         .background(Color(.systemGroupedBackground))
-        .navigationTitle(item.title)
+        .navigationTitle(item.resolvedTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder
     private var showcase: some View {
-        switch item.kind {
-        case .errorLabel:
-            ErrorLabelDemo()
+        switch item.name {
+        case .feedbackLabel:
+            FeedbackLabelDemo(texts: item.texts)
         case .formSecureField:
-            FormSecureFieldDemo()
+            FormSecureFieldDemo(texts: item.texts)
         case .formTextField:
-            FormTextFieldDemo()
+            FormTextFieldDemo(texts: item.texts)
         case .loadingView:
-            LoadingView(message: "Buscando horários disponíveis")
+            LoadingView(message: item.texts.message ?? "Buscando horários disponíveis")
         case .manicuristPhotoView:
             ManicuristPhotoView(size: 96)
         case .otpField:
-            OTPFieldDemo()
+            OTPFieldDemo(texts: item.texts)
         case .orDivider:
-            OrDivider()
+            OrDivider(label: item.texts.message ?? String(localized: "dividerOr"))
         case .passwordStrengthBar:
             PasswordStrengthBarDemo()
         case .primaryButton:
-            PrimaryButtonDemo()
+            PrimaryButtonDemo(texts: item.texts)
         case .ratingView:
             RatingViewDemo()
         case .statusBadgeView:
-            StatusBadgeViewDemo()
+            StatusBadgeViewDemo(texts: item.texts)
         }
     }
 }
 
-private struct ErrorLabelDemo: View {
+private struct FeedbackLabelDemo: View {
+    let texts: CatalogComponentTexts
+
     var body: some View {
-        ErrorLabel(message: "Este campo é obrigatório.")
+        VStack(alignment: .leading, spacing: 12) {
+            ErrorLabel(message: texts.failureMessage ?? "Este campo é obrigatório.")
+            SuccessLabel(message: texts.successMessage ?? "Dados validados com sucesso.")
+        }
     }
 }
 
 private struct FormTextFieldDemo: View {
+    let texts: CatalogComponentTexts
     @State private var name = ""
+    @State private var hasValidated = false
 
     var body: some View {
-        FormTextField(
-            label: "Nome",
-            placeholder: "Digite o nome completo",
-            text: $name,
-            errorMessage: name.isEmpty ? "Preencha o nome para continuar." : nil
-        )
+        VStack(alignment: .leading, spacing: 12) {
+            FormTextField(
+                label: texts.label ?? "Nome",
+                placeholder: texts.placeholder ?? "Digite o nome completo",
+                text: $name,
+                errorMessage: hasValidated && name.isEmpty ? (texts.failureMessage ?? "Preencha o nome para continuar.") : nil,
+                successMessage: hasValidated && !name.isEmpty ? (texts.successMessage ?? "Nome preenchido corretamente.") : nil
+            )
+
+            Button(texts.primaryActionTitle ?? "Validar") {
+                hasValidated = true
+            }
+            .buttonStyle(.bordered)
+        }
     }
 }
 
 private struct FormSecureFieldDemo: View {
+    let texts: CatalogComponentTexts
     @State private var password = ""
     @State private var isVisible = false
+    @State private var hasValidated = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             FormSecureField(
-                label: "Senha",
-                placeholder: "Digite sua senha",
+                label: texts.label ?? "Senha",
+                placeholder: texts.placeholder ?? "Digite sua senha",
                 text: $password,
                 isVisible: $isVisible,
-                errorMessage: password.count >= 6 || password.isEmpty ? nil : "A senha deve ter ao menos 6 caracteres."
+                errorMessage: hasValidated && !password.isEmpty && password.count < 6 ? (texts.failureMessage ?? "A senha deve ter ao menos 6 caracteres.") : nil,
+                successMessage: hasValidated && password.count >= 6 ? (texts.successMessage ?? "Senha válida.") : nil
             )
 
             PasswordStrengthBar(strength: strength)
+
+            Button(texts.primaryActionTitle ?? "Validar") {
+                hasValidated = true
+            }
+            .buttonStyle(.bordered)
         }
     }
 
@@ -190,14 +173,24 @@ private struct FormSecureFieldDemo: View {
 }
 
 private struct OTPFieldDemo: View {
+    let texts: CatalogComponentTexts
     @State private var code = ""
+    @State private var hasValidated = false
 
     var body: some View {
-        OTPField(
-            label: "Código de verificação",
-            code: $code,
-            errorMessage: code.count == 6 || code.isEmpty ? nil : "Digite os 6 números enviados."
-        )
+        VStack(alignment: .leading, spacing: 12) {
+            OTPField(
+                label: texts.label ?? "Código de verificação",
+                code: $code,
+                errorMessage: hasValidated && !code.isEmpty && code.count < 6 ? (texts.failureMessage ?? "Digite os 6 números enviados.") : nil,
+                successMessage: hasValidated && code.count == 6 ? (texts.successMessage ?? "Código preenchido corretamente.") : nil
+            )
+
+            Button(texts.primaryActionTitle ?? "Validar") {
+                hasValidated = true
+            }
+            .buttonStyle(.bordered)
+        }
     }
 }
 
@@ -220,11 +213,12 @@ private struct PasswordStrengthBarDemo: View {
 }
 
 private struct PrimaryButtonDemo: View {
+    let texts: CatalogComponentTexts
     @State private var tapCount = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            PrimaryButton(title: "Continuar") {
+            PrimaryButton(title: texts.primaryActionTitle ?? "Continuar") {
                 tapCount += 1
             }
 
@@ -249,13 +243,18 @@ private struct RatingViewDemo: View {
 }
 
 private struct StatusBadgeViewDemo: View {
+    let texts: CatalogComponentTexts
     @State private var isOpen = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
             StatusBadgeView(isOpen: isOpen)
+            HStack(spacing: 12) {
+                StatusBadgeView(text: texts.successMessage ?? "Sucesso", tone: .success)
+                StatusBadgeView(text: texts.failureMessage ?? "Fracasso", tone: .failure)
+            }
 
-            Toggle("Estabelecimento aberto", isOn: $isOpen)
+            Toggle(texts.label ?? "Estabelecimento aberto", isOn: $isOpen)
         }
     }
 }

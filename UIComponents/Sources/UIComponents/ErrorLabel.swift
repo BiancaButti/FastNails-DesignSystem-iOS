@@ -3,13 +3,11 @@ import SwiftUI
 struct ErrorLabel: View {
     let message: String
 
+    init(message: String) {
+        self.message = message
+    }
+
     var body: some View {
-        Label {
-            Text(message)
-        } icon: {
-            Image(systemName: "exclamationmark.circle.fill")
-        }
-        .font(.caption)
-        .foregroundColor(.red)
+        FeedbackLabel(message: message, tone: .failure)
     }
 }

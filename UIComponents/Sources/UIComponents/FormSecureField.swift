@@ -6,10 +6,23 @@ struct FormSecureField: View {
     @Binding var text: String
     @Binding var isVisible: Bool
     var errorMessage: String? = nil
+    var successMessage: String? = nil
     var systemStyle: Bool = false
     var onLostFocus: () -> Void = {}
 
     @FocusState private var isFocused: Bool
+
+    private var feedback: (message: String, tone: FeedbackTone)? {
+        if let errorMessage, !errorMessage.isEmpty {
+            return (errorMessage, .failure)
+        }
+
+        if let successMessage, !successMessage.isEmpty {
+            return (successMessage, .success)
+        }
+
+        return nil
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -30,7 +43,7 @@ struct FormSecureField: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .focused($isFocused)
-                    .accessibilityHint(errorMessage ?? String(localized: "accessibilityButtonTouchTwice"))
+                    .accessibilityHint(feedback?.message ?? String(localized: "accessibilityButtonTouchTwice"))
                     .onChange(of: isFocused) { newValue in
                         if !newValue { onLostFocus() }
                     }
@@ -51,10 +64,9 @@ struct FormSecureField: View {
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(
-                            errorMessage != nil
-                                ? Color.red.opacity(0.8)
-                                : isFocused ? Color.accentColor.opacity(0.5) : Color(.systemGray4),
-                            lineWidth: errorMessage != nil || isFocused ? 1.5 : 0.5
+                            feedback?.tone.color.opacity(0.8)
+                                ?? (isFocused ? Color.accentColor.opacity(0.5) : Color(.systemGray4)),
+                            lineWidth: feedback != nil || isFocused ? 1.5 : 0.5
                         )
                 }
             } else {
@@ -70,7 +82,7 @@ struct FormSecureField: View {
                     .textInputAutocapitalization(.never)
                     .autocorrectionDisabled()
                     .focused($isFocused)
-                    .accessibilityHint(errorMessage ?? String(localized: "accessibilityButtonTouchTwice"))
+                    .accessibilityHint(feedback?.message ?? String(localized: "accessibilityButtonTouchTwice"))
                     .onChange(of: isFocused) { newValue in
                         if !newValue { onLostFocus() }
                     }
@@ -92,16 +104,15 @@ struct FormSecureField: View {
                 .overlay {
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(
-                            errorMessage != nil
-                                ? Color.red.opacity(0.8)
-                                : isFocused ? Color.accentColor.opacity(0.5) : Color.clear,
+                            feedback?.tone.color.opacity(0.8)
+                                ?? (isFocused ? Color.accentColor.opacity(0.5) : Color.clear),
                             lineWidth: 1.5
                         )
                 }
             }
 
-            if let error = errorMessage {
-                ErrorLabel(message: error)
+            if let feedback {
+                FeedbackLabel(message: feedback.message, tone: feedback.tone)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)

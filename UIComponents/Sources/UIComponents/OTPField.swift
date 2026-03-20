@@ -6,9 +6,22 @@ struct OTPField: View {
     let label: String
     @Binding var code: String
     var errorMessage: String? = nil
+    var successMessage: String? = nil
 
     @FocusState private var isFocused: Bool
     private let length = 6
+
+    private var feedback: (message: String, tone: FeedbackTone)? {
+        if let errorMessage, !errorMessage.isEmpty {
+            return (errorMessage, .failure)
+        }
+
+        if let successMessage, !successMessage.isEmpty {
+            return (successMessage, .success)
+        }
+
+        return nil
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -35,8 +48,8 @@ struct OTPField: View {
                     }
             }
 
-            if let error = errorMessage {
-                ErrorLabel(message: error)
+            if let feedback {
+                FeedbackLabel(message: feedback.message, tone: feedback.tone)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -47,7 +60,7 @@ struct OTPField: View {
                 ? String(localized: "otpFieldAccessibilityEmpty")
                 : code.map { String($0) }.joined(separator: " ")
         )
-        .accessibilityHint(errorMessage ?? String(localized: "otpFieldAccessibilityHint"))
+        .accessibilityHint(feedback?.message ?? String(localized: "otpFieldAccessibilityHint"))
         .accessibilityAddTraits(.allowsDirectInteraction)
     }
 
@@ -58,7 +71,8 @@ struct OTPField: View {
         let chars = Array(code)
         let char = index < chars.count ? String(chars[index]) : ""
         let isCurrentBox = isFocused && index == min(code.count, length - 1)
-        let hasError = errorMessage != nil
+        let hasFeedback = feedback != nil
+        let feedbackColor = feedback?.tone.color.opacity(0.8)
 
         ZStack {
             RoundedRectangle(cornerRadius: 8)
@@ -66,10 +80,9 @@ struct OTPField: View {
                 .overlay {
                     RoundedRectangle(cornerRadius: 8)
                         .stroke(
-                            hasError
-                                ? Color.red.opacity(0.8)
-                                : isCurrentBox ? Color.appPink : Color(.systemGray4),
-                            lineWidth: hasError || isCurrentBox ? 2 : 1
+                            feedbackColor
+                                ?? (isCurrentBox ? Color.appPink : Color(.systemGray4)),
+                            lineWidth: hasFeedback || isCurrentBox ? 2 : 1
                         )
                 }
 
@@ -78,7 +91,7 @@ struct OTPField: View {
             } else {
                 Text(char)
                     .font(.title2.bold())
-                    .foregroundStyle(hasError ? Color.red.opacity(0.8) : Color.primary)
+                    .foregroundStyle(feedbackColor ?? Color.primary)
             }
         }
         .frame(maxWidth: .infinity)

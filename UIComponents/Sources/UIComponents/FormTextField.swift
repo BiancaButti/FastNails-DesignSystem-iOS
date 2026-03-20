@@ -5,6 +5,7 @@ struct FormTextField: View {
     let placeholder: String
     @Binding var text: String
     var errorMessage: String? = nil
+    var successMessage: String? = nil
     var keyboardType: UIKeyboardType = .default
     var autocapitalization: TextInputAutocapitalization = .words
     var textContentType: UITextContentType? = nil
@@ -12,6 +13,18 @@ struct FormTextField: View {
     var onLostFocus: () -> Void = {}
 
     @FocusState private var isFocused: Bool
+
+    private var feedback: (message: String, tone: FeedbackTone)? {
+        if let errorMessage, !errorMessage.isEmpty {
+            return (errorMessage, .failure)
+        }
+
+        if let successMessage, !successMessage.isEmpty {
+            return (successMessage, .success)
+        }
+
+        return nil
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -27,7 +40,7 @@ struct FormTextField: View {
                     .autocorrectionDisabled()
                     .textFieldStyle(.roundedBorder)
                     .focused($isFocused)
-                    .accessibilityHint(errorMessage ?? String(localized: "accessibilityButtonTouchTwice"))
+                    .accessibilityHint(feedback?.message ?? String(localized: "accessibilityButtonTouchTwice"))
             } else {
                 TextField(placeholder, text: $text)
                     .keyboardType(keyboardType)
@@ -42,20 +55,19 @@ struct FormTextField: View {
                     .overlay {
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(
-                                errorMessage != nil
-                                    ? Color.red.opacity(0.8)
-                                    : isFocused ? Color.accentColor.opacity(0.5) : Color.clear,
+                                feedback?.tone.color.opacity(0.8)
+                                    ?? (isFocused ? Color.accentColor.opacity(0.5) : Color.clear),
                                 lineWidth: 1.5
                             )
                     }
                     .onChange(of: isFocused) { newValue in
                         if !newValue { onLostFocus() }
                     }
-                    .accessibilityHint(errorMessage ?? String(localized: "accessibilityButtonTouchTwice"))
+                    .accessibilityHint(feedback?.message ?? String(localized: "accessibilityButtonTouchTwice"))
             }
 
-            if let error = errorMessage {
-                ErrorLabel(message: error)
+            if let feedback {
+                FeedbackLabel(message: feedback.message, tone: feedback.tone)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
