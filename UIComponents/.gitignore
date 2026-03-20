@@ -1,0 +1,15 @@
+.DS_Store
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+.swiftpm/
+
+# Xcode generated files
+*.xcodeproj
+xcuserdata/
+DerivedData/
+
+# Local credentials
+.netrc
