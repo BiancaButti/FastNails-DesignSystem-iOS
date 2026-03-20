@@ -16,7 +16,7 @@ let package = Package(
     targets: [
         .target(
             name: "UIComponents",
-            path: "Sources/UIComponents"
+            path: "UIComponents"
         ),
         .testTarget(
             name: "UIComponentsTests",
