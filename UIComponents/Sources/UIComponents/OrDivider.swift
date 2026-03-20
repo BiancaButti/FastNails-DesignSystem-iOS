@@ -1,9 +1,13 @@
 import SwiftUI
 
-struct OrDivider: View {
+public struct OrDivider: View {
     var label: String = String(localized: "dividerOr")
 
-    var body: some View {
+    public init(label: String = String(localized: "dividerOr")) {
+        self.label = label
+    }
+
+    public var body: some View {
         HStack {
             Rectangle()
                 .frame(height: 1)

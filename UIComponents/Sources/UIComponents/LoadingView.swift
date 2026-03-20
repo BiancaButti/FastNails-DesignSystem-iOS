@@ -1,9 +1,13 @@
 import SwiftUI
 
-struct LoadingView: View {
+public struct LoadingView: View {
 	var message: String = "Carregando..."
 
-	var body: some View {
+	public init(message: String = "Carregando...") {
+		self.message = message
+	}
+
+	public var body: some View {
 		VStack(spacing: 12) {
 			ProgressView()
 				.progressViewStyle(.circular)

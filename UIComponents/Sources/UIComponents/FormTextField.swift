@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FormTextField: View {
+public struct FormTextField: View {
     let label: String
     let placeholder: String
     @Binding var text: String
@@ -14,6 +14,30 @@ struct FormTextField: View {
 
     @FocusState private var isFocused: Bool
 
+    public init(
+        label: String,
+        placeholder: String,
+        text: Binding<String>,
+        errorMessage: String? = nil,
+        successMessage: String? = nil,
+        keyboardType: UIKeyboardType = .default,
+        autocapitalization: TextInputAutocapitalization = .words,
+        textContentType: UITextContentType? = nil,
+        systemStyle: Bool = false,
+        onLostFocus: @escaping () -> Void = {}
+    ) {
+        self.label = label
+        self.placeholder = placeholder
+        self._text = text
+        self.errorMessage = errorMessage
+        self.successMessage = successMessage
+        self.keyboardType = keyboardType
+        self.autocapitalization = autocapitalization
+        self.textContentType = textContentType
+        self.systemStyle = systemStyle
+        self.onLostFocus = onLostFocus
+    }
+
     private var feedback: (message: String, tone: FeedbackTone)? {
         if let errorMessage, !errorMessage.isEmpty {
             return (errorMessage, .failure)
@@ -26,7 +50,7 @@ struct FormTextField: View {
         return nil
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label)
                 .font(.subheadline.weight(.medium))

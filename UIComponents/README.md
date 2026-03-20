@@ -16,7 +16,26 @@ Os testes automatizados ficam em `Tests/UIComponentsTests`, permitindo validar o
 
 Adicione a library ao projeto FastNails como Swift Package e importe `UIComponents` nos módulos que precisarem reutilizar os componentes compartilhados.
 
-Depois disso, utilize os componentes disponibilizados pelo pacote para montar telas e fluxos da aplicação com maior padronização visual e menor duplicação de código.
+Depois disso, injete os componentes diretamente nas telas, sem depender de `CatalogComponentItem` ou outras estruturas de catálogo. Exemplo:
+
+```swift
+import SwiftUI
+import UIComponents
+
+struct SignupView: View {
+	@State private var name = ""
+
+	var body: some View {
+		FormTextField(
+			label: "Nome",
+			placeholder: "Digite o nome completo",
+			text: $name
+		)
+	}
+}
+```
+
+Os tipos públicos do package agora incluem componentes como `FormTextField`, `FormSecureField`, `PrimaryButton`, `OTPField`, `LoadingView`, `StatusBadgeView`, entre outros.
 
 ## Como Buildar o Package
 
@@ -32,14 +51,7 @@ Estrutura principal:
 
 Existe um app de catálogo em `CatalogDemo/CatalogDemo.xcodeproj` com o scheme `CatalogDemo`.
 
-O demo importa o módulo `UIComponents` e consome apenas a API pública de catálogo/configuração. As implementações concretas dos componentes continuam isoladas no target `UIComponents`, evitando acesso direto pelo código do app de demonstração.
-
-API pública atual para a demo:
-
-- `ComponentsCatalogView`
-- `CatalogComponentItem`
-- `CatalogComponentName`
-- `CatalogComponentTexts`
+O demo importa o módulo `UIComponents` e serve apenas para visualizar os componentes. As telas de catálogo ficam isoladas no app de demonstração e não fazem parte da API pública do package.
 
 Se precisar recriar o projeto do catálogo, execute:
 
@@ -48,4 +60,4 @@ cd UIComponents/CatalogDemo
 ruby generate_project.rb
 ```
 
-Depois, abra o projeto `CatalogDemo.xcodeproj` no Xcode e rode o scheme `CatalogDemo` em um simulador iOS. A tela inicial renderiza `ComponentsCatalogView`, que lista e exibe os componentes disponíveis.
+Depois, abra o projeto `CatalogDemo.xcodeproj` no Xcode e rode o scheme `CatalogDemo` em um simulador iOS. A tela inicial renderiza um catálogo local do app demo com os componentes disponíveis.

@@ -1,13 +1,12 @@
 import SwiftUI
 
-public struct ComponentsCatalogView: View {
-    private let items: [CatalogComponentItem]
+struct ComponentsCatalogView: View {
+    private let items = CatalogComponentItem.demoItems
 
-    public init(items: [CatalogComponentItem]? = nil) {
-        self.items = items ?? CatalogComponentName.allCases.map { CatalogComponentItem(name: $0) }
+    init() {
     }
 
-    public var body: some View {
+    var body: some View {
         NavigationStack {
             List(items) { item in
                 NavigationLink {
@@ -26,6 +25,70 @@ public struct ComponentsCatalogView: View {
             .navigationTitle("Componentes")
         }
     }
+}
+
+private extension CatalogComponentItem {
+    static let demoItems: [CatalogComponentItem] = [
+        CatalogComponentItem(
+            name: .feedbackLabel,
+            texts: CatalogComponentTexts(
+                successMessage: "Dados validados com sucesso.",
+                failureMessage: "Este campo é obrigatório."
+            )
+        ),
+        CatalogComponentItem(
+            name: .formTextField,
+            texts: CatalogComponentTexts(
+                label: "Nome",
+                placeholder: "Digite o nome completo",
+                successMessage: "Nome preenchido corretamente.",
+                failureMessage: "Preencha o nome para continuar.",
+                primaryActionTitle: "Validar"
+            )
+        ),
+        CatalogComponentItem(
+            name: .formSecureField,
+            texts: CatalogComponentTexts(
+                label: "Senha",
+                placeholder: "Digite sua senha",
+                successMessage: "Senha válida.",
+                failureMessage: "A senha deve ter ao menos 6 caracteres.",
+                primaryActionTitle: "Validar"
+            )
+        ),
+        CatalogComponentItem(
+            name: .loadingView,
+            texts: CatalogComponentTexts(message: "Buscando horários disponíveis")
+        ),
+        CatalogComponentItem(name: .manicuristPhotoView),
+        CatalogComponentItem(
+            name: .otpField,
+            texts: CatalogComponentTexts(
+                label: "Código de verificação",
+                successMessage: "Código preenchido corretamente.",
+                failureMessage: "Digite os 6 números enviados.",
+                primaryActionTitle: "Validar"
+            )
+        ),
+        CatalogComponentItem(
+            name: .orDivider,
+            texts: CatalogComponentTexts(message: String(localized: "dividerOr"))
+        ),
+        CatalogComponentItem(name: .passwordStrengthBar),
+        CatalogComponentItem(
+            name: .primaryButton,
+            texts: CatalogComponentTexts(primaryActionTitle: "Continuar")
+        ),
+        CatalogComponentItem(name: .ratingView),
+        CatalogComponentItem(
+            name: .statusBadgeView,
+            texts: CatalogComponentTexts(
+                label: "Estabelecimento aberto",
+                successMessage: "Sucesso",
+                failureMessage: "Fracasso"
+            )
+        )
+    ]
 }
 
 private extension CatalogComponentItem {

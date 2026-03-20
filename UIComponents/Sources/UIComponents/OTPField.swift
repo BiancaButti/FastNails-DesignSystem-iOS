@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - OTPField
 
-struct OTPField: View {
+public struct OTPField: View {
     let label: String
     @Binding var code: String
     var errorMessage: String? = nil
@@ -10,6 +10,18 @@ struct OTPField: View {
 
     @FocusState private var isFocused: Bool
     private let length = 6
+
+    public init(
+        label: String,
+        code: Binding<String>,
+        errorMessage: String? = nil,
+        successMessage: String? = nil
+    ) {
+        self.label = label
+        self._code = code
+        self.errorMessage = errorMessage
+        self.successMessage = successMessage
+    }
 
     private var feedback: (message: String, tone: FeedbackTone)? {
         if let errorMessage, !errorMessage.isEmpty {
@@ -23,7 +35,7 @@ struct OTPField: View {
         return nil
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label)
                 .font(.subheadline.weight(.medium))

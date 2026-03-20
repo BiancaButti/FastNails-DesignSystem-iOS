@@ -1,13 +1,27 @@
 import SwiftUI
 
-struct PrimaryButton: View {
+public struct PrimaryButton: View {
     let title: String
     var isEnabled: Bool = true
     var color: Color = .accentColor
     var accessibilityHint: String? = nil
     let action: () -> Void
 
-    var body: some View {
+    public init(
+        title: String,
+        isEnabled: Bool = true,
+        color: Color = .accentColor,
+        accessibilityHint: String? = nil,
+        action: @escaping () -> Void
+    ) {
+        self.title = title
+        self.isEnabled = isEnabled
+        self.color = color
+        self.accessibilityHint = accessibilityHint
+        self.action = action
+    }
+
+    public var body: some View {
         Button(action: action) {
             Text(title)
                 .fontWeight(.semibold)

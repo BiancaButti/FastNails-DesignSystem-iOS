@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - PasswordStrength
 
-enum PasswordStrength: Equatable {
+public enum PasswordStrength: Equatable {
     case empty, weak, medium, strong
 
     var label: String {
@@ -35,11 +35,15 @@ enum PasswordStrength: Equatable {
 
 // MARK: - PasswordStrengthBar
 
-struct PasswordStrengthBar: View {
+public struct PasswordStrengthBar: View {
 
     let strength: PasswordStrength
 
-    var body: some View {
+    public init(strength: PasswordStrength) {
+        self.strength = strength
+    }
+
+    public var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { index in

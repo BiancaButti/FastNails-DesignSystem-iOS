@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct FormSecureField: View {
+public struct FormSecureField: View {
     let label: String
     let placeholder: String
     @Binding var text: String
@@ -11,6 +11,26 @@ struct FormSecureField: View {
     var onLostFocus: () -> Void = {}
 
     @FocusState private var isFocused: Bool
+
+    public init(
+        label: String,
+        placeholder: String,
+        text: Binding<String>,
+        isVisible: Binding<Bool>,
+        errorMessage: String? = nil,
+        successMessage: String? = nil,
+        systemStyle: Bool = false,
+        onLostFocus: @escaping () -> Void = {}
+    ) {
+        self.label = label
+        self.placeholder = placeholder
+        self._text = text
+        self._isVisible = isVisible
+        self.errorMessage = errorMessage
+        self.successMessage = successMessage
+        self.systemStyle = systemStyle
+        self.onLostFocus = onLostFocus
+    }
 
     private var feedback: (message: String, tone: FeedbackTone)? {
         if let errorMessage, !errorMessage.isEmpty {
@@ -24,7 +44,7 @@ struct FormSecureField: View {
         return nil
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label)
                 .font(.subheadline.weight(.medium))

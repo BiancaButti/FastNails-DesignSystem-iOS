@@ -1,10 +1,14 @@
 import SwiftUI
 
-struct ManicuristPhotoView: View {
+public struct ManicuristPhotoView: View {
 
     let size: CGFloat
 
-    var body: some View {
+    public init(size: CGFloat) {
+        self.size = size
+    }
+
+    public var body: some View {
         ZStack {
             Circle()
                 .fill(Color.appPink.opacity(0.15))

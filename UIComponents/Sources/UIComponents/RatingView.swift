@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct RatingView: View {
+public struct RatingView: View {
 
-    enum Style {
+    public enum Style {
         /// Single star + number. Accessibility hidden (row handles its own label).
         case compact
         /// Five stars (fill/half/empty) + number. Has its own accessibility label.
@@ -12,7 +12,12 @@ struct RatingView: View {
     let rating: Double
     let style: Style
 
-    var body: some View {
+    public init(rating: Double, style: Style) {
+        self.rating = rating
+        self.style = style
+    }
+
+    public var body: some View {
         switch style {
         case .compact:
             compactView

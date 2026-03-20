@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct StatusBadgeView: View {
-    enum Tone {
+public struct StatusBadgeView: View {
+    public enum Tone {
         case success
         case failure
 
@@ -18,17 +18,17 @@ struct StatusBadgeView: View {
     let text: String
     let tone: Tone
 
-    init(isOpen: Bool) {
+    public init(isOpen: Bool) {
         self.text = isOpen ? String(localized: "homeBadgeOpenNow") : String(localized: "homeBadgeClosed")
         self.tone = isOpen ? .success : .failure
     }
 
-    init(text: String, tone: Tone) {
+    public init(text: String, tone: Tone) {
         self.text = text
         self.tone = tone
     }
 
-    var body: some View {
+    public var body: some View {
         Text(text)
             .font(.caption2)
             .fontWeight(.semibold)

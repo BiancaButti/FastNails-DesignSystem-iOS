@@ -1,4 +1,4 @@
-public enum CatalogComponentName: String, CaseIterable, Identifiable {
+enum CatalogComponentName: String, CaseIterable, Identifiable {
     case feedbackLabel = "FeedbackLabel"
     case formSecureField = "FormSecureField"
     case formTextField = "FormTextField"
@@ -11,7 +11,7 @@ public enum CatalogComponentName: String, CaseIterable, Identifiable {
     case ratingView = "RatingView"
     case statusBadgeView = "StatusBadgeView"
 
-    public var id: String { rawValue }
+    var id: String { rawValue }
 
     var defaultSummary: String {
         switch self {
@@ -41,16 +41,16 @@ public enum CatalogComponentName: String, CaseIterable, Identifiable {
     }
 }
 
-public struct CatalogComponentTexts {
-    public var label: String?
-    public var placeholder: String?
-    public var message: String?
-    public var successMessage: String?
-    public var failureMessage: String?
-    public var primaryActionTitle: String?
-    public var secondaryMessage: String?
+struct CatalogComponentTexts {
+    var label: String?
+    var placeholder: String?
+    var message: String?
+    var successMessage: String?
+    var failureMessage: String?
+    var primaryActionTitle: String?
+    var secondaryMessage: String?
 
-    public init(
+    init(
         label: String? = nil,
         placeholder: String? = nil,
         message: String? = nil,
@@ -69,15 +69,15 @@ public struct CatalogComponentTexts {
     }
 }
 
-public struct CatalogComponentItem: Identifiable {
-    public let name: CatalogComponentName
-    public var title: String?
-    public var summary: String?
-    public var texts: CatalogComponentTexts
+struct CatalogComponentItem: Identifiable {
+    let name: CatalogComponentName
+    var title: String?
+    var summary: String?
+    var texts: CatalogComponentTexts
 
-    public var id: String { name.id }
+    var id: String { name.id }
 
-    public init(
+    init(
         name: CatalogComponentName,
         title: String? = nil,
         summary: String? = nil,
