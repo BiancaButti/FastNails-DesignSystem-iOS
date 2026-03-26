@@ -1,51 +1,51 @@
 # 🎨 FastNails Design System
 
-**Status:** Em desenvolvimento 🚧  
-**Tipo:** Swift Package (SPM)  
-**Plataforma:** iOS  
+**Status:** In development 🚧
 
-O **FastNails Design System** é uma biblioteca de componentes reutilizáveis desenvolvida em Swift, com o objetivo de padronizar a interface e acelerar o desenvolvimento do aplicativo FastNails.
+**Type:** Swift Package (SPM)
 
-Ele foi projetado como um módulo independente, permitindo evolução desacoplada e reutilização em diferentes contextos.
+**Platform:** iOS
 
----
-
-## 🎯 Objetivos
-
-- Garantir consistência visual entre telas  
-- Centralizar componentes de UI reutilizáveis  
-- Reduzir duplicação de código  
-- Aumentar velocidade de desenvolvimento  
-- Facilitar manutenção e evolução da interface  
+The **FastNails Design System** is a reusable component library built in Swift, designed to standardize the interface and accelerate the development of the FastNails application.
+It was designed as an independent module, allowing decoupled evolution and reuse across different contexts.
 
 ---
 
-## 🧱 Estrutura
+## 🎯 Goals
 
-O Design System é distribuído como um Swift Package e organizado por responsabilidade:
-
-- Componentes reutilizáveis  
-- Tokens de design (cores, tipografia, espaçamentos)  
-- Assets (imagens, ícones)  
-
----
-
-## 📦 Como utilizar
-
-### 🔗 Adicionando ao projeto
-
-1. No Xcode:
-   - Vá em **File > Add Packages…**
-2. Insira a URL do repositório: https://github.com/BiancaButti/FastNails-DesignSystem-iOS
-4. 3. Selecione a versão desejada (ex: `1.0.0`)
-5. Adicione ao target do seu projeto
+- Ensure visual consistency across screens
+- Centralize reusable UI components
+- Reduce code duplication
+- Increase development speed
+- Simplify interface maintenance and evolution
 
 ---
 
-### 📥 Importação
+## 🧱 Structure
 
-Para utilizar os componentes no código:
+The Design System is distributed as a Swift Package and organized by responsibility:
 
+- Reusable components
+- Design tokens (colors, typography, spacing)
+- Assets (images, icons)
+
+---
+
+## 📦 How to use
+
+### 🔗 Adding to the project
+
+1. In Xcode:
+   - Go to **File > Add Packages…**
+2. Enter the repository URL: [DS iOS](https://github.com/BiancaButti/FastNails-DesignSystem-iOS)
+3. Select the desired version (e.g. `1.0.0`)
+4. Add to your project target
+
+---
+
+### 📥 Import
+
+To use the components in your code:
 ```swift
 import SwiftUI
 import UIComponents
@@ -53,14 +53,14 @@ import UIComponents
 struct ContentView: View {
     var body: some View {
         VStack(spacing: 16) {
-            DSButton(title: "Continuar")
-            DSTextField(placeholder: "Digite seu nome")
+            DSButton(title: "Continue")
+            DSTextField(placeholder: "Enter your name")
         }
         .padding()
     }
 }
-
 ```
+
 ---
 
 <p align="center">
