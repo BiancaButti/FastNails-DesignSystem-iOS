@@ -46,8 +46,9 @@ public struct DSResultSection<Item: Identifiable, RowContent: View, EmptyContent
     let isLoading: Bool
     /// Lista de itens a exibir.
     let items: [Item]
-    /// Formato de contagem (ex.: `"%d resultados encontrados"`). Usa `String(format:count)`.
-    let countFormat: String
+    /// Formato printf de contagem customizado (ex.: `"%d encontrados"`). Quando `nil`,
+    /// usa a chave localizada `"resultsCount"` com pluralização via `.stringsdict`.
+    let countFormat: String?
     /// Label lida pelo VoiceOver quando o spinner está visível.
     let loadingAccessibilityLabel: String
     /// Builder para o conteúdo de cada linha.
@@ -75,7 +76,7 @@ public struct DSResultSection<Item: Identifiable, RowContent: View, EmptyContent
     ) {
         self.isLoading = isLoading
         self.items = items
-        self.countFormat = countFormat ?? String(localized: "resultsCount", bundle: .module)
+        self.countFormat = countFormat
         self.loadingAccessibilityLabel = loadingAccessibilityLabel ?? String(localized: "resultsLoadingAccessibility", bundle: .module)
         self.rowContent = rowContent
         self.emptyContent = emptyContent
@@ -92,7 +93,7 @@ public struct DSResultSection<Item: Identifiable, RowContent: View, EmptyContent
             } else if items.isEmpty {
                 emptyContent()
             } else {
-                Text(String(format: countFormat, items.count))
+                Text(resultsCountText)
                     .font(theme.buttonFont)
                     .padding(.horizontal, DSSpacing.lg)
                     .accessibilityAddTraits(.isHeader)
@@ -104,6 +105,16 @@ public struct DSResultSection<Item: Identifiable, RowContent: View, EmptyContent
                 }
             }
         }
+    }
+
+    private var resultsCountText: String {
+        if let fmt = countFormat {
+            return String(format: fmt, items.count)
+        }
+        return String.localizedStringWithFormat(
+            NSLocalizedString("resultsCount", bundle: .module, comment: ""),
+            items.count
+        )
     }
 }
 
@@ -140,7 +151,7 @@ public extension DSResultSection where EmptyContent == DSResultEmptyView {
 
 /// Estado vazio padrão para `DSResultSection`.
 ///
-/// Exibe um ícone de lupa riscada, um título e uma mensagem de sugestão.
+/// Exibe um ícone de lupa (`magnifyingglass`), um título e uma mensagem de sugestão.
 /// Pode ser usada de forma independente ou substituída por `emptyContent` customizado.
 ///
 /// ```swift

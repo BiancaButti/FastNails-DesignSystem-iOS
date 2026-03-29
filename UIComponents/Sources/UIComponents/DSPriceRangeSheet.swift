@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Default formatter (module-private, cached)
 
-private let _defaultPriceFormatter: NumberFormatter = {
+private let defaultPriceFormatter: NumberFormatter = {
     let f = NumberFormatter()
     f.numberStyle = .currency
     f.locale = Locale.current
@@ -10,8 +10,8 @@ private let _defaultPriceFormatter: NumberFormatter = {
     return f
 }()
 
-private func _formatCurrency(_ value: Double) -> String {
-    _defaultPriceFormatter.string(from: NSNumber(value: value)) ?? "\(Int(value))"
+private func formatCurrency(_ value: Double) -> String {
+    defaultPriceFormatter.string(from: NSNumber(value: value)) ?? "\(Int(value))"
 }
 
 // MARK: - DSPriceSliderRow
@@ -68,7 +68,7 @@ public struct DSPriceSliderRow: View {
         self._value = value
         self.range = range
         self.step = step
-        self.formatValue = formatValue ?? _formatCurrency
+        self.formatValue = formatValue ?? formatCurrency
     }
 
     public var body: some View {
@@ -183,7 +183,7 @@ public struct DSPriceRangeSheet: View {
         self.minRange = minRange
         self.maxRange = maxRange
         self.step = step
-        self.formatValue = formatValue ?? _formatCurrency
+        self.formatValue = formatValue ?? formatCurrency
         self.title = title ?? String(localized: "priceSheetTitle", bundle: .module)
         self.minLabel = minLabel ?? String(localized: "priceSheetMin", bundle: .module)
         self.maxLabel = maxLabel ?? String(localized: "priceSheetMax", bundle: .module)
@@ -207,6 +207,9 @@ public struct DSPriceRangeSheet: View {
                     step: step,
                     formatValue: formatValue
                 )
+                .onChange(of: minPrice) { newMin in
+                    if newMin > maxPrice { maxPrice = newMin }
+                }
                 DSPriceSliderRow(
                     title: maxLabel,
                     value: $maxPrice,
@@ -214,6 +217,9 @@ public struct DSPriceRangeSheet: View {
                     step: step,
                     formatValue: formatValue
                 )
+                .onChange(of: maxPrice) { newMax in
+                    if newMax < minPrice { minPrice = newMax }
+                }
             }
             .padding(.horizontal, DSSpacing.lg)
 

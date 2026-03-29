@@ -6,8 +6,8 @@ import SwiftUI
 /// da cidade ativa. À direita, um botão de avatar que dispara `onAvatarTap`.
 ///
 /// ```swift
-/// // Strings padrão (localizadas) + ação no avatar
-/// DSHeaderView { print("avatar tapped") }
+/// // Cidade obrigatória + rótulos padrão (localizados)
+/// DSHeaderView(city: "Rio de Janeiro") { print("avatar tapped") }
 ///
 /// // Strings customizadas
 /// DSHeaderView(
@@ -39,17 +39,17 @@ public struct DSHeaderView: View {
     /// Cria um `DSHeaderView`.
     /// - Parameters:
     ///   - locationLabel: Rótulo acima da cidade. Padrão: string localizada `"headerLocationLabel"`.
-    ///   - city: Nome da cidade. Padrão: string localizada `"headerCity"`.
+    ///   - city: Nome da cidade exibida no cabeçalho (obrigatório).
     ///   - avatarAccessibilityLabel: Label do VoiceOver para o avatar. Padrão: `"headerAvatarAccessibility"`.
     ///   - onAvatarTap: Closure chamada ao tocar no botão de avatar.
     public init(
         locationLabel: String? = nil,
-        city: String? = nil,
+        city: String,
         avatarAccessibilityLabel: String? = nil,
         onAvatarTap: @escaping () -> Void = {}
     ) {
         self.locationLabel = locationLabel ?? String(localized: "headerLocationLabel", bundle: .module)
-        self.city = city ?? String(localized: "headerCity", bundle: .module)
+        self.city = city
         self.avatarAccessibilityLabel = avatarAccessibilityLabel ?? String(localized: "headerAvatarAccessibility", bundle: .module)
         self.onAvatarTap = onAvatarTap
     }
