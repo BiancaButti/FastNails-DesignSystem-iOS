@@ -24,6 +24,7 @@ import SwiftUI
 /// ## Acessibilidade
 /// O `label` é exposto via `accessibilityLabel` do campo.
 /// O botão de visibilidade anuncia "Mostrar senha" / "Ocultar senha" ao VoiceOver.
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSFormSecureField: View {
     /// Texto do rótulo exibido acima do campo.
     let label: String
@@ -183,13 +184,13 @@ public struct DSFormSecureField: View {
         }
         .padding(.horizontal, DSSpacing.sm)
         .padding(.vertical, DSSpacing.sm)
-        .background(Color(.systemBackground))
+        .background(Color(uiColor: .systemBackground))
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.sm))
         .overlay {
             RoundedRectangle(cornerRadius: DSRadius.sm)
                 .stroke(
                     feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
-                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color(.systemGray4)),
+                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color(uiColor: .systemGray4)),
                     lineWidth: feedback != nil || isFocused ? 1.5 : 0.5
                 )
         }
@@ -205,7 +206,7 @@ public struct DSFormSecureField: View {
         }
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.md)
-        .background(Color(.secondarySystemBackground))
+        .background(Color(uiColor: .secondarySystemBackground))
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
         .overlay {
             RoundedRectangle(cornerRadius: DSRadius.md)
@@ -221,22 +222,30 @@ public struct DSFormSecureField: View {
 
     @ViewBuilder
     private var inputField: some View {
-        Group {
-            if isVisible {
-                TextField(placeholder, text: $text)
-            } else {
-                SecureField(placeholder, text: $text)
-            }
-        }
-        .keyboardType(keyboardType)
-        .textInputAutocapitalization(autocapitalization)
-        .textContentType(textContentType)
-        .autocorrectionDisabled()
-        .focused($isFocused)
-        .accessibilityLabel(label)
-        .accessibilityValue(feedback?.message ?? "")
-        .onChange(of: isFocused) { newValue in
-            if !newValue { onLostFocus() }
+        if isVisible {
+            TextField(placeholder, text: $text)
+                .keyboardType(keyboardType)
+                .textInputAutocapitalization(autocapitalization)
+                .textContentType(textContentType)
+                .autocorrectionDisabled()
+                .focused($isFocused)
+                .accessibilityLabel(label)
+                .accessibilityValue(feedback?.message ?? "")
+                .onChange(of: isFocused) { newValue in
+                    if !newValue { onLostFocus() }
+                }
+        } else {
+            SecureField(placeholder, text: $text)
+                .keyboardType(keyboardType)
+                .textInputAutocapitalization(autocapitalization)
+                .textContentType(textContentType)
+                .autocorrectionDisabled()
+                .focused($isFocused)
+                .accessibilityLabel(label)
+                .accessibilityValue(feedback?.message ?? "")
+                .onChange(of: isFocused) { newValue in
+                    if !newValue { onLostFocus() }
+                }
         }
     }
 

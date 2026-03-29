@@ -7,6 +7,7 @@ import SwiftUI
 /// ```
 ///
 /// - SeeAlso: `DSFeedbackLabel`, `DSSuccessLabel`
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSErrorLabel: View {
     let message: String
 

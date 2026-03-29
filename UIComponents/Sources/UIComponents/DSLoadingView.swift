@@ -15,6 +15,7 @@ import SwiftUI
 /// O componente colapsa sua árvore de acessibilidade em um único elemento com:
 /// - `accessibilityLabel`: o texto da mensagem
 /// - `.updatesFrequently`: sinaliza ao VoiceOver que o conteúdo pode mudar
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSLoadingView: View {
 	/// Texto descritivo exibido abaixo do spinner e lido pelo VoiceOver.
 	var message: String
@@ -41,7 +42,7 @@ public struct DSLoadingView: View {
 		}
 		.frame(maxWidth: .infinity)
 		.padding(DSSpacing.xl)
-		.background(Color(.secondarySystemBackground))
+		.background(Color(uiColor: .secondarySystemBackground))
 		.clipShape(RoundedRectangle(cornerRadius: DSRadius.xl))
 		.accessibilityElement(children: .ignore)
 		.accessibilityLabel(message)
