@@ -4,6 +4,13 @@
 /* DSCategoriesSection */
 "categoriesSectionTitle" = "Categorias";
 
+/* DSPriceRangeSheet */
+"priceSheetTitle" = "Faixa de preço";
+"priceSheetMin" = "Preço mínimo";
+"priceSheetMax" = "Preço máximo";
+"priceSheetApply" = "Aplicar";
+"priceSheetApplyHint" = "Aplica o filtro de preço e fecha o painel";
+
 /* DSSearchEmptyStateView */
 "searchEmptyTitle" = "Nenhum resultado encontrado";
 "searchEmptySubtitle" = "Tente ajustar os filtros ou buscar por outro termo.";
