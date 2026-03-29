@@ -1,20 +1,24 @@
 enum CatalogComponentName: String, CaseIterable, Identifiable {
-    case feedbackLabel = "FeedbackLabel"
-    case formSecureField = "FormSecureField"
-    case formTextField = "FormTextField"
-    case loadingView = "LoadingView"
-    case manicuristPhotoView = "ManicuristPhotoView"
-    case otpField = "OTPField"
-    case orDivider = "OrDivider"
-    case passwordStrengthBar = "PasswordStrengthBar"
-    case primaryButton = "PrimaryButton"
-    case ratingView = "RatingView"
-    case statusBadgeView = "StatusBadgeView"
+    case errorLabel = "DSErrorLabel"
+    case feedbackLabel = "DSFeedbackLabel"
+    case formSecureField = "DSFormSecureField"
+    case formTextField = "DSFormTextField"
+    case loadingView = "DSLoadingView"
+    case manicuristPhotoView = "DSManicuristPhotoView"
+    case otpField = "DSOTPField"
+    case orDivider = "DSOrDivider"
+    case passwordStrengthBar = "DSPasswordStrengthBar"
+    case primaryButton = "DSPrimaryButton"
+    case ratingView = "DSRatingView"
+    case statusBadgeView = "DSStatusBadgeView"
+    case successLabel = "DSSuccessLabel"
 
     var id: String { rawValue }
 
     var defaultSummary: String {
         switch self {
+        case .errorLabel:
+            return "Mensagem visual de erro"
         case .feedbackLabel:
             return "Mensagens visuais de sucesso e fracasso"
         case .formSecureField:
@@ -37,6 +41,8 @@ enum CatalogComponentName: String, CaseIterable, Identifiable {
             return "Exibição de avaliação"
         case .statusBadgeView:
             return "Badge de status com estados configuráveis"
+        case .successLabel:
+            return "Mensagem visual de sucesso"
         }
     }
 }

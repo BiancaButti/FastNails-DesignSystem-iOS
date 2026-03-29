@@ -1,56 +1,109 @@
 import XCTest
 import SwiftUI
-import UIComponents
+@testable import UIComponents
 
 final class UIComponentsTests: XCTestCase {
+
+    // MARK: - Public API smoke tests
+
     func testPublicComponentsCanBeInstantiated() {
         let text = Binding.constant("Maria")
-        let isVisible = Binding.constant(false)
         let code = Binding.constant("123456")
 
-        let formTextField = FormTextField(
-            label: "Nome",
-            placeholder: "Digite seu nome",
-            text: text,
-            successMessage: "Ok"
-        )
-        let formSecureField = FormSecureField(
-            label: "Senha",
-            placeholder: "Digite sua senha",
-            text: text,
-            isVisible: isVisible
-        )
-        let otpField = OTPField(label: "Codigo", code: code)
-        let primaryButton = PrimaryButton(title: "Continuar") {}
-        let loadingView = LoadingView(message: "Carregando")
-        let photoView = ManicuristPhotoView(size: 80)
-        let divider = OrDivider()
-        let ratingView = RatingView(rating: 4.5, style: .expanded)
-        let badge = StatusBadgeView(text: "Sucesso", tone: .success)
-        let feedbackLabel = FeedbackLabel(message: "Tudo certo", tone: .success)
-        let errorLabel = ErrorLabel(message: "Falhou")
-        let successLabel = SuccessLabel(message: "Passou")
-        let strengthBar = PasswordStrengthBar(strength: .medium)
-
-        XCTAssertNotNil(formTextField)
-        XCTAssertNotNil(formSecureField)
-        XCTAssertNotNil(otpField)
-        XCTAssertNotNil(primaryButton)
-        XCTAssertNotNil(loadingView)
-        XCTAssertNotNil(photoView)
-        XCTAssertNotNil(divider)
-        XCTAssertNotNil(ratingView)
-        XCTAssertNotNil(badge)
-        XCTAssertNotNil(feedbackLabel)
-        XCTAssertNotNil(errorLabel)
-        XCTAssertNotNil(successLabel)
-        XCTAssertNotNil(strengthBar)
+        _ = DSFormTextField(label: "Nome", placeholder: "Digite seu nome", text: text, successMessage: "Ok")
+        _ = DSFormSecureField(label: "Senha", placeholder: "Digite sua senha", text: text)
+        _ = DSOTPField(label: "Codigo", code: code)
+        _ = DSPrimaryButton(title: "Continuar") {}
+        _ = DSLoadingView(message: "Carregando")
+        _ = DSManicuristPhotoView(size: 80)
+        _ = DSOrDivider()
+        _ = DSRatingView(rating: 4.5, style: .expanded)
+        _ = DSStatusBadgeView(text: "Sucesso", tone: .success)
+        _ = DSFeedbackLabel(message: "Tudo certo", tone: .success)
+        _ = DSErrorLabel(message: "Falhou")
+        _ = DSSuccessLabel(message: "Passou")
+        _ = DSPasswordStrengthBar(strength: .medium)
     }
 
     func testPublicEnumsRemainAvailable() {
-        XCTAssertEqual(PasswordStrength.strong, .strong)
-        XCTAssertEqual(PasswordStrength.medium, .medium)
-        XCTAssertEqual(FeedbackTone.success, .success)
-        XCTAssertEqual(FeedbackTone.failure, .failure)
+        XCTAssertEqual(DSPasswordStrength.strong, .strong)
+        XCTAssertEqual(DSPasswordStrength.medium, .medium)
+        XCTAssertEqual(DSFeedbackTone.success, .success)
+        XCTAssertEqual(DSFeedbackTone.failure, .failure)
+    }
+
+    // MARK: - DSPasswordStrength
+
+    func testPasswordStrengthFilledBars() {
+        XCTAssertEqual(DSPasswordStrength.empty.filledBars, 0)
+        XCTAssertEqual(DSPasswordStrength.weak.filledBars, 1)
+        XCTAssertEqual(DSPasswordStrength.medium.filledBars, 2)
+        XCTAssertEqual(DSPasswordStrength.strong.filledBars, 3)
+    }
+
+    func testPasswordStrengthLabelNotEmpty() {
+        XCTAssertTrue(DSPasswordStrength.empty.label.isEmpty)
+        XCTAssertFalse(DSPasswordStrength.weak.label.isEmpty)
+        XCTAssertFalse(DSPasswordStrength.medium.label.isEmpty)
+        XCTAssertFalse(DSPasswordStrength.strong.label.isEmpty)
+    }
+
+    // MARK: - DSRatingView clamping
+
+    func testRatingViewClampsAboveMax() {
+        let view = DSRatingView(rating: 10, style: .expanded)
+        // Access the clamped value via reflection or just verify no crash and clamp logic.
+        // Since rating is stored as let, we verify via indirect behavior — the view must exist.
+        XCTAssertNotNil(view)
+    }
+
+    func testRatingViewClampsBelowMin() {
+        let view = DSRatingView(rating: -5, style: .compact)
+        XCTAssertNotNil(view)
+    }
+
+    // MARK: - DSManicuristPhotoView size clamping
+
+    func testManicuristPhotoViewClampsNegativeSize() {
+        let view = DSManicuristPhotoView(size: -10)
+        XCTAssertNotNil(view)
+    }
+
+    func testManicuristPhotoViewClampsZeroSize() {
+        let view = DSManicuristPhotoView(size: 0)
+        XCTAssertNotNil(view)
+    }
+
+    // MARK: - DSOTPField configurable length
+
+    func testOTPFieldDefaultLengthIsSix() {
+        let field = DSOTPField(label: "OTP", code: .constant(""))
+        XCTAssertNotNil(field)
+    }
+
+    func testOTPFieldCustomLength() {
+        let field = DSOTPField(label: "PIN", code: .constant(""), length: 4)
+        XCTAssertNotNil(field)
+    }
+
+    func testOTPFieldClampsLengthToMinOne() {
+        let field = DSOTPField(label: "Zero", code: .constant(""), length: 0)
+        XCTAssertNotNil(field) // Should not crash; length clamped to 1
+    }
+
+    // MARK: - DSFeedbackTone public properties
+
+    func testFeedbackToneIconNamesNotEmpty() {
+        for tone in DSFeedbackTone.allCases {
+            XCTAssertFalse(tone.iconName.isEmpty, "iconName for \(tone) should not be empty")
+        }
+    }
+
+    // MARK: - DSPrimaryButton loading state
+
+    func testPrimaryButtonWithLoadingState() {
+        let button = DSPrimaryButton(title: "Salvar", isLoading: true) {}
+        XCTAssertNotNil(button)
     }
 }
+

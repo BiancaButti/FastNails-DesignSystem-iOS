@@ -1,29 +1,69 @@
 import SwiftUI
 
-// MARK: - OTPField
+// MARK: - DSOTPField
 
-public struct OTPField: View {
+/// Campo de entrada de código OTP (One-Time Password) com caixas individuais por dígito.
+///
+/// Renderiza `length` caixas quadradas lado a lado e captura a entrada via um `TextField`
+/// invisível sobreposto. Aceita apenas dígitos numéricos e limita automaticamente
+/// ao comprimento configurado.
+///
+/// ```swift
+/// @State private var codigo = ""
+///
+/// DSOTPField(
+///     label: "Código de verificação",
+///     code: $codigo,
+///     length: 6,
+///     errorMessage: codigo.count < 6 ? "Digite os 6 números enviados." : nil,
+///     successMessage: codigo.count == 6 ? "Código correto!" : nil
+/// )
+/// ```
+///
+/// ## Comportamento
+/// - Ao tocar em qualquer caixa, o campo invisível recebe foco e o teclado numérico aparece.
+/// - Uma seta piscante indica a caixa ativa.
+/// - Caracteres não numéricos são filtrados automaticamente.
+///
+/// ## Acessibilidade
+/// O componente é tratado como elemento único pelo VoiceOver. O valor lido é
+/// cada dígito separado por espaço (ex.: "1 2 3 4 5 6") ou "Vazio" quando vazio.
+public struct DSOTPField: View {
+    /// Texto do rótulo exibido acima das caixas.
     let label: String
+    /// Binding bidirecional com o código digitado (somente dígitos, máx. `length` caracteres).
     @Binding var code: String
+    /// Mensagem de erro exibida abaixo do campo. Tem prioridade sobre `successMessage`.
     var errorMessage: String? = nil
+    /// Mensagem de sucesso exibida abaixo do campo.
     var successMessage: String? = nil
 
     @FocusState private var isFocused: Bool
-    private let length = 6
+    /// Número de dígitos do código. Clampeado a mínimo 1. Padrão: `6`.
+    private let length: Int
 
+    /// Cria um `DSOTPField`.
+    /// - Parameters:
+    ///   - label: Rótulo visível acima das caixas.
+    ///   - code: Binding com o código digitado.
+    ///   - length: Número de dígitos esperados (padrão `6`, mínimo `1`).
+    ///   - errorMessage: Mensagem de erro.
+    ///   - successMessage: Mensagem de sucesso.
     public init(
         label: String,
         code: Binding<String>,
+        length: Int = 6,
         errorMessage: String? = nil,
         successMessage: String? = nil
     ) {
         self.label = label
         self._code = code
+        self.length = max(1, length)
         self.errorMessage = errorMessage
         self.successMessage = successMessage
     }
 
-    private var feedback: (message: String, tone: FeedbackTone)? {
+    private var feedback: (message: String, tone: DSFeedbackTone)? {
         if let errorMessage, !errorMessage.isEmpty {
             return (errorMessage, .failure)
         }
@@ -54,6 +94,7 @@ public struct OTPField: View {
                     .textContentType(.oneTimeCode)
                     .focused($isFocused)
                     .opacity(0)
+                    .accessibilityHidden(true)
                     .onChange(of: code) { newValue in
                         let digits = String(newValue.filter(\.isNumber).prefix(length))
                         if code != digits { code = digits }
@@ -61,7 +102,7 @@ public struct OTPField: View {
             }
 
             if let feedback {
-                FeedbackLabel(message: feedback.message, tone: feedback.tone)
+                DSFeedbackLabel(message: feedback.message, tone: feedback.tone)
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -69,10 +110,10 @@ public struct OTPField: View {
         .accessibilityLabel(label)
         .accessibilityValue(
             code.isEmpty
-                ? String(localized: "otpFieldAccessibilityEmpty")
+                ? String(localized: "otpFieldAccessibilityEmpty", bundle: .module)
                 : code.map { String($0) }.joined(separator: " ")
         )
-        .accessibilityHint(feedback?.message ?? String(localized: "otpFieldAccessibilityHint"))
+        .accessibilityHint(feedback?.message ?? String(localized: "otpFieldAccessibilityHint", bundle: .module))
         .accessibilityAddTraits(.allowsDirectInteraction)
     }
 
@@ -121,7 +162,7 @@ private struct BlinkingCursor: View {
             .frame(width: 2, height: 24)
             .foregroundStyle(Color.appPink)
             .opacity(visible ? 1 : 0)
-            .onAppear {
+            .task {
                 withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
                     visible = false
                 }

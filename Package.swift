@@ -4,6 +4,7 @@ import PackageDescription
 
 let package = Package(
     name: "UIComponents",
+    defaultLocalization: "pt-BR",
     platforms: [
         .iOS(.v16)
     ],
@@ -16,7 +17,8 @@ let package = Package(
     targets: [
         .target(
             name: "UIComponents",
-            path: "UIComponents/Sources/UIComponents"
+            path: "UIComponents/Sources/UIComponents",
+            resources: [.process("Resources")]
         ),
         .testTarget(
             name: "UIComponentsTests",

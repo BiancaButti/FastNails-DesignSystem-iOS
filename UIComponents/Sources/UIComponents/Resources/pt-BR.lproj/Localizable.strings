@@ -1,0 +1,32 @@
+/* DSOrDivider */
+"dividerOr" = "ou";
+
+/* DSOTPField */
+"otpFieldAccessibilityEmpty" = "Vazio";
+"otpFieldAccessibilityHint" = "Toque duas vezes para editar";
+
+/* DSPasswordStrength */
+"passwordStrengthWeak" = "Fraca";
+"passwordStrengthMedium" = "Média";
+"passwordStrengthStrong" = "Forte";
+"passwordStrengthLabel" = "Força da senha:";
+"passwordStrengthAccessibility" = "Força da senha: %@";
+
+/* DSFormTextField / DSFormSecureField */
+"accessibilityButtonTouchTwice" = "Toque duas vezes para editar";
+"commonPasswordHide" = "Ocultar senha";
+"commonPasswordShow" = "Mostrar senha";
+
+/* DSStatusBadgeView */
+"homeBadgeOpenNow" = "Aberto agora";
+"homeBadgeClosed" = "Fechado";
+
+/* DSRatingView */
+"manicuristProfileRatingAccessibility" = "Avaliação: %@ de 5 estrelas";
+
+/* DSLoadingView */
+"loadingDefault" = "Carregando...";
+
+/* Accessibility */
+"accessibilitySuccess" = "Sucesso";
+"accessibilityError" = "Erro";

@@ -20,68 +20,80 @@ private struct CatalogDemoItem: Identifiable {
 private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
         CatalogDemoItem(
+            id: "errorLabel",
+            title: "DSErrorLabel",
+            summary: "Mensagem visual de erro",
+            content: AnyView(DSErrorLabel(message: "Este campo é obrigatório."))
+        ),
+        CatalogDemoItem(
             id: "feedbackLabel",
-            title: "FeedbackLabel",
+            title: "DSFeedbackLabel",
             summary: "Mensagens visuais de sucesso e fracasso",
             content: AnyView(FeedbackLabelShowcase())
         ),
         CatalogDemoItem(
             id: "formTextField",
-            title: "FormTextField",
+            title: "DSFormTextField",
             summary: "Campo de texto reutilizável",
             content: AnyView(FormTextFieldShowcase())
         ),
         CatalogDemoItem(
             id: "formSecureField",
-            title: "FormSecureField",
+            title: "DSFormSecureField",
             summary: "Campo seguro com opção de mostrar senha",
             content: AnyView(FormSecureFieldShowcase())
         ),
         CatalogDemoItem(
             id: "loadingView",
-            title: "LoadingView",
+            title: "DSLoadingView",
             summary: "Indicador de carregamento",
-            content: AnyView(LoadingView(message: "Buscando horários disponíveis"))
+            content: AnyView(DSLoadingView(message: "Buscando horários disponíveis"))
         ),
         CatalogDemoItem(
             id: "manicuristPhotoView",
-            title: "ManicuristPhotoView",
+            title: "DSManicuristPhotoView",
             summary: "Avatar genérico de profissional",
-            content: AnyView(ManicuristPhotoView(size: 96))
+            content: AnyView(DSManicuristPhotoView(size: 96))
         ),
         CatalogDemoItem(
             id: "otpField",
-            title: "OTPField",
+            title: "DSOTPField",
             summary: "Campo para código de verificação",
             content: AnyView(OTPFieldShowcase())
         ),
         CatalogDemoItem(
             id: "orDivider",
-            title: "OrDivider",
+            title: "DSOrDivider",
             summary: "Divisor visual com texto",
-            content: AnyView(OrDivider(label: String(localized: "dividerOr")))
+            content: AnyView(DSOrDivider(label: String(localized: "dividerOr")))
         ),
         CatalogDemoItem(
             id: "passwordStrengthBar",
-            title: "PasswordStrengthBar",
+            title: "DSPasswordStrengthBar",
             summary: "Indicador de força da senha",
             content: AnyView(PasswordStrengthBarShowcase())
         ),
         CatalogDemoItem(
             id: "primaryButton",
-            title: "PrimaryButton",
+            title: "DSPrimaryButton",
             summary: "Botão principal de ação",
             content: AnyView(PrimaryButtonShowcase())
         ),
         CatalogDemoItem(
             id: "ratingView",
-            title: "RatingView",
+            title: "DSRatingView",
             summary: "Exibição de avaliação",
             content: AnyView(RatingViewShowcase())
         ),
         CatalogDemoItem(
+            id: "successLabel",
+            title: "DSSuccessLabel",
+            summary: "Mensagem visual de sucesso",
+            content: AnyView(DSSuccessLabel(message: "Dados validados com sucesso."))
+        ),
+        CatalogDemoItem(
             id: "statusBadgeView",
-            title: "StatusBadgeView",
+            title: "DSStatusBadgeView",
             summary: "Badge de status com estados configuráveis",
             content: AnyView(StatusBadgeViewShowcase())
         )
@@ -143,8 +155,8 @@ private struct CatalogDemoDetailView: View {
 private struct FeedbackLabelShowcase: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            ErrorLabel(message: "Este campo é obrigatório.")
-            SuccessLabel(message: "Dados validados com sucesso.")
+            DSErrorLabel(message: "Este campo é obrigatório.")
+            DSSuccessLabel(message: "Dados validados com sucesso.")
         }
     }
 }
@@ -155,7 +167,7 @@ private struct FormTextFieldShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            FormTextField(
+            DSFormTextField(
                 label: "Nome",
                 placeholder: "Digite o nome completo",
                 text: $name,
@@ -173,21 +185,19 @@ private struct FormTextFieldShowcase: View {
 
 private struct FormSecureFieldShowcase: View {
     @State private var password = ""
-    @State private var isVisible = false
     @State private var hasValidated = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            FormSecureField(
+            DSFormSecureField(
                 label: "Senha",
                 placeholder: "Digite sua senha",
                 text: $password,
-                isVisible: $isVisible,
                 errorMessage: hasValidated && !password.isEmpty && password.count < 6 ? "A senha deve ter ao menos 6 caracteres." : nil,
                 successMessage: hasValidated && password.count >= 6 ? "Senha válida." : nil
             )
 
-            PasswordStrengthBar(strength: strength)
+            DSPasswordStrengthBar(strength: strength)
 
             Button("Validar") {
                 hasValidated = true
@@ -196,7 +206,7 @@ private struct FormSecureFieldShowcase: View {
         }
     }
 
-    private var strength: PasswordStrength {
+    private var strength: DSPasswordStrength {
         switch password.count {
         case 0:
             return .empty
@@ -216,7 +226,7 @@ private struct OTPFieldShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            OTPField(
+            DSOTPField(
                 label: "Código de verificação",
                 code: $code,
                 errorMessage: hasValidated && !code.isEmpty && code.count < 6 ? "Digite os 6 números enviados." : nil,
@@ -232,17 +242,17 @@ private struct OTPFieldShowcase: View {
 }
 
 private struct PasswordStrengthBarShowcase: View {
-    @State private var strength: PasswordStrength = .medium
+    @State private var strength: DSPasswordStrength = .medium
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            PasswordStrengthBar(strength: strength)
+            DSPasswordStrengthBar(strength: strength)
 
             Picker("Força", selection: $strength) {
-                Text("Vazia").tag(PasswordStrength.empty)
-                Text("Fraca").tag(PasswordStrength.weak)
-                Text("Média").tag(PasswordStrength.medium)
-                Text("Forte").tag(PasswordStrength.strong)
+                Text("Vazia").tag(DSPasswordStrength.empty)
+                Text("Fraca").tag(DSPasswordStrength.weak)
+                Text("Média").tag(DSPasswordStrength.medium)
+                Text("Forte").tag(DSPasswordStrength.strong)
             }
             .pickerStyle(.segmented)
         }
@@ -254,7 +264,7 @@ private struct PrimaryButtonShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            PrimaryButton(title: "Continuar") {
+            DSPrimaryButton(title: "Continuar") {
                 tapCount += 1
             }
 
@@ -270,8 +280,8 @@ private struct RatingViewShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            RatingView(rating: rating, style: .expanded)
-            RatingView(rating: rating, style: .compact)
+            DSRatingView(rating: rating, style: .expanded)
+            DSRatingView(rating: rating, style: .compact)
 
             Slider(value: $rating, in: 0...5, step: 0.5)
         }
@@ -283,10 +293,10 @@ private struct StatusBadgeViewShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            StatusBadgeView(isOpen: isOpen)
+            DSStatusBadgeView(isOpen: isOpen)
             HStack(spacing: 12) {
-                StatusBadgeView(text: "Sucesso", tone: .success)
-                StatusBadgeView(text: "Fracasso", tone: .failure)
+                DSStatusBadgeView(text: "Sucesso", tone: .success)
+                DSStatusBadgeView(text: "Fracasso", tone: .failure)
             }
 
             Toggle("Estabelecimento aberto", isOn: $isOpen)

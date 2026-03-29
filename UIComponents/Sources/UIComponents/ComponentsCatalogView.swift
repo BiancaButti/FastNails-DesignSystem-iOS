@@ -3,8 +3,8 @@ import SwiftUI
 struct ComponentsCatalogView: View {
     private let items = CatalogComponentItem.demoItems
 
-    init() {
-    }
+
+    init() { }
 
     var body: some View {
         NavigationStack {
@@ -29,8 +29,12 @@ struct ComponentsCatalogView: View {
 
 private extension CatalogComponentItem {
     static let demoItems: [CatalogComponentItem] = [
-        CatalogComponentItem(
-            name: .feedbackLabel,
+        CatalogComponentItem(            name: .errorLabel,
+            texts: CatalogComponentTexts(
+                failureMessage: "Este campo é obrigatório."
+            )
+        ),
+        CatalogComponentItem(            name: .feedbackLabel,
             texts: CatalogComponentTexts(
                 successMessage: "Dados validados com sucesso.",
                 failureMessage: "Este campo é obrigatório."
@@ -80,6 +84,12 @@ private extension CatalogComponentItem {
             texts: CatalogComponentTexts(primaryActionTitle: "Continuar")
         ),
         CatalogComponentItem(name: .ratingView),
+        CatalogComponentItem(
+            name: .successLabel,
+            texts: CatalogComponentTexts(
+                successMessage: "Dados validados com sucesso."
+            )
+        ),
         CatalogComponentItem(
             name: .statusBadgeView,
             texts: CatalogComponentTexts(
@@ -135,6 +145,8 @@ private struct ComponentDetailView: View {
     @ViewBuilder
     private var showcase: some View {
         switch item.name {
+        case .errorLabel:
+            DSErrorLabel(message: item.texts.failureMessage ?? "Este campo é obrigatório.")
         case .feedbackLabel:
             FeedbackLabelDemo(texts: item.texts)
         case .formSecureField:
@@ -142,19 +154,21 @@ private struct ComponentDetailView: View {
         case .formTextField:
             FormTextFieldDemo(texts: item.texts)
         case .loadingView:
-            LoadingView(message: item.texts.message ?? "Buscando horários disponíveis")
+            DSLoadingView(message: item.texts.message ?? "Buscando horários disponíveis")
         case .manicuristPhotoView:
-            ManicuristPhotoView(size: 96)
+            DSManicuristPhotoView(size: 96)
         case .otpField:
             OTPFieldDemo(texts: item.texts)
         case .orDivider:
-            OrDivider(label: item.texts.message ?? String(localized: "dividerOr"))
+            DSOrDivider(label: item.texts.message ?? String(localized: "dividerOr"))
         case .passwordStrengthBar:
             PasswordStrengthBarDemo()
         case .primaryButton:
             PrimaryButtonDemo(texts: item.texts)
         case .ratingView:
             RatingViewDemo()
+        case .successLabel:
+            DSSuccessLabel(message: item.texts.successMessage ?? "Dados validados com sucesso.")
         case .statusBadgeView:
             StatusBadgeViewDemo(texts: item.texts)
         }
@@ -166,8 +180,8 @@ private struct FeedbackLabelDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            ErrorLabel(message: texts.failureMessage ?? "Este campo é obrigatório.")
-            SuccessLabel(message: texts.successMessage ?? "Dados validados com sucesso.")
+            DSErrorLabel(message: texts.failureMessage ?? "Este campo é obrigatório.")
+            DSSuccessLabel(message: texts.successMessage ?? "Dados validados com sucesso.")
         }
     }
 }
@@ -179,7 +193,7 @@ private struct FormTextFieldDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            FormTextField(
+            DSFormTextField(
                 label: texts.label ?? "Nome",
                 placeholder: texts.placeholder ?? "Digite o nome completo",
                 text: $name,
@@ -198,21 +212,19 @@ private struct FormTextFieldDemo: View {
 private struct FormSecureFieldDemo: View {
     let texts: CatalogComponentTexts
     @State private var password = ""
-    @State private var isVisible = false
     @State private var hasValidated = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            FormSecureField(
+            DSFormSecureField(
                 label: texts.label ?? "Senha",
                 placeholder: texts.placeholder ?? "Digite sua senha",
                 text: $password,
-                isVisible: $isVisible,
                 errorMessage: hasValidated && !password.isEmpty && password.count < 6 ? (texts.failureMessage ?? "A senha deve ter ao menos 6 caracteres.") : nil,
                 successMessage: hasValidated && password.count >= 6 ? (texts.successMessage ?? "Senha válida.") : nil
             )
 
-            PasswordStrengthBar(strength: strength)
+            DSPasswordStrengthBar(strength: strength)
 
             Button(texts.primaryActionTitle ?? "Validar") {
                 hasValidated = true
@@ -221,7 +233,7 @@ private struct FormSecureFieldDemo: View {
         }
     }
 
-    private var strength: PasswordStrength {
+    private var strength: DSPasswordStrength {
         switch password.count {
         case 0:
             return .empty
@@ -242,7 +254,7 @@ private struct OTPFieldDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            OTPField(
+            DSOTPField(
                 label: texts.label ?? "Código de verificação",
                 code: $code,
                 errorMessage: hasValidated && !code.isEmpty && code.count < 6 ? (texts.failureMessage ?? "Digite os 6 números enviados.") : nil,
@@ -258,17 +270,17 @@ private struct OTPFieldDemo: View {
 }
 
 private struct PasswordStrengthBarDemo: View {
-    @State private var strength: PasswordStrength = .medium
+    @State private var strength: DSPasswordStrength = .medium
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            PasswordStrengthBar(strength: strength)
+            DSPasswordStrengthBar(strength: strength)
 
             Picker("Força", selection: $strength) {
-                Text("Vazia").tag(PasswordStrength.empty)
-                Text("Fraca").tag(PasswordStrength.weak)
-                Text("Média").tag(PasswordStrength.medium)
-                Text("Forte").tag(PasswordStrength.strong)
+                Text("Vazia").tag(DSPasswordStrength.empty)
+                Text("Fraca").tag(DSPasswordStrength.weak)
+                Text("Média").tag(DSPasswordStrength.medium)
+                Text("Forte").tag(DSPasswordStrength.strong)
             }
             .pickerStyle(.segmented)
         }
@@ -281,7 +293,7 @@ private struct PrimaryButtonDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            PrimaryButton(title: texts.primaryActionTitle ?? "Continuar") {
+            DSPrimaryButton(title: texts.primaryActionTitle ?? "Continuar") {
                 tapCount += 1
             }
 
@@ -297,8 +309,8 @@ private struct RatingViewDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            RatingView(rating: rating, style: .expanded)
-            RatingView(rating: rating, style: .compact)
+            DSRatingView(rating: rating, style: .expanded)
+            DSRatingView(rating: rating, style: .compact)
 
             Slider(value: $rating, in: 0...5, step: 0.5)
         }
@@ -311,10 +323,10 @@ private struct StatusBadgeViewDemo: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            StatusBadgeView(isOpen: isOpen)
+            DSStatusBadgeView(isOpen: isOpen)
             HStack(spacing: 12) {
-                StatusBadgeView(text: texts.successMessage ?? "Sucesso", tone: .success)
-                StatusBadgeView(text: texts.failureMessage ?? "Fracasso", tone: .failure)
+                DSStatusBadgeView(text: texts.successMessage ?? "Sucesso", tone: .success)
+                DSStatusBadgeView(text: texts.failureMessage ?? "Fracasso", tone: .failure)
             }
 
             Toggle(texts.label ?? "Estabelecimento aberto", isOn: $isOpen)
