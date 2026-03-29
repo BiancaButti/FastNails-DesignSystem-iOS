@@ -28,6 +28,7 @@ import SwiftUI
 /// ## Acessibilidade
 /// O componente é tratado como elemento único pelo VoiceOver. O valor lido é
 /// cada dígito separado por espaço (ex.: "1 2 3 4 5 6") ou "Vazio" quando vazio.
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSOTPField: View {
     /// Texto do rótulo exibido acima das caixas.
     let label: String
@@ -130,12 +131,12 @@ public struct DSOTPField: View {
 
         ZStack {
             RoundedRectangle(cornerRadius: DSRadius.sm)
-                .fill(Color(.systemBackground))
+                .fill(Color(uiColor: .systemBackground))
                 .overlay {
                     RoundedRectangle(cornerRadius: DSRadius.sm)
                         .stroke(
                             feedbackColor
-                                ?? (isCurrentBox ? theme.brandColor : Color(.systemGray4)),
+                                ?? (isCurrentBox ? theme.brandColor : Color(uiColor: .systemGray4)),
                             lineWidth: hasFeedback || isCurrentBox ? 2 : 1
                         )
                 }
@@ -155,6 +156,7 @@ public struct DSOTPField: View {
 
 // MARK: - BlinkingCursor
 
+@available(macOS 12.0, iOS 15.0, *)
 private struct BlinkingCursor: View {
     var color: Color
     @State private var visible = true

@@ -13,6 +13,7 @@ import UIKit
 /// - **Avaliações**: `appRating`
 /// - **Semânticas de estado**: `colorSuccess`, `colorDestructive`
 /// - **Aliases legados**: `appOpenBadge`, `appClosedBadge`
+@available(macOS 10.15, iOS 13.0, *)
 extension Color {
     // MARK: - Brand / Primary
     /// Cor rosa da marca. Mais clara no modo escuro para manter contraste adequado.

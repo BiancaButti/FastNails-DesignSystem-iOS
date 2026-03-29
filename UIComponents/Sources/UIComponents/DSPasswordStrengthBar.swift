@@ -96,7 +96,7 @@ public struct DSPasswordStrengthBar: View {
             HStack(spacing: DSSpacing.xs) {
                 ForEach(0..<3, id: \.self) { index in
                     Capsule()
-                        .fill(index < strength.filledBars ? strengthColor : Color(.systemGray5))
+                        .fill(index < strength.filledBars ? strengthColor : Color(uiColor: .systemGray5))
                         .frame(height: 4)
                         .animation(
                             .easeInOut(duration: 0.25).delay(Double(index) * 0.06),
