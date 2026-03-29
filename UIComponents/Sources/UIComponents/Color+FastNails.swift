@@ -74,4 +74,18 @@ extension Color {
     static let appOpenBadge: Color = .colorSuccess
     /// Alias de `colorDestructive`. Prefer `colorDestructive` em novo código.
     static let appClosedBadge: Color = .colorDestructive
+
+    // MARK: - Empty state
+    /// Cor neutra para ícones de estado vazio. Cinza médio que adapta ao modo escuro.
+    static let appEmptyState: Color = {
+        #if canImport(UIKit)
+        return Color(UIColor { trait in
+            trait.userInterfaceStyle == .dark
+                ? UIColor(red: 0.60, green: 0.60, blue: 0.65, alpha: 1)
+                : UIColor(red: 0.70, green: 0.70, blue: 0.73, alpha: 1)
+        })
+        #else
+        return Color(red: 0.70, green: 0.70, blue: 0.73)
+        #endif
+    }()
 }

@@ -12,6 +12,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>UICatalog</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>UIComponents</key>
 		<dict>
 			<key>primary</key>

@@ -1,6 +1,27 @@
 /* DSOrDivider */
 "dividerOr" = "ou";
 
+/* DSCategoriesSection */
+"categoriesSectionTitle" = "Categorias";
+
+/* DSSearchEmptyStateView */
+"searchEmptyTitle" = "Nenhum resultado encontrado";
+"searchEmptySubtitle" = "Tente ajustar os filtros ou buscar por outro termo.";
+
+/* DSResultSection */
+"resultsCount" = "%d resultados encontrados";
+"resultsLoadingAccessibility" = "Carregando resultados";
+"resultsEmptyTitle" = "Nenhum resultado";
+"resultsEmptyMessage" = "Tente outros filtros ou uma busca diferente.";
+
+/* DSSearchFieldView */
+"searchFieldPlaceholder" = "Pesquisar";
+
+/* DSHeaderView */
+"headerLocationLabel" = "Sua localização";
+"headerCity" = "São Paulo";
+"headerAvatarAccessibility" = "Perfil do usuário";
+
 /* DSOTPField */
 "otpFieldAccessibilityEmpty" = "Vazio";
 "otpFieldAccessibilityHint" = "Toque duas vezes para editar";
