@@ -17,6 +17,7 @@ import SwiftUI
 /// As linhas decorativas são ocultas do VoiceOver. O `label` é exposto
 /// como elemento acessível único, para que leitores de tela leiam
 /// apenas o texto semanticamente relevante.
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSOrDivider: View {
     /// Texto exibido entre as linhas divisórias e lido pelo VoiceOver.
     var label: String

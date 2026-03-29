@@ -28,6 +28,7 @@ public enum DSPasswordStrength: Equatable {
 
     /// Rótulo textual localizado correspondente ao nível (ex.: "Fraca", "Média", "Forte").
     /// Retorna `""` para `.empty`.
+    @available(macOS 12.0, iOS 15.0, *)
     public var label: String {
         switch self {
         case .empty:  return ""
@@ -38,6 +39,7 @@ public enum DSPasswordStrength: Equatable {
     }
 
     /// Cor semântica associada ao nível (`colorDestructive`, `appRating` ou `colorSuccess`).
+    @available(macOS 10.15, iOS 13.0, *)
     public var color: Color {
         switch self {
         case .empty:  return .clear
@@ -76,6 +78,7 @@ public enum DSPasswordStrength: Equatable {
 /// acessibilidade fica em branco.
 ///
 /// - SeeAlso: `DSPasswordStrength`
+@available(macOS 12.0, iOS 15.0, *)
 public struct DSPasswordStrengthBar: View {
 
     /// Nível de força a exibir.
