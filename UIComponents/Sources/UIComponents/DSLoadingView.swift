@@ -19,6 +19,8 @@ public struct DSLoadingView: View {
 	/// Texto descritivo exibido abaixo do spinner e lido pelo VoiceOver.
 	var message: String
 
+	@Environment(\.dsTheme) private var theme
+
 	/// Cria um `DSLoadingView`.
 	/// - Parameter message: Mensagem exibida abaixo do spinner.
 	///   Quando `nil`, usa a string localizada `"loadingDefault"`.
@@ -27,20 +29,20 @@ public struct DSLoadingView: View {
 	}
 
 	public var body: some View {
-		VStack(spacing: 12) {
+		VStack(spacing: DSSpacing.md) {
 			ProgressView()
 				.progressViewStyle(.circular)
 				.controlSize(.large)
-				.tint(Color.appPink)
+				.tint(theme.brandColor)
 
 			Text(message)
-				.font(.subheadline)
+				.font(theme.feedbackFont)
 				.foregroundStyle(.secondary)
 		}
 		.frame(maxWidth: .infinity)
-		.padding(24)
+		.padding(DSSpacing.xl)
 		.background(Color(.secondarySystemBackground))
-		.clipShape(RoundedRectangle(cornerRadius: 16))
+		.clipShape(RoundedRectangle(cornerRadius: DSRadius.xl))
 		.accessibilityElement(children: .ignore)
 		.accessibilityLabel(message)
 		.accessibilityAddTraits(.updatesFrequently)

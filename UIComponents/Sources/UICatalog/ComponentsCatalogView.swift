@@ -1,4 +1,5 @@
 import SwiftUI
+import UIComponents
 
 struct ComponentsCatalogView: View {
     private let items = CatalogComponentItem.demoItems

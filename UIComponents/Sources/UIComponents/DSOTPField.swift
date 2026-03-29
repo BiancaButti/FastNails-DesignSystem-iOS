@@ -41,6 +41,7 @@ public struct DSOTPField: View {
     @FocusState private var isFocused: Bool
     /// Número de dígitos do código. Clampeado a mínimo 1. Padrão: `6`.
     private let length: Int
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSOTPField`.
     /// - Parameters:
@@ -76,17 +77,17 @@ public struct DSOTPField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: DSSpacing.sm) {
             Text(label)
-                .font(.subheadline.weight(.medium))
+                .font(theme.labelFont)
                 .accessibilityHidden(true)
 
-            HStack(spacing: 8) {
+            HStack(spacing: DSSpacing.sm) {
                 ForEach(0..<length, id: \.self) { index in
                     digitBox(at: index)
                 }
             }
-            .frame(height: 52)
+            .frame(height: 48)
             .onTapGesture { isFocused = true }
             .overlay {
                 TextField("", text: $code)
@@ -125,22 +126,22 @@ public struct DSOTPField: View {
         let char = index < chars.count ? String(chars[index]) : ""
         let isCurrentBox = isFocused && index == min(code.count, length - 1)
         let hasFeedback = feedback != nil
-        let feedbackColor = feedback?.tone.color.opacity(0.8)
+        let feedbackColor = feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
 
         ZStack {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: DSRadius.sm)
                 .fill(Color(.systemBackground))
                 .overlay {
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: DSRadius.sm)
                         .stroke(
                             feedbackColor
-                                ?? (isCurrentBox ? Color.appPink : Color(.systemGray4)),
+                                ?? (isCurrentBox ? theme.brandColor : Color(.systemGray4)),
                             lineWidth: hasFeedback || isCurrentBox ? 2 : 1
                         )
                 }
 
             if char.isEmpty && isCurrentBox {
-                BlinkingCursor()
+                BlinkingCursor(color: theme.brandColor)
             } else {
                 Text(char)
                     .font(.title2.bold())
@@ -155,12 +156,13 @@ public struct DSOTPField: View {
 // MARK: - BlinkingCursor
 
 private struct BlinkingCursor: View {
+    var color: Color
     @State private var visible = true
 
     var body: some View {
         Rectangle()
-            .frame(width: 2, height: 24)
-            .foregroundStyle(Color.appPink)
+            .frame(width: 2, height: DSSpacing.xxl)
+            .foregroundStyle(color)
             .opacity(visible ? 1 : 0)
             .task {
                 withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {

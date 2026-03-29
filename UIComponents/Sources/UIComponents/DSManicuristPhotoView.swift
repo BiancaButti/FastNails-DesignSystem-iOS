@@ -22,22 +22,27 @@ public struct DSManicuristPhotoView: View {
     let size: CGFloat
     /// Label lida pelo VoiceOver. `nil` torna o componente decorativo e invisível para leitores de tela.
     var accessibilityLabel: String?
+    /// Fator de escala do ícone em relação ao diâmetro. Padrão `0.45` — boa proporção para `person.fill`.
+    var iconScale: CGFloat
+    @Environment(\.dsTheme) private var theme
 
     /// - Parameters:
-    ///   - size: Diameter of the avatar. Clamped to a minimum of 0.
+    ///   - size: Diâmetro do avatar. Clamped to a minimum of 0.
+    ///   - iconScale: Fator multiplicativo sobre `size` para o tamanho do ícone. Padrão `0.45`.
     ///   - accessibilityLabel: Optional label for VoiceOver. When `nil` the view is decorative and hidden from VoiceOver.
-    public init(size: CGFloat, accessibilityLabel: String? = nil) {
+    public init(size: CGFloat, iconScale: CGFloat = 0.45, accessibilityLabel: String? = nil) {
         self.size = max(size, 0)
+        self.iconScale = min(max(iconScale, 0.1), 0.9)
         self.accessibilityLabel = accessibilityLabel
     }
 
     public var body: some View {
         ZStack {
             Circle()
-                .fill(Color.appPink.opacity(0.15))
+                .fill(theme.brandColor.opacity(0.15))
             Image(systemName: "person.fill")
-                .font(.system(size: size * 0.45))
-                .foregroundStyle(Color.appPink)
+                .font(.system(size: size * iconScale))
+                .foregroundStyle(theme.brandColor)
         }
         .frame(width: size, height: size)
         .accessibilityElement(children: .ignore)

@@ -51,6 +51,7 @@ public struct DSFormTextField: View {
     var onLostFocus: () -> Void = {}
 
     @FocusState private var isFocused: Bool
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSFormTextField`.
     /// - Parameters:
@@ -101,9 +102,9 @@ public struct DSFormTextField: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: DSSpacing.sm) {
             Text(label)
-                .font(.subheadline.weight(.medium))
+                .font(theme.labelFont)
                 .accessibilityHidden(true)
 
             if systemStyle {
@@ -135,20 +136,20 @@ public struct DSFormTextField: View {
     }
 
     private var customTextField: some View {
-        let borderColor = feedback?.tone.color.opacity(0.8)
-            ?? (isFocused ? Color.accentColor.opacity(0.5) : Color.clear)
+        let borderColor = feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
+            ?? (isFocused ? theme.brandColor.opacity(0.5) : Color.clear)
         return TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
             .textInputAutocapitalization(autocapitalization)
             .textContentType(textContentType)
             .autocorrectionDisabled()
             .focused($isFocused)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 12)
+            .padding(.horizontal, DSSpacing.md)
+            .padding(.vertical, DSSpacing.md)
             .background(Color(.secondarySystemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: DSRadius.md)
                     .stroke(borderColor, lineWidth: 1.5)
             )
             .accessibilityLabel(label)

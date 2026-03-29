@@ -35,6 +35,12 @@ public struct DSFormSecureField: View {
     var errorMessage: String? = nil
     /// Mensagem de sucesso a exibir abaixo do campo.
     var successMessage: String? = nil
+    /// Tipo de teclado a apresentar. Padrão: `.default`.
+    var keyboardType: UIKeyboardType = .default
+    /// Política de autocapitalização. Padrão: `.never` (campos de senha nunca capitalizam).
+    var autocapitalization: TextInputAutocapitalization = .never
+    /// Tipo de conteúdo para autofill do iOS. Padrão: `.password`.
+    var textContentType: UITextContentType? = .password
     /// Quando `true`, usa o estilo nativo `.roundedBorder`; quando `false` (padrão), usa o estilo customizado.
     var systemStyle: Bool = false
     /// Callback disparado quando o campo perde o foco. Ideal para validação ao sair.
@@ -43,6 +49,7 @@ public struct DSFormSecureField: View {
     @FocusState private var isFocused: Bool
     @State private var internalVisible: Bool = false
     private var externalVisible: Binding<Bool>?
+    @Environment(\.dsTheme) private var theme
 
     private var isVisible: Bool {
         externalVisible?.wrappedValue ?? internalVisible
@@ -63,6 +70,9 @@ public struct DSFormSecureField: View {
     ///   - text: Binding com o valor digitado.
     ///   - errorMessage: Mensagem de erro (tem prioridade sobre sucesso).
     ///   - successMessage: Mensagem de sucesso.
+    ///   - keyboardType: Tipo de teclado (padrão `.default`).
+    ///   - autocapitalization: Política de capitalização (padrão `.never`).
+    ///   - textContentType: Tipo para autofill (padrão `.password`).
     ///   - systemStyle: Se `true`, usa estilo nativo do iOS.
     ///   - onLostFocus: Closure chamada ao perder foco.
     public init(
@@ -71,6 +81,9 @@ public struct DSFormSecureField: View {
         text: Binding<String>,
         errorMessage: String? = nil,
         successMessage: String? = nil,
+        keyboardType: UIKeyboardType = .default,
+        autocapitalization: TextInputAutocapitalization = .never,
+        textContentType: UITextContentType? = .password,
         systemStyle: Bool = false,
         onLostFocus: @escaping () -> Void = {}
     ) {
@@ -79,6 +92,9 @@ public struct DSFormSecureField: View {
         self._text = text
         self.errorMessage = errorMessage
         self.successMessage = successMessage
+        self.keyboardType = keyboardType
+        self.autocapitalization = autocapitalization
+        self.textContentType = textContentType
         self.systemStyle = systemStyle
         self.onLostFocus = onLostFocus
         self.externalVisible = nil
@@ -95,6 +111,9 @@ public struct DSFormSecureField: View {
     ///   - isVisible: Binding externo que controla se o texto é visível.
     ///   - errorMessage: Mensagem de erro (tem prioridade sobre sucesso).
     ///   - successMessage: Mensagem de sucesso.
+    ///   - keyboardType: Tipo de teclado (padrão `.default`).
+    ///   - autocapitalization: Política de capitalização (padrão `.never`).
+    ///   - textContentType: Tipo para autofill (padrão `.password`).
     ///   - systemStyle: Se `true`, usa estilo nativo do iOS.
     ///   - onLostFocus: Closure chamada ao perder foco.
     public init(
@@ -104,6 +123,9 @@ public struct DSFormSecureField: View {
         isVisible: Binding<Bool>,
         errorMessage: String? = nil,
         successMessage: String? = nil,
+        keyboardType: UIKeyboardType = .default,
+        autocapitalization: TextInputAutocapitalization = .never,
+        textContentType: UITextContentType? = .password,
         systemStyle: Bool = false,
         onLostFocus: @escaping () -> Void = {}
     ) {
@@ -112,6 +134,9 @@ public struct DSFormSecureField: View {
         self._text = text
         self.errorMessage = errorMessage
         self.successMessage = successMessage
+        self.keyboardType = keyboardType
+        self.autocapitalization = autocapitalization
+        self.textContentType = textContentType
         self.systemStyle = systemStyle
         self.onLostFocus = onLostFocus
         self.externalVisible = isVisible
@@ -132,7 +157,7 @@ public struct DSFormSecureField: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(label)
-                .font(.subheadline.weight(.medium))
+                .font(theme.labelFont)
                 .accessibilityHidden(true)
 
             if systemStyle {
@@ -151,20 +176,20 @@ public struct DSFormSecureField: View {
     // MARK: - System Style
 
     private var systemStyleField: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: DSSpacing.sm) {
             inputField
 
             toggleVisibilityButton(filled: false)
         }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 7)
+        .padding(.horizontal, DSSpacing.sm)
+        .padding(.vertical, DSSpacing.sm)
         .background(Color(.systemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.sm))
         .overlay {
-            RoundedRectangle(cornerRadius: 8)
+            RoundedRectangle(cornerRadius: DSRadius.sm)
                 .stroke(
-                    feedback?.tone.color.opacity(0.8)
-                        ?? (isFocused ? Color.accentColor.opacity(0.5) : Color(.systemGray4)),
+                    feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
+                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color(.systemGray4)),
                     lineWidth: feedback != nil || isFocused ? 1.5 : 0.5
                 )
         }
@@ -173,20 +198,20 @@ public struct DSFormSecureField: View {
     // MARK: - Custom Style
 
     private var customStyleField: some View {
-        HStack(spacing: 8) {
+        HStack(spacing: DSSpacing.sm) {
             inputField
 
             toggleVisibilityButton(filled: true)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 12)
+        .padding(.horizontal, DSSpacing.md)
+        .padding(.vertical, DSSpacing.md)
         .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
         .overlay {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: DSRadius.md)
                 .stroke(
-                    feedback?.tone.color.opacity(0.8)
-                        ?? (isFocused ? Color.accentColor.opacity(0.5) : Color.clear),
+                    feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
+                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color.clear),
                     lineWidth: 1.5
                 )
         }
@@ -203,8 +228,9 @@ public struct DSFormSecureField: View {
                 SecureField(placeholder, text: $text)
             }
         }
-        .textContentType(.password)
-        .textInputAutocapitalization(.never)
+        .keyboardType(keyboardType)
+        .textInputAutocapitalization(autocapitalization)
+        .textContentType(textContentType)
         .autocorrectionDisabled()
         .focused($isFocused)
         .accessibilityLabel(label)

@@ -80,6 +80,7 @@ public struct DSPasswordStrengthBar: View {
 
     /// Nível de força a exibir.
     let strength: DSPasswordStrength
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSPasswordStrengthBar`.
     /// - Parameter strength: Nível de força da senha.
@@ -88,11 +89,11 @@ public struct DSPasswordStrengthBar: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 4) {
+        VStack(alignment: .leading, spacing: DSSpacing.xs) {
+            HStack(spacing: DSSpacing.xs) {
                 ForEach(0..<3, id: \.self) { index in
                     Capsule()
-                        .fill(index < strength.filledBars ? strength.color : Color(.systemGray5))
+                        .fill(index < strength.filledBars ? strengthColor : Color(.systemGray5))
                         .frame(height: 4)
                         .animation(
                             .easeInOut(duration: 0.25).delay(Double(index) * 0.06),
@@ -101,14 +102,14 @@ public struct DSPasswordStrengthBar: View {
                 }
             }
             if strength != .empty {
-                HStack(spacing: 4) {
+                HStack(spacing: DSSpacing.xs) {
                     Text(String(localized: "passwordStrengthLabel", bundle: .module))
                         .foregroundStyle(.secondary)
                     Text(strength.label)
-                        .foregroundStyle(strength.color)
+                        .foregroundStyle(strengthColor)
                         .fontWeight(.medium)
                 }
-                .font(.caption)
+                .font(theme.feedbackFont)
             }
         }
         .accessibilityElement(children: .ignore)
@@ -120,5 +121,14 @@ public struct DSPasswordStrengthBar: View {
                     strength.label
                   )
         )
+    }
+
+    private var strengthColor: Color {
+        switch strength {
+        case .empty:  return .clear
+        case .weak:   return theme.errorColor
+        case .medium: return theme.ratingColor
+        case .strong: return theme.successColor
+        }
     }
 }

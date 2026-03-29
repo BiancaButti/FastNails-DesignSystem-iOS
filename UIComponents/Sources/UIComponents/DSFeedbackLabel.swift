@@ -9,13 +9,22 @@ public enum DSFeedbackTone: CaseIterable {
     /// Indica erro, campo inválido ou ação falha.
     case failure
 
-    /// Cor semântica associada ao tom (`colorSuccess` ou `colorDestructive`).
+    /// Cor semântica associada ao tom, lida do `DSTheme` ativo via environment.
+    /// O método estático `color(for:theme:)` é usado internamente pelos componentes.
     public var color: Color {
         switch self {
         case .success:
             return Color.colorSuccess
         case .failure:
             return Color.colorDestructive
+        }
+    }
+
+    /// Devolve a cor correta para este tom a partir de um `DSTheme` concreto.
+    public func color(for theme: DSTheme) -> Color {
+        switch self {
+        case .success: return theme.successColor
+        case .failure: return theme.errorColor
         }
     }
 
@@ -56,6 +65,8 @@ public struct DSFeedbackLabel: View {
     /// Tom semântico que define cor e ícone.
     let tone: DSFeedbackTone
 
+    @Environment(\.dsTheme) private var theme
+
     /// Cria um `DSFeedbackLabel`.
     /// - Parameters:
     ///   - message: Texto da mensagem de feedback.
@@ -72,8 +83,8 @@ public struct DSFeedbackLabel: View {
             Image(systemName: tone.iconName)
                 .accessibilityHidden(true)
         }
-        .font(.caption)
-        .foregroundStyle(tone.color)
+        .font(theme.feedbackFont)
+        .foregroundStyle(tone.color(for: theme))
         .accessibilityLabel("\(tone.accessibilityPrefix): \(message)")
     }
 }

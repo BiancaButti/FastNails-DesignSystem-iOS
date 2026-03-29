@@ -35,12 +35,21 @@ public struct DSStatusBadgeView: View {
                 return Color.colorDestructive
             }
         }
+
+        /// Cor de fundo resolvida usando as cores do `DSTheme` ativo.
+        func resolvedBackground(for theme: DSTheme) -> Color {
+            switch self {
+            case .success: return theme.successColor
+            case .failure: return theme.errorColor
+            }
+        }
     }
 
     /// Texto exibido no badge.
     let text: String
     /// Tom de cor do badge.
     let tone: Tone
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSStatusBadgeView` de conveniência para status aberto/fechado.
     ///
@@ -65,12 +74,11 @@ public struct DSStatusBadgeView: View {
 
     public var body: some View {
         Text(text)
-            .font(.caption2)
-            .fontWeight(.semibold)
+            .font(theme.badgeFont)
             .foregroundStyle(.white)
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(tone.backgroundColor)
+            .padding(.horizontal, DSSpacing.sm)
+            .padding(.vertical, DSSpacing.xs)
+            .background(tone.resolvedBackground(for: theme))
             .clipShape(Capsule())
             .accessibilityAddTraits(.isStaticText)
     }

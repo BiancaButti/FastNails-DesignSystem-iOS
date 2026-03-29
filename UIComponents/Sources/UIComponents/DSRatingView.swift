@@ -32,6 +32,7 @@ public struct DSRatingView: View {
     let rating: Double
     /// Estilo de exibição: `.compact` ou `.expanded`.
     let style: Style
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSRatingView`.
     /// - Parameters:
@@ -71,29 +72,29 @@ public struct DSRatingView: View {
 private extension DSRatingView {
 
     var compactView: some View {
-        HStack(spacing: 3) {
+        HStack(spacing: DSSpacing.xs) {
             Image(systemName: "star.fill")
-                .foregroundStyle(Color.appRating)
-                .font(.caption2)
+                .foregroundStyle(theme.ratingColor)
+                .font(theme.captionFont)
             Text(String(format: "%.1f", rating))
-                .font(.caption)
+                .font(theme.captionFont)
                 .foregroundStyle(.secondary)
         }
     }
 
     var expandedView: some View {
-        HStack(spacing: 6) {
-            HStack(spacing: 2) {
+        HStack(spacing: DSSpacing.sm) {
+            HStack(spacing: DSSpacing.xs) {
                 ForEach(1...5, id: \.self) { index in
                     Image(systemName: starIcon(for: index))
-                        .foregroundStyle(Color.appRating)
-                        .font(.subheadline)
+                        .foregroundStyle(theme.ratingColor)
+                        .font(theme.labelFont)
                 }
             }
             .accessibilityHidden(true)
 
             Text(String(format: "%.1f", rating))
-                .font(.subheadline)
+                .font(theme.labelFont)
                 .fontWeight(.semibold)
                 .foregroundStyle(.primary)
         }

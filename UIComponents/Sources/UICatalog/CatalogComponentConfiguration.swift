@@ -1,3 +1,5 @@
+import UIComponents
+
 enum CatalogComponentName: String, CaseIterable, Identifiable {
     case errorLabel = "DSErrorLabel"
     case feedbackLabel = "DSFeedbackLabel"

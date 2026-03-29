@@ -39,12 +39,14 @@ public struct DSPrimaryButton: View {
     var isEnabled: Bool = true
     /// Quando `true`, exibe um spinner e desabilita a interação. Padrão: `false`.
     var isLoading: Bool = false
-    /// Cor de fundo do botão no estado ativo. Padrão: `.accentColor`.
-    var color: Color = .accentColor
+    /// Cor de fundo do botão no estado ativo. `nil` usa `DSTheme.brandColor`.
+    var color: Color? = nil
     /// Dica contextual lida pelo VoiceOver após o label. Omitida quando `nil`.
     var accessibilityHint: String? = nil
     /// Ação executada ao tocar no botão.
     let action: () -> Void
+
+    @Environment(\.dsTheme) private var theme
 
     /// Cria um `DSPrimaryButton`.
     /// - Parameters:
@@ -58,7 +60,7 @@ public struct DSPrimaryButton: View {
         title: String,
         isEnabled: Bool = true,
         isLoading: Bool = false,
-        color: Color = .accentColor,
+        color: Color? = nil,
         accessibilityHint: String? = nil,
         action: @escaping () -> Void
     ) {
@@ -72,6 +74,8 @@ public struct DSPrimaryButton: View {
 
     private var isInteractive: Bool { isEnabled && !isLoading }
 
+    private var activeColor: Color { color ?? theme.brandColor }
+
     public var body: some View {
         Button(action: action) {
             ZStack {
@@ -81,15 +85,15 @@ public struct DSPrimaryButton: View {
                         .tint(.white)
                 } else {
                     Text(title)
-                        .fontWeight(.semibold)
+                        .font(theme.buttonFont)
                 }
             }
             .frame(maxWidth: .infinity)
             .frame(minHeight: 44)
-            .padding(.vertical, 14)
-            .background(isInteractive ? color : Color(.systemGray4))
+            .padding(.vertical, DSSpacing.md)
+            .background(isInteractive ? activeColor : Color(.systemGray4))
             .foregroundStyle(isInteractive ? Color.white : Color(.systemGray))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
         }
         .disabled(!isInteractive)
         .animation(.easeInOut(duration: 0.2), value: isEnabled)

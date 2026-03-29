@@ -37,7 +37,7 @@ public struct DSOrDivider: View {
             Text(label)
                 .font(.footnote)
                 .foregroundStyle(.secondary)
-                .padding(.horizontal, 8)
+                .padding(.horizontal, DSSpacing.sm)
             Rectangle()
                 .frame(height: 1)
                 .foregroundStyle(.secondary.opacity(0.4))
