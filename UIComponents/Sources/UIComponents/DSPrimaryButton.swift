@@ -91,8 +91,8 @@ public struct DSPrimaryButton: View {
             .frame(maxWidth: .infinity)
             .frame(minHeight: 44)
             .padding(.vertical, DSSpacing.md)
-            .background(isInteractive ? activeColor : Color(.systemGray4))
-            .foregroundStyle(isInteractive ? Color.white : Color(.systemGray))
+            .background(isInteractive ? activeColor : Color.dsSystemGray4)
+            .foregroundStyle(isInteractive ? Color.white : Color.dsSystemGray)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
         }
         .disabled(!isInteractive)

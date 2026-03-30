@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 
 /// Campo seguro de senha com botão de mostrar/ocultar e feedback visual.
 ///
@@ -183,13 +184,13 @@ public struct DSFormSecureField: View {
         }
         .padding(.horizontal, DSSpacing.sm)
         .padding(.vertical, DSSpacing.sm)
-        .background(Color(.systemBackground))
+        .background(Color.dsSystemBackground)
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.sm))
         .overlay {
             RoundedRectangle(cornerRadius: DSRadius.sm)
                 .stroke(
                     feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
-                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color(.systemGray4)),
+                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color.dsSystemGray4),
                     lineWidth: feedback != nil || isFocused ? 1.5 : 0.5
                 )
         }
@@ -205,7 +206,7 @@ public struct DSFormSecureField: View {
         }
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.md)
-        .background(Color(.secondarySystemBackground))
+        .background(Color.dsSecondarySystemBackground)
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
         .overlay {
             RoundedRectangle(cornerRadius: DSRadius.md)
@@ -221,22 +222,30 @@ public struct DSFormSecureField: View {
 
     @ViewBuilder
     private var inputField: some View {
-        Group {
-            if isVisible {
-                TextField(placeholder, text: $text)
-            } else {
-                SecureField(placeholder, text: $text)
-            }
-        }
-        .keyboardType(keyboardType)
-        .textInputAutocapitalization(autocapitalization)
-        .textContentType(textContentType)
-        .autocorrectionDisabled()
-        .focused($isFocused)
-        .accessibilityLabel(label)
-        .accessibilityValue(feedback?.message ?? "")
-        .onChange(of: isFocused) { newValue in
-            if !newValue { onLostFocus() }
+        if isVisible {
+            TextField(placeholder, text: $text)
+                .keyboardType(keyboardType)
+                .textInputAutocapitalization(autocapitalization)
+                .textContentType(textContentType)
+                .autocorrectionDisabled()
+                .focused($isFocused)
+                .accessibilityLabel(label)
+                .accessibilityValue(feedback?.message ?? "")
+                .onChange(of: isFocused) { newValue in
+                    if !newValue { onLostFocus() }
+                }
+        } else {
+            SecureField(placeholder, text: $text)
+                .keyboardType(keyboardType)
+                .textInputAutocapitalization(autocapitalization)
+                .textContentType(textContentType)
+                .autocorrectionDisabled()
+                .focused($isFocused)
+                .accessibilityLabel(label)
+                .accessibilityValue(feedback?.message ?? "")
+                .onChange(of: isFocused) { newValue in
+                    if !newValue { onLostFocus() }
+                }
         }
     }
 
@@ -258,4 +267,4 @@ public struct DSFormSecureField: View {
         )
     }
 }
-
+#endif

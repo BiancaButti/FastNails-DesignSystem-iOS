@@ -32,7 +32,7 @@ public struct DSOrDivider: View {
         HStack {
             Rectangle()
                 .frame(height: 1)
-                .foregroundStyle(.secondary.opacity(0.4))
+                .foregroundStyle(Color.secondary.opacity(0.4))
                 .accessibilityHidden(true)
             Text(label)
                 .font(.footnote)
@@ -40,7 +40,7 @@ public struct DSOrDivider: View {
                 .padding(.horizontal, DSSpacing.sm)
             Rectangle()
                 .frame(height: 1)
-                .foregroundStyle(.secondary.opacity(0.4))
+                .foregroundStyle(Color.secondary.opacity(0.4))
                 .accessibilityHidden(true)
         }
         .accessibilityElement(children: .ignore)

@@ -25,6 +25,58 @@ final class UIComponentsTests: XCTestCase {
         _ = DSPasswordStrengthBar(strength: .medium)
     }
 
+    func testNewPublicComponentsCanBeInstantiated() {
+        let minPrice = Binding.constant(50.0)
+        let maxPrice = Binding.constant(200.0)
+
+        // DSHeaderView
+        _ = DSHeaderView(locationLabel: "Região", city: "Rio", onAvatarTap: {})
+        _ = DSHeaderView(city: "Santos")
+
+        // DSSearchFieldView
+        _ = DSSearchFieldView(text: Binding.constant(""))
+        _ = DSSearchFieldView(placeholder: "Buscar…", text: Binding.constant("query"), onSubmit: {})
+
+        // DSSearchEmptyStateView
+        _ = DSSearchEmptyStateView()
+        _ = DSSearchEmptyStateView(title: "Vazio", subtitle: "Tente outro termo.")
+
+        // DSResultEmptyView
+        _ = DSResultEmptyView()
+        _ = DSResultEmptyView(title: "Sem itens", message: "Ajuste os filtros.")
+
+        // DSResultSection (default empty state)
+        _ = DSResultSection(isLoading: false, items: [DSFilterChipItem]()) { _ in EmptyView() }
+        _ = DSResultSection(isLoading: true, items: [DSFilterChipItem]()) { _ in EmptyView() }
+
+        // DSFilterChipItem + DSFilterChipView
+        let chip = DSFilterChipItem(id: "rating", label: "Avaliação", isActive: true, onTap: {})
+        _ = DSFilterChipView(label: chip.label, isActive: chip.isActive, action: chip.onTap)
+
+        // DSFilterChipsSection
+        let chips = [
+            DSFilterChipItem(id: "a", label: "Preço", isActive: false, onTap: {}),
+            DSFilterChipItem(id: "b", label: "Distância", isActive: true, onTap: {})
+        ]
+        _ = DSFilterChipsSection(items: chips)
+
+        // DSCategoryItem + DSCategoryItemView + DSCategoriesSection
+        let category = DSCategoryItem(id: "manicure", label: "Manicure", systemIcon: "hand.raised.fill", onTap: {})
+        _ = DSCategoryItemView(item: category)
+        _ = DSCategoriesSection(items: [category])
+        _ = DSCategoriesSection(items: [category], columns: 3, title: "Serviços")
+
+        // DSPriceSliderRow + DSPriceRangeSheet
+        _ = DSPriceSliderRow(title: "Mínimo", value: minPrice, range: 0...490)
+        _ = DSPriceSliderRow(title: "Mínimo", value: minPrice, range: 0...490, formatValue: { "R$ \(Int($0))" })
+        _ = DSPriceRangeSheet(minPrice: minPrice, maxPrice: maxPrice) {}
+        _ = DSPriceRangeSheet(minPrice: minPrice, maxPrice: maxPrice, formatValue: { "R$ \(Int($0))" }) {}
+
+        // DSDistanceView
+        _ = DSDistanceView(distance: "2,5 km")
+        _ = DSDistanceView(distance: "2,5 km", accessibilityLabel: "A 2,5 km de você")
+    }
+
     func testPublicEnumsRemainAvailable() {
         XCTAssertEqual(DSPasswordStrength.strong, .strong)
         XCTAssertEqual(DSPasswordStrength.medium, .medium)

@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 
 /// Campo de texto reutilizável com label, placeholder, validação e feedback visual.
 ///
@@ -146,7 +147,7 @@ public struct DSFormTextField: View {
             .focused($isFocused)
             .padding(.horizontal, DSSpacing.md)
             .padding(.vertical, DSSpacing.md)
-            .background(Color(.secondarySystemBackground))
+            .background(Color.dsSecondarySystemBackground)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
             .overlay(
                 RoundedRectangle(cornerRadius: DSRadius.md)
@@ -159,3 +160,4 @@ public struct DSFormTextField: View {
             }
     }
 }
+#endif

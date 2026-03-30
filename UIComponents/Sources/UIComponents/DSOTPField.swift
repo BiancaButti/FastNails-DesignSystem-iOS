@@ -130,12 +130,12 @@ public struct DSOTPField: View {
 
         ZStack {
             RoundedRectangle(cornerRadius: DSRadius.sm)
-                .fill(Color(.systemBackground))
+                .fill(Color.dsSystemBackground)
                 .overlay {
                     RoundedRectangle(cornerRadius: DSRadius.sm)
                         .stroke(
                             feedbackColor
-                                ?? (isCurrentBox ? theme.brandColor : Color(.systemGray4)),
+                                ?? (isCurrentBox ? theme.brandColor : Color.dsSystemGray4),
                             lineWidth: hasFeedback || isCurrentBox ? 2 : 1
                         )
                 }
