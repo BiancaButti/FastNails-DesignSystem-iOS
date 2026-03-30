@@ -13,7 +13,6 @@ import UIKit
 /// - **Avaliações**: `appRating`
 /// - **Semânticas de estado**: `colorSuccess`, `colorDestructive`
 /// - **Aliases legados**: `appOpenBadge`, `appClosedBadge`
-@available(macOS 10.15, iOS 13.0, *)
 extension Color {
     // MARK: - Brand / Primary
     /// Cor rosa da marca. Mais clara no modo escuro para manter contraste adequado.
@@ -89,4 +88,48 @@ extension Color {
         return Color(red: 0.70, green: 0.70, blue: 0.73)
         #endif
     }()
+}
+
+// MARK: - Cross-platform system colors (internal)
+
+extension Color {
+    static var dsSystemBackground: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemBackground)
+        #else
+        Color(NSColor.windowBackgroundColor)
+        #endif
+    }
+
+    static var dsSecondarySystemBackground: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .secondarySystemBackground)
+        #else
+        Color(NSColor.controlBackgroundColor)
+        #endif
+    }
+
+    static var dsSystemGray: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemGray)
+        #else
+        Color(NSColor.systemGray)
+        #endif
+    }
+
+    static var dsSystemGray4: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemGray4)
+        #else
+        Color(NSColor.separatorColor)
+        #endif
+    }
+
+    static var dsSystemGray5: Color {
+        #if canImport(UIKit)
+        Color(uiColor: .systemGray5)
+        #else
+        Color(NSColor.underPageBackgroundColor)
+        #endif
+    }
 }

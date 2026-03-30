@@ -3,7 +3,6 @@ import SwiftUI
 /// Tonalidade semântica de um `DSFeedbackLabel`.
 ///
 /// Controla a cor e o ícone exibidos ao lado da mensagem.
-@available(macOS 12.0, iOS 15.0, *)
 public enum DSFeedbackTone: CaseIterable {
     /// Indica resultado positivo, campo válido ou ação bem-sucedida.
     case success
@@ -60,7 +59,6 @@ public enum DSFeedbackTone: CaseIterable {
 /// ```
 ///
 /// - SeeAlso: `DSErrorLabel`, `DSSuccessLabel`
-@available(macOS 12.0, iOS 15.0, *)
 public struct DSFeedbackLabel: View {
     /// Texto descritivo exibido ao lado do ícone.
     let message: String
@@ -96,7 +94,6 @@ public struct DSFeedbackLabel: View {
 /// ```swift
 /// DSSuccessLabel(message: "Nome preenchido corretamente.")
 /// ```
-@available(macOS 12.0, iOS 15.0, *)
 public struct DSSuccessLabel: View {
     let message: String
 

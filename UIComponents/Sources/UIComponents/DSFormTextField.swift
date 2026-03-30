@@ -1,4 +1,5 @@
 import SwiftUI
+#if canImport(UIKit)
 
 /// Campo de texto reutilizável com label, placeholder, validação e feedback visual.
 ///
@@ -28,7 +29,6 @@ import SwiftUI
 /// O `label` é composto no `accessibilityLabel` do campo para que o VoiceOver
 /// continue anunciando o contexto mesmo após o placeholder desaparecer.
 /// O feedback de validação é exposto via `accessibilityValue`.
-@available(macOS 12.0, iOS 15.0, *)
 public struct DSFormTextField: View {
     /// Texto do rótulo exibido acima do campo.
     let label: String
@@ -147,7 +147,7 @@ public struct DSFormTextField: View {
             .focused($isFocused)
             .padding(.horizontal, DSSpacing.md)
             .padding(.vertical, DSSpacing.md)
-            .background(Color(uiColor: .secondarySystemBackground))
+            .background(Color.dsSecondarySystemBackground)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
             .overlay(
                 RoundedRectangle(cornerRadius: DSRadius.md)
@@ -160,3 +160,4 @@ public struct DSFormTextField: View {
             }
     }
 }
+#endif

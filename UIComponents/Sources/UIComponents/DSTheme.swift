@@ -64,7 +64,6 @@ public enum DSRadius {
 /// ```
 ///
 /// - SeeAlso: `View.dsTheme(_:)`, `EnvironmentValues.dsTheme`
-@available(macOS 11.0, iOS 14.0, *)
 public struct DSTheme: Equatable {
     /// Cor primária de marca (botões, destaques, cursor OTP). Padrão: `.appPink`.
     public var brandColor: Color
@@ -125,12 +124,10 @@ public struct DSTheme: Equatable {
 
 // MARK: - EnvironmentKey
 
-@available(macOS 11.0, iOS 14.0, *)
 private struct DSThemeKey: EnvironmentKey {
     static let defaultValue = DSTheme.default
 }
 
-@available(macOS 11.0, iOS 14.0, *)
 public extension EnvironmentValues {
     /// Tema ativo do design system na hierarquia de views.
     var dsTheme: DSTheme {
@@ -141,7 +138,6 @@ public extension EnvironmentValues {
 
 // MARK: - View modifier
 
-@available(macOS 11.0, iOS 14.0, *)
 public extension View {
     /// Injeta um `DSTheme` customizado em toda a subárvore desta view.
     ///

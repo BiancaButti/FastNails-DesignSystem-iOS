@@ -32,7 +32,6 @@ import SwiftUI
 /// ## Acessibilidade
 /// O `title` é sempre o `accessibilityLabel`. O `accessibilityHint` é aplicado
 /// somente quando fornecido (evita pausas desnecessárias no VoiceOver).
-@available(macOS 12.0, iOS 15.0, *)
 public struct DSPrimaryButton: View {
     /// Texto exibido no botão e usado como `accessibilityLabel`.
     let title: String
@@ -92,8 +91,8 @@ public struct DSPrimaryButton: View {
             .frame(maxWidth: .infinity)
             .frame(minHeight: 44)
             .padding(.vertical, DSSpacing.md)
-            .background(isInteractive ? activeColor : Color(uiColor: .systemGray4))
-            .foregroundStyle(isInteractive ? Color.white : Color(uiColor: .systemGray))
+            .background(isInteractive ? activeColor : Color.dsSystemGray4)
+            .foregroundStyle(isInteractive ? Color.white : Color.dsSystemGray)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
         }
         .disabled(!isInteractive)
@@ -106,7 +105,6 @@ public struct DSPrimaryButton: View {
 
 // MARK: - Helper
 
-@available(macOS 12.0, iOS 15.0, *)
 private struct OptionalAccessibilityHint: ViewModifier {
     let hint: String?
 

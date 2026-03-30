@@ -35,7 +35,6 @@ private func formatCurrency(_ value: Double) -> String {
 /// com o valor formatado, permitindo leitura completa pelo VoiceOver.
 ///
 /// - SeeAlso: `DSPriceRangeSheet`
-@available(iOS 16.0, macOS 13.0, *)
 public struct DSPriceSliderRow: View {
 
     /// Rótulo exibido acima do slider.
@@ -121,7 +120,6 @@ public struct DSPriceSliderRow: View {
 /// - O botão de aplicar recebe um `accessibilityHint` configurável.
 ///
 /// - SeeAlso: `DSPriceSliderRow`, `DSPrimaryButton`
-@available(iOS 16.0, macOS 13.0, *)
 public struct DSPriceRangeSheet: View {
 
     /// Binding para o valor mínimo.
@@ -241,7 +239,6 @@ public struct DSPriceRangeSheet: View {
 
 // MARK: - Drag handle (private)
 
-@available(iOS 16.0, macOS 13.0, *)
 private extension DSPriceRangeSheet {
     var dragHandle: some View {
         Capsule()

@@ -6,7 +6,8 @@ let package = Package(
     name: "UIComponents",
     defaultLocalization: "pt-BR",
     platforms: [
-        .iOS(.v16)
+        .iOS(.v16),
+        .macOS(.v13)
     ],
     products: [
         .library(
