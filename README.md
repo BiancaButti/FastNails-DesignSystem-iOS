@@ -1,7 +1,5 @@
 # 🎨 FastNails Design System
 
-**Status:** In development 🚧
-
 **Type:** Swift Package (SPM)
 
 **Platform:** iOS
