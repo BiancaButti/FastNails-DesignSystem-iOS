@@ -1,10 +1,13 @@
 require 'pathname'
 require 'xcodeproj'
 
-repo_root = Pathname.new(File.expand_path('..', __dir__))
-catalog_demo_root = repo_root.join('CatalogDemo')
+# Gera o app de catálogo consumindo o pacote UIComponents como dependência SwiftPM
+# local. Isso garante que recursos e `Bundle.module` funcionem (o SwiftPM sintetiza
+# esse acessor), ao contrário de compilar os fontes diretamente num framework.
+
+catalog_demo_root = Pathname.new(File.expand_path(__dir__))
+package_root = Pathname.new(File.expand_path('../..', __dir__)) # onde vive o Package.swift
 project_path = catalog_demo_root.join('CatalogDemo.xcodeproj')
-ui_components_sources = repo_root.join('Sources', 'UIComponents')
 
 project_path.rmtree if project_path.exist?
 
@@ -15,9 +18,6 @@ project.root_object.preferred_project_object_version = '56'
 
 app_target = project.new_target(:application, 'CatalogDemo', :ios, '16.0')
 app_target.product_name = 'CatalogDemo'
-
-framework_target = project.new_target(:framework, 'UIComponents', :ios, '16.0')
-framework_target.product_name = 'UIComponents'
 
 app_target.build_configurations.each do |config|
   config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.fastnails.catalogdemo'
@@ -33,37 +33,16 @@ app_target.build_configurations.each do |config|
   config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
   config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
   config.build_settings['CODE_SIGN_IDENTITY'] = ''
-    config.build_settings['MARKETING_VERSION'] = '1.0'
-    config.build_settings['CURRENT_PROJECT_VERSION'] = '1'
-    config.build_settings['INFOPLIST_KEY_CFBundleShortVersionString'] = '$(MARKETING_VERSION)'
-    config.build_settings['INFOPLIST_KEY_CFBundleVersion'] = '$(CURRENT_PROJECT_VERSION)'
-end
-
-framework_target.build_configurations.each do |config|
-  config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.fastnails.uicomponents'
-  config.build_settings['PRODUCT_NAME'] = 'UIComponents'
-  config.build_settings['PRODUCT_MODULE_NAME'] = 'UIComponents'
-  config.build_settings['SWIFT_VERSION'] = '5.0'
-  config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '16.0'
-  config.build_settings['TARGETED_DEVICE_FAMILY'] = '1'
-  config.build_settings['SDKROOT'] = 'iphoneos'
-  config.build_settings['DEFINES_MODULE'] = 'YES'
-  config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
   config.build_settings['MARKETING_VERSION'] = '1.0'
   config.build_settings['CURRENT_PROJECT_VERSION'] = '1'
   config.build_settings['INFOPLIST_KEY_CFBundleShortVersionString'] = '$(MARKETING_VERSION)'
   config.build_settings['INFOPLIST_KEY_CFBundleVersion'] = '$(CURRENT_PROJECT_VERSION)'
-  config.build_settings['LD_RUNPATH_SEARCH_PATHS'] = '$(inherited) @executable_path/Frameworks @loader_path/Frameworks'
-  config.build_settings['SKIP_INSTALL'] = 'YES'
-  config.build_settings['CODE_SIGNING_ALLOWED'] = 'NO'
-  config.build_settings['CODE_SIGNING_REQUIRED'] = 'NO'
-  config.build_settings['CODE_SIGN_IDENTITY'] = ''
 end
 
+# Fontes do app de catálogo
 main_group = project.main_group
 catalog_group = main_group.find_subpath('CatalogDemo', true)
 sources_group = catalog_group.find_subpath('Sources', true)
-components_group = main_group.find_subpath('UIComponents', true)
 
 catalog_sources = Dir[catalog_demo_root.join('Sources', '*.swift').to_s].sort
 catalog_sources.each do |file|
@@ -72,27 +51,42 @@ catalog_sources.each do |file|
   app_target.add_file_references([file_ref])
 end
 
-ui_component_files = Dir[ui_components_sources.join('*.swift').to_s]
-  .reject { |path| File.basename(path).start_with?('.') }
-  .sort
+# Dependência SwiftPM local para o pacote UIComponents
+package_ref = project.new(Xcodeproj::Project::Object::XCLocalSwiftPackageReference)
+package_ref.relative_path = package_root.relative_path_from(project_path.parent).to_s
+project.root_object.package_references ||= []
+project.root_object.package_references << package_ref
 
-ui_component_files.each do |file|
-  relative_path = Pathname.new(file).relative_path_from(project_path.parent).to_s
-  file_ref = components_group.new_file(relative_path)
-  framework_target.add_file_references([file_ref])
-end
+product_dep = project.new(Xcodeproj::Project::Object::XCSwiftPackageProductDependency)
+product_dep.package = package_ref
+product_dep.product_name = 'UIComponents'
+app_target.package_product_dependencies << product_dep
 
-app_target.add_dependency(framework_target)
-app_target.frameworks_build_phase.add_file_reference(framework_target.product_reference, true)
+build_file = project.new(Xcodeproj::Project::Object::PBXBuildFile)
+build_file.product_ref = product_dep
+app_target.frameworks_build_phase.files << build_file
 
-embed_frameworks_phase = app_target.new_copy_files_build_phase('Embed Frameworks')
-embed_frameworks_phase.symbol_dst_subfolder_spec = :frameworks
-embed_frameworks_phase.add_file_reference(framework_target.product_reference, true)
-
+# Scheme executável
 scheme = Xcodeproj::XCScheme.new
 scheme.add_build_target(app_target)
-scheme.add_build_target(framework_target)
 scheme.set_launch_target(app_target)
 scheme.save_as(project_path, 'CatalogDemo', true)
 
 project.save
+
+# Workspace que junta o pacote (Package.swift) + o app.
+# Abrir ESTE workspace (não o .xcodeproj) é o que garante a resolução do
+# pacote local UIComponents e o funcionamento de Bundle.module.
+workspace_path = catalog_demo_root.join('CatalogDemo.xcworkspace')
+workspace_path.mkpath
+package_rel = package_root.relative_path_from(catalog_demo_root).to_s
+File.write(
+  workspace_path.join('contents.xcworkspacedata'),
+  <<~XML
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Workspace version="1.0">
+       <FileRef location="group:#{package_rel}"></FileRef>
+       <FileRef location="group:CatalogDemo.xcodeproj"></FileRef>
+    </Workspace>
+  XML
+)

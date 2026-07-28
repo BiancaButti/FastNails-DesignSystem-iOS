@@ -49,15 +49,22 @@ Estrutura principal:
 
 ## Como Exibir os Componentes
 
-Existe um app de catálogo em `CatalogDemo/CatalogDemo.xcodeproj` com o scheme `CatalogDemo`.
+Existe um app de catálogo em `CatalogDemo/` que consome o pacote `UIComponents`
+como dependência SwiftPM local. Ele importa o módulo apenas para visualizar os
+componentes com suas variações — as telas de catálogo não fazem parte da API pública.
 
-O demo importa o módulo `UIComponents` e serve apenas para visualizar os componentes. As telas de catálogo ficam isoladas no app de demonstração e não fazem parte da API pública do package.
-
-Se precisar recriar o projeto do catálogo, execute:
+Gere o projeto e o workspace com:
 
 ```bash
 cd UIComponents/CatalogDemo
 ruby generate_project.rb
 ```
 
-Depois, abra o projeto `CatalogDemo.xcodeproj` no Xcode e rode o scheme `CatalogDemo` em um simulador iOS. A tela inicial renderiza um catálogo local do app demo com os componentes disponíveis.
+Depois, **abra o `CatalogDemo.xcworkspace`** (o workspace, não o `.xcodeproj`) no
+Xcode e rode o scheme `CatalogDemo` em um simulador iOS. Abrir o workspace é o que
+garante a resolução do pacote local e o funcionamento de `Bundle.module` (recursos
+e strings localizadas).
+
+A tela inicial lista todos os componentes; toque em cada um para ver suas variações.
+No topo há um seletor de tema (`appPink` / `Coral`) que re-tematiza tudo ao vivo via
+`.dsTheme(...)`.

@@ -2,7 +2,7 @@ import SwiftUI
 
 /// Botão principal de ação de largura total com suporte a estado de carregamento.
 ///
-/// Ocupa toda a largura disponível e garante altura mínima de 44pt (guideline Apple HIG).
+/// Ocupa toda a largura disponível e garante altura mínima de 50pt (acima do alvo de toque de 44pt da Apple HIG).
 /// Quando `isLoading` é `true`, o texto é substituído por um `ProgressView` e
 /// o botão fica não-interativo automaticamente.
 ///
@@ -89,8 +89,7 @@ public struct DSPrimaryButton: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(minHeight: 44)
-            .padding(.vertical, DSSpacing.md)
+            .frame(minHeight: 50)
             .background(isInteractive ? activeColor : Color.dsSystemGray4)
             .foregroundStyle(isInteractive ? Color.white : Color.dsSystemGray)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))

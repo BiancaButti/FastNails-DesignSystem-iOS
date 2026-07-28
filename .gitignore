@@ -6,3 +6,7 @@
 .swiftpm/xcode/package.xcworkspace/xcuserdata/
 xcuserdata/
 *.xcuserstate
+
+# Catálogo gerado por generate_project.rb (não versionar — é reproduzível)
+UIComponents/CatalogDemo/CatalogDemo.xcodeproj/
+UIComponents/CatalogDemo/CatalogDemo.xcworkspace/
