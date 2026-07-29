@@ -31,6 +31,16 @@ Everything is **theme-driven** (a single injectable brand color re-styles the wh
 
 <br/>
 
+## 🎬 Preview
+
+Browse every component in the bundled catalog app — including a live theme switcher:
+
+<p align="center">
+  <img src="docs/media/catalog-demo.gif" width="300" alt="FastNails Design System catalog app running on the iOS Simulator" />
+</p>
+
+<br/>
+
 ## 📦 Installation
 
 In Xcode: **File → Add Packages…** and enter the repository URL:
@@ -86,6 +96,19 @@ Inject a `DSTheme` to re-brand the whole component tree — no changes to the co
 SignInView()
     .dsTheme(DSTheme(brandColor: .pink)) // or any brand color
 ```
+
+The same components, re-branded by a single `DSTheme` — no component changes:
+
+<table>
+  <tr>
+    <td align="center"><strong>appPink</strong></td>
+    <td align="center"><strong>Coral</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/theme-apppink.png" width="240" alt="Components using the appPink brand color" /></td>
+    <td><img src="docs/media/theme-coral.png" width="240" alt="The same components re-branded to a coral brand color" /></td>
+  </tr>
+</table>
 
 Design tokens keep spacing and corners consistent: `DSSpacing` (`.xs`…`.xxl`) and `DSRadius` (`.sm`…`.xxl`).
 
