@@ -31,6 +31,16 @@ Everything is **theme-driven** (a single injectable brand color re-styles the wh
 
 <br/>
 
+## 🎬 Preview
+
+Browse every component in the bundled catalog app — including a live theme switcher:
+
+<p align="center">
+  <img src="docs/media/catalog-demo.gif" width="300" alt="FastNails Design System catalog app running on the iOS Simulator" />
+</p>
+
+<br/>
+
 ## 📦 Installation
 
 In Xcode: **File → Add Packages…** and enter the repository URL:
