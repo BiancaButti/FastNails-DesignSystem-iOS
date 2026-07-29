@@ -97,6 +97,19 @@ SignInView()
     .dsTheme(DSTheme(brandColor: .pink)) // or any brand color
 ```
 
+The same components, re-branded by a single `DSTheme` — no component changes:
+
+<table>
+  <tr>
+    <td align="center"><strong>appPink</strong></td>
+    <td align="center"><strong>Coral</strong></td>
+  </tr>
+  <tr>
+    <td><img src="docs/media/theme-apppink.png" width="240" alt="Components using the appPink brand color" /></td>
+    <td><img src="docs/media/theme-coral.png" width="240" alt="The same components re-branded to a coral brand color" /></td>
+  </tr>
+</table>
+
 Design tokens keep spacing and corners consistent: `DSSpacing` (`.xs`…`.xxl`) and `DSRadius` (`.sm`…`.xxl`).
 
 <br/>
