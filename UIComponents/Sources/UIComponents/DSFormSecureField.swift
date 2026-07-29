@@ -44,6 +44,8 @@ public struct DSFormSecureField: View {
     var textContentType: UITextContentType? = .password
     /// Quando `true`, usa o estilo nativo `.roundedBorder`; quando `false` (padrão), usa o estilo customizado.
     var systemStyle: Bool = false
+    /// SF Symbol opcional exibido à esquerda do campo (apenas no estilo customizado).
+    var icon: String? = nil
     /// Callback disparado quando o campo perde o foco. Ideal para validação ao sair.
     var onLostFocus: () -> Void = {}
 
@@ -86,6 +88,7 @@ public struct DSFormSecureField: View {
         autocapitalization: TextInputAutocapitalization = .never,
         textContentType: UITextContentType? = .password,
         systemStyle: Bool = false,
+        icon: String? = nil,
         onLostFocus: @escaping () -> Void = {}
     ) {
         self.label = label
@@ -97,6 +100,7 @@ public struct DSFormSecureField: View {
         self.autocapitalization = autocapitalization
         self.textContentType = textContentType
         self.systemStyle = systemStyle
+        self.icon = icon
         self.onLostFocus = onLostFocus
         self.externalVisible = nil
     }
@@ -128,6 +132,7 @@ public struct DSFormSecureField: View {
         autocapitalization: TextInputAutocapitalization = .never,
         textContentType: UITextContentType? = .password,
         systemStyle: Bool = false,
+        icon: String? = nil,
         onLostFocus: @escaping () -> Void = {}
     ) {
         self.label = label
@@ -139,6 +144,7 @@ public struct DSFormSecureField: View {
         self.autocapitalization = autocapitalization
         self.textContentType = textContentType
         self.systemStyle = systemStyle
+        self.icon = icon
         self.onLostFocus = onLostFocus
         self.externalVisible = isVisible
     }
@@ -200,6 +206,13 @@ public struct DSFormSecureField: View {
 
     private var customStyleField: some View {
         HStack(spacing: DSSpacing.sm) {
+            if let icon {
+                Image(systemName: icon)
+                    .foregroundStyle(theme.brandColor.opacity(0.7))
+                    .font(theme.labelFont)
+                    .accessibilityHidden(true)
+            }
+
             inputField
 
             toggleVisibilityButton(filled: true)
@@ -207,13 +220,13 @@ public struct DSFormSecureField: View {
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.md)
         .background(Color.dsSecondarySystemBackground)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.md))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
         .overlay {
-            RoundedRectangle(cornerRadius: DSRadius.md)
+            RoundedRectangle(cornerRadius: DSRadius.lg)
                 .stroke(
-                    feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
-                        ?? (isFocused ? theme.brandColor.opacity(0.5) : Color.clear),
-                    lineWidth: 1.5
+                    feedback.map { f in f.tone.color(for: theme).opacity(0.85) }
+                        ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.dsSystemGray5),
+                    lineWidth: isFocused || feedback != nil ? 1.5 : 1
                 )
         }
     }

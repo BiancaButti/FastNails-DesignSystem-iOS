@@ -159,11 +159,12 @@ private struct FormTextFieldShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VariantRow(label: "Estilo custom (design system)") {
+            VariantRow(label: "Estilo custom com ícone (design system)") {
                 DSFormTextField(
-                    label: "Nome", placeholder: "Digite o nome completo", text: $custom,
-                    errorMessage: hasValidated && custom.isEmpty ? "Preencha o nome para continuar." : nil,
-                    successMessage: hasValidated && !custom.isEmpty ? "Nome preenchido corretamente." : nil
+                    label: "E-mail", placeholder: "seu@email.com", text: $custom,
+                    errorMessage: hasValidated && custom.isEmpty ? "Preencha o e-mail para continuar." : nil,
+                    successMessage: hasValidated && !custom.isEmpty ? "E-mail preenchido corretamente." : nil,
+                    icon: "envelope"
                 )
             }
             VariantRow(label: "Estilo nativo (systemStyle)") {
@@ -183,7 +184,8 @@ private struct FormSecureFieldShowcase: View {
             DSFormSecureField(
                 label: "Senha", placeholder: "Digite sua senha", text: $password,
                 errorMessage: hasValidated && !password.isEmpty && password.count < 6 ? "A senha deve ter ao menos 6 caracteres." : nil,
-                successMessage: hasValidated && password.count >= 6 ? "Senha válida." : nil
+                successMessage: hasValidated && password.count >= 6 ? "Senha válida." : nil,
+                icon: "lock"
             )
             DSPasswordStrengthBar(strength: strength)
             Button("Validar") { hasValidated = true }.buttonStyle(.bordered)

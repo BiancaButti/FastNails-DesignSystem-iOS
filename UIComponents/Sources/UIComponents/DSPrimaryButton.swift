@@ -92,7 +92,8 @@ public struct DSPrimaryButton: View {
             .frame(minHeight: 50)
             .background(isInteractive ? activeColor : Color.dsSystemGray4)
             .foregroundStyle(isInteractive ? Color.white : Color.dsSystemGray)
-            .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
+            .clipShape(Capsule())
+            .shadow(color: isInteractive ? activeColor.opacity(0.3) : .clear, radius: 8, y: 4)
         }
         .disabled(!isInteractive)
         .animation(.easeInOut(duration: 0.2), value: isEnabled)
