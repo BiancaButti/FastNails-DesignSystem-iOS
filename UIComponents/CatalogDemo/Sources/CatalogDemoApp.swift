@@ -38,6 +38,7 @@ private struct CatalogDemoRootView: View {
 
     private let items: [CatalogDemoItem] = [
         CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Botão principal — estados e cores", content: AnyView(PrimaryButtonShowcase())),
+        CatalogDemoItem(id: "socialButton", title: "DSSocialButton", summary: "Login social Apple/Google (claro e escuro)", content: AnyView(SocialButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSFormTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
@@ -148,6 +149,32 @@ private struct PrimaryButtonShowcase: View {
                 DSPrimaryButton(title: "Confirmar", color: .green) { tapCount += 1 }
             }
             Text("Toques: \(tapCount)").font(.footnote).foregroundStyle(.secondary)
+        }
+    }
+}
+
+private struct SocialButtonShowcase: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            themeBlock("Modo claro", scheme: .light, background: Color.white)
+            themeBlock("Modo escuro", scheme: .dark, background: Color(red: 0.11, green: 0.11, blue: 0.12))
+            Text("O logo do Google aqui é placeholder — usar o \"G\" oficial de 4 cores.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func themeBlock(_ name: String, scheme: ColorScheme, background: Color) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(name).font(.caption).foregroundStyle(.secondary)
+            VStack(spacing: 10) {
+                DSSocialButton(style: .apple, title: "Continuar com a Apple", logo: Image(systemName: "apple.logo")) {}
+                DSSocialButton(style: .google, title: "Continuar com o Google", logo: Image(systemName: "g.circle.fill")) {}
+            }
+            .padding(14)
+            .background(background)
+            .clipShape(RoundedRectangle(cornerRadius: 14))
+            .environment(\.colorScheme, scheme)
         }
     }
 }
