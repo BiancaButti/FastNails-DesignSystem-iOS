@@ -43,6 +43,7 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
         CatalogDemoItem(id: "passwordStrengthBar", title: "DSPasswordStrengthBar", summary: "Força da senha", content: AnyView(PasswordStrengthBarShowcase())),
+        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
         CatalogDemoItem(id: "searchField", title: "DSSearchFieldView", summary: "Campo de busca", content: AnyView(SearchFieldShowcase())),
         CatalogDemoItem(id: "filterChips", title: "DSFilterChips", summary: "Chip e seção de filtros", content: AnyView(FilterChipsShowcase())),
         CatalogDemoItem(id: "categories", title: "DSCategoriesSection", summary: "Grade de categorias", content: AnyView(CategoriesShowcase())),
@@ -258,6 +259,34 @@ private struct PasswordStrengthBarShowcase: View {
                 Text("Forte").tag(DSPasswordStrength.strong)
             }
             .pickerStyle(.segmented)
+        }
+    }
+}
+
+private struct CheckboxShowcase: View {
+    @State private var newsletter = true
+    @State private var terms = false
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            VariantRow(label: "Rótulo simples") {
+                DSCheckbox(isChecked: $newsletter) {
+                    Text("Quero receber novidades por e-mail.")
+                        .font(.subheadline)
+                }
+            }
+            VariantRow(label: "Rótulo estilizado (aceite de termos)") {
+                DSCheckbox(isChecked: $terms) {
+                    (
+                        Text("Li e aceito os ")
+                        + Text("Termos de Uso").foregroundColor(.accentColor)
+                        + Text(" e a ")
+                        + Text("Política de Privacidade").foregroundColor(.accentColor)
+                        + Text(".")
+                    )
+                    .font(.footnote)
+                }
+            }
         }
     }
 }
