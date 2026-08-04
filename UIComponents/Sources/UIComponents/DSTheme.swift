@@ -73,7 +73,13 @@ public struct DSTheme: Equatable {
     public var successColor: Color
     /// Cor usada em avaliações e senha média. Padrão: `.appRating`.
     public var ratingColor: Color
+    /// Cor de fundo de superfícies elevadas (cartões). Padrão: `.dsSystemBackground`.
+    public var surfaceColor: Color
+    /// Cor de títulos de destaque (cabeçalhos de tela). Padrão: `.primary`.
+    public var titleColor: Color
 
+    /// Escala tipográfica: títulos de destaque (cabeçalhos de tela).
+    public var titleFont: Font
     /// Escala tipográfica: rótulos de campo e textos secundários.
     public var labelFont: Font
     /// Escala tipográfica: textos de feedback (erro/sucesso).
@@ -91,6 +97,9 @@ public struct DSTheme: Equatable {
     ///   - errorColor: Cor de erro (padrão `.colorDestructive` quando `nil`).
     ///   - successColor: Cor de sucesso (padrão `.colorSuccess` quando `nil`).
     ///   - ratingColor: Cor de avaliação (padrão `.appRating` quando `nil`).
+    ///   - surfaceColor: Fundo de cartões (padrão `.dsSystemBackground` quando `nil`).
+    ///   - titleColor: Cor de títulos de destaque (padrão `.primary` quando `nil`).
+    ///   - titleFont: Fonte de títulos de destaque (padrão serifada, `.title2` semibold).
     ///   - labelFont: Fonte de rótulo (padrão `.subheadline.weight(.medium)`).
     ///   - feedbackFont: Fonte de feedback (padrão `.caption`).
     ///   - buttonFont: Fonte do botão (padrão `.body.weight(.semibold)`).
@@ -101,6 +110,9 @@ public struct DSTheme: Equatable {
         errorColor: Color? = nil,
         successColor: Color? = nil,
         ratingColor: Color? = nil,
+        surfaceColor: Color? = nil,
+        titleColor: Color? = nil,
+        titleFont: Font = .system(.title2, design: .serif).weight(.semibold),
         labelFont: Font = .subheadline.weight(.medium),
         feedbackFont: Font = .caption,
         buttonFont: Font = .body.weight(.semibold),
@@ -111,6 +123,9 @@ public struct DSTheme: Equatable {
         self.errorColor = errorColor ?? Color.colorDestructive
         self.successColor = successColor ?? Color.colorSuccess
         self.ratingColor = ratingColor ?? Color.appRating
+        self.surfaceColor = surfaceColor ?? Color.dsSystemBackground
+        self.titleColor = titleColor ?? Color.primary
+        self.titleFont = titleFont
         self.labelFont = labelFont
         self.feedbackFont = feedbackFont
         self.buttonFont = buttonFont

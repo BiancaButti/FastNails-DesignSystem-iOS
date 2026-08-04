@@ -37,8 +37,13 @@ public struct DSOTPField: View {
     var errorMessage: String? = nil
     /// Mensagem de sucesso exibida abaixo do campo.
     var successMessage: String? = nil
+    /// Chamado quando o código atinge `length` dígitos — permite validar sozinho,
+    /// sem esperar um toque no botão. Recebe o código completo.
+    var onComplete: ((String) -> Void)? = nil
 
     @FocusState private var isFocused: Bool
+    /// Último código completo já entregue ao `onComplete`, para não repetir a chamada.
+    @State private var lastCompletedCode: String?
     /// Número de dígitos do código. Clampeado a mínimo 1. Padrão: `6`.
     private let length: Int
     @Environment(\.dsTheme) private var theme
@@ -50,18 +55,22 @@ public struct DSOTPField: View {
     ///   - length: Número de dígitos esperados (padrão `6`, mínimo `1`).
     ///   - errorMessage: Mensagem de erro.
     ///   - successMessage: Mensagem de sucesso.
+    ///   - onComplete: Chamado ao completar `length` dígitos, com o código inteiro.
+    ///     Use para validar automaticamente, sem exigir um toque no botão.
     public init(
         label: String,
         code: Binding<String>,
         length: Int = 6,
         errorMessage: String? = nil,
-        successMessage: String? = nil
+        successMessage: String? = nil,
+        onComplete: ((String) -> Void)? = nil
     ) {
         self.label = label
         self._code = code
         self.length = max(1, length)
         self.errorMessage = errorMessage
         self.successMessage = successMessage
+        self.onComplete = onComplete
     }
 
     private var feedback: (message: String, tone: DSFeedbackTone)? {
@@ -99,6 +108,17 @@ public struct DSOTPField: View {
                     .onChange(of: code) { newValue in
                         let digits = String(newValue.filter(\.isNumber).prefix(length))
                         if code != digits { code = digits }
+
+                        guard digits.count == length else {
+                            // Ao apagar, rearma para o próximo código completo.
+                            lastCompletedCode = nil
+                            return
+                        }
+                        // Só dispara uma vez por código: digitar além do limite
+                        // gera um `onChange` cujo valor truncado é o mesmo.
+                        guard lastCompletedCode != digits else { return }
+                        lastCompletedCode = digits
+                        onComplete?(digits)
                     }
             }
 
