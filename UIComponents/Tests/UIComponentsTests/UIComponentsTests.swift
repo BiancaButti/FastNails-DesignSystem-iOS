@@ -75,6 +75,37 @@ final class UIComponentsTests: XCTestCase {
         // DSDistanceView
         _ = DSDistanceView(distance: "2,5 km")
         _ = DSDistanceView(distance: "2,5 km", accessibilityLabel: "A 2,5 km de você")
+
+        // DSCheckbox
+        _ = DSCheckbox(isChecked: Binding.constant(true)) { Text("Aceito os termos") }
+
+        // DSResendButton
+        _ = DSResendButton {}
+        _ = DSResendButton(secondsRemaining: 30, isLoading: false, title: "Reenviar e-mail") {}
+        _ = DSResendButton(isLoading: true, accessibilityHint: "Reenvia o código") {}
+    }
+
+    // MARK: - DSResendButton
+
+    func testResendButtonClampsNegativeSecondsToZero() {
+        let sut = DSResendButton(secondsRemaining: -5) {}
+        XCTAssertEqual(sut.secondsRemaining, 0)
+    }
+
+    func testResendButtonKeepsPositiveSeconds() {
+        let sut = DSResendButton(secondsRemaining: 45) {}
+        XCTAssertEqual(sut.secondsRemaining, 45)
+    }
+
+    func testResendButtonUsesLocalizedTitleWhenNoneGiven() {
+        let sut = DSResendButton {}
+        XCTAssertFalse(sut.title.isEmpty)
+        XCTAssertNotEqual(sut.title, "resendButtonTitle", "a string deveria estar traduzida, não crua")
+    }
+
+    func testResendButtonKeepsCustomTitle() {
+        let sut = DSResendButton(title: "Reenviar e-mail") {}
+        XCTAssertEqual(sut.title, "Reenviar e-mail")
     }
 
     func testPublicEnumsRemainAvailable() {

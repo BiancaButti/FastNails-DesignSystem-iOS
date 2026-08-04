@@ -44,6 +44,7 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
         CatalogDemoItem(id: "passwordStrengthBar", title: "DSPasswordStrengthBar", summary: "Força da senha", content: AnyView(PasswordStrengthBarShowcase())),
         CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
+        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
         CatalogDemoItem(id: "searchField", title: "DSSearchFieldView", summary: "Campo de busca", content: AnyView(SearchFieldShowcase())),
         CatalogDemoItem(id: "filterChips", title: "DSFilterChips", summary: "Chip e seção de filtros", content: AnyView(FilterChipsShowcase())),
         CatalogDemoItem(id: "categories", title: "DSCategoriesSection", summary: "Grade de categorias", content: AnyView(CategoriesShowcase())),
@@ -286,6 +287,50 @@ private struct CheckboxShowcase: View {
                     )
                     .font(.footnote)
                 }
+            }
+        }
+    }
+}
+
+private struct ResendButtonShowcase: View {
+    @State private var seconds = 0
+    @State private var isSending = false
+    @State private var ticker: Task<Void, Never>?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            VariantRow(label: "Disponível") {
+                DSResendButton(title: "Reenviar e-mail") {}
+            }
+            VariantRow(label: "Enviando") {
+                DSResendButton(isLoading: true, title: "Reenviar e-mail") {}
+            }
+            VariantRow(label: "Em espera") {
+                DSResendButton(secondsRemaining: 45) {}
+            }
+            VariantRow(label: "Interativo (toque e veja a contagem)") {
+                DSResendButton(
+                    secondsRemaining: seconds,
+                    isLoading: isSending,
+                    title: "Reenviar e-mail"
+                ) {
+                    startCountdown()
+                }
+            }
+        }
+        .onDisappear { ticker?.cancel() }
+    }
+
+    private func startCountdown() {
+        ticker?.cancel()
+        ticker = Task {
+            isSending = true
+            try? await Task.sleep(nanoseconds: 800_000_000)
+            isSending = false
+            for remaining in stride(from: 10, through: 0, by: -1) {
+                guard !Task.isCancelled else { return }
+                seconds = remaining
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
             }
         }
     }

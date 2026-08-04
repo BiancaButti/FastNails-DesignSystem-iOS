@@ -32,6 +32,12 @@
 "otpFieldAccessibilityEmpty" = "Vazio";
 "otpFieldAccessibilityHint" = "Toque duas vezes para editar";
 
+/* DSResendButton */
+"resendButtonTitle" = "Reenviar código";
+"resendCooldown" = "Aguarde %lld s para reenviar";
+"resendCooldownAccessibility" = "Aguarde %lld segundos para reenviar";
+"resendLoading" = "Reenviando";
+
 /* DSPasswordStrength */
 "passwordStrengthWeak" = "Fraca";
 "passwordStrengthMedium" = "Média";
