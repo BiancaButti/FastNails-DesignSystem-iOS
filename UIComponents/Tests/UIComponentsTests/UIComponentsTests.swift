@@ -79,10 +79,39 @@ final class UIComponentsTests: XCTestCase {
         // DSCheckbox
         _ = DSCheckbox(isChecked: Binding.constant(true)) { Text("Aceito os termos") }
 
+        // DSCard / DSScreenHeader
+        _ = DSCard { Text("conteúdo") }
+        _ = DSCard(spacing: 8, padding: 12, cornerRadius: 10) { Text("compacto") }
+        _ = DSScreenHeader(title: "Esqueceu a senha?")
+        _ = DSScreenHeader(
+            systemImage: "envelope.badge",
+            title: "Confira seu e-mail",
+            subtitle: "Se existir uma conta, enviamos um código.",
+            accessibilityLabel: "Confira seu e-mail."
+        )
+
+        // DSOTPField com auto-validação
+        _ = DSOTPField(label: "Código", code: Binding.constant("123456"), onComplete: { _ in })
+
         // DSResendButton
         _ = DSResendButton {}
         _ = DSResendButton(secondsRemaining: 30, isLoading: false, title: "Reenviar e-mail") {}
         _ = DSResendButton(isLoading: true, accessibilityHint: "Reenvia o código") {}
+    }
+
+    // MARK: - DSTheme — cores e fontes novas
+
+    func testThemeDefaultsForSurfaceAndTitle() {
+        let theme = DSTheme.default
+        XCTAssertEqual(theme.surfaceColor, Color.dsSystemBackground)
+        XCTAssertEqual(theme.titleColor, Color.primary)
+    }
+
+    func testThemeOverridesSurfaceAndTitleColors() {
+        let theme = DSTheme(surfaceColor: .yellow, titleColor: .purple)
+        XCTAssertEqual(theme.surfaceColor, .yellow)
+        XCTAssertEqual(theme.titleColor, .purple)
+        XCTAssertEqual(theme.brandColor, Color.appPink, "as demais cores seguem no padrão")
     }
 
     // MARK: - DSResendButton

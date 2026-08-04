@@ -13,7 +13,10 @@ import UIKit
 /// - **Avaliações**: `appRating`
 /// - **Semânticas de estado**: `colorSuccess`, `colorDestructive`
 /// - **Aliases legados**: `appOpenBadge`, `appClosedBadge`
-extension Color {
+///
+/// Estes tokens são **públicos**: o app consome os mesmos valores que os
+/// componentes da lib, em vez de manter cópias próprias que divergem com o tempo.
+public extension Color {
     // MARK: - Brand / Primary
     /// Cor rosa da marca. Mais clara no modo escuro para manter contraste adequado.
     static let appPink: Color = {
