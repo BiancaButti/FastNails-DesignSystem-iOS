@@ -45,6 +45,7 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "passwordStrengthBar", title: "DSPasswordStrengthBar", summary: "Força da senha", content: AnyView(PasswordStrengthBarShowcase())),
         CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
         CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
+        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
         CatalogDemoItem(id: "searchField", title: "DSSearchFieldView", summary: "Campo de busca", content: AnyView(SearchFieldShowcase())),
         CatalogDemoItem(id: "filterChips", title: "DSFilterChips", summary: "Chip e seção de filtros", content: AnyView(FilterChipsShowcase())),
         CatalogDemoItem(id: "categories", title: "DSCategoriesSection", summary: "Grade de categorias", content: AnyView(CategoriesShowcase())),
@@ -286,6 +287,42 @@ private struct CheckboxShowcase: View {
                         + Text(".")
                     )
                     .font(.footnote)
+                }
+            }
+        }
+    }
+}
+
+private struct IconLabelAndTagShowcase: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            VariantRow(label: "Apoio (ícone colorido, texto discreto)") {
+                DSIconLabel(systemImage: "location.fill", text: "1,2 km")
+            }
+            VariantRow(label: "Destaque (texto na cor do ícone)") {
+                DSIconLabel(
+                    systemImage: "clock",
+                    text: "Livre hoje às 16h",
+                    font: .footnote.weight(.semibold),
+                    textColor: .accentColor
+                )
+            }
+            VariantRow(label: "Etiquetas informativas") {
+                HStack(spacing: 6) {
+                    DSTag(text: "Em casa")
+                    DSTag(systemImage: "house", text: "No espaço dela")
+                }
+            }
+            VariantRow(label: "Cartão em destaque") {
+                DSCard(spacing: 4, padding: 14, cornerRadius: 18, background: .accentColor) {
+                    Text("Seu próximo horário")
+                        .font(.caption2)
+                        .foregroundStyle(.white.opacity(0.85))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Juliana Lima · quinta, 14h")
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }

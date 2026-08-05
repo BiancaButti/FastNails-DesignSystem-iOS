@@ -26,6 +26,8 @@ public struct DSCard<Content: View>: View {
     let padding: CGFloat
     /// Raio dos cantos.
     let cornerRadius: CGFloat
+    /// Cor de fundo. Quando `nil`, usa `surfaceColor` do tema.
+    let background: Color?
     @ViewBuilder let content: () -> Content
 
     @Environment(\.dsTheme) private var theme
@@ -36,16 +38,21 @@ public struct DSCard<Content: View>: View {
     ///   - padding: Espaçamento interno (padrão 20 pt).
     ///   - cornerRadius: Raio dos cantos (padrão 24 pt — mais pronunciado que
     ///     `DSRadius.xl`, que serve para sheets e modais).
+    ///   - background: Cor de fundo. Quando `nil`, usa `surfaceColor` do tema.
+    ///     Informe para destacar um cartão do resto da tela — por exemplo, o
+    ///     próximo agendamento preenchido com a cor da marca.
     ///   - content: Conteúdo do cartão.
     public init(
         spacing: CGFloat = DSSpacing.lg,
         padding: CGFloat = 20,
         cornerRadius: CGFloat = 24,
+        background: Color? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.spacing = spacing
         self.padding = padding
         self.cornerRadius = cornerRadius
+        self.background = background
         self.content = content
     }
 
@@ -54,7 +61,7 @@ public struct DSCard<Content: View>: View {
             content()
         }
         .padding(padding)
-        .background(theme.surfaceColor)
+        .background(background ?? theme.surfaceColor)
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         .shadow(color: .black.opacity(0.06), radius: 18, y: 10)
     }
