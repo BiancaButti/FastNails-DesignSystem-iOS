@@ -79,8 +79,22 @@ final class UIComponentsTests: XCTestCase {
         // DSCheckbox
         _ = DSCheckbox(isChecked: Binding.constant(true)) { Text("Aceito os termos") }
 
+        // DSIconLabel / DSTag
+        _ = DSIconLabel(systemImage: "clock", text: "Livre hoje às 16h")
+        _ = DSIconLabel(
+            systemImage: "location.fill",
+            text: "1,2 km",
+            font: .footnote,
+            iconColor: .red,
+            textColor: .blue,
+            accessibilityLabel: "a 1,2 quilômetros"
+        )
+        _ = DSTag(text: "Em casa")
+        _ = DSTag(systemImage: "house", text: "No espaço dela")
+
         // DSCard / DSScreenHeader
         _ = DSCard { Text("conteúdo") }
+        _ = DSCard(background: .orange) { Text("cartão em destaque") }
         _ = DSCard(spacing: 8, padding: 12, cornerRadius: 10) { Text("compacto") }
         _ = DSScreenHeader(title: "Esqueceu a senha?")
         _ = DSScreenHeader(
@@ -112,6 +126,41 @@ final class UIComponentsTests: XCTestCase {
         XCTAssertEqual(theme.surfaceColor, .yellow)
         XCTAssertEqual(theme.titleColor, .purple)
         XCTAssertEqual(theme.brandColor, Color.appPink, "as demais cores seguem no padrão")
+    }
+
+    // MARK: - DSIconLabel
+
+    func testIconLabelUsesTextAsAccessibilityLabelByDefault() {
+        let sut = DSIconLabel(systemImage: "clock", text: "Livre hoje às 16h")
+        XCTAssertNil(sut.accessibilityLabel, "sem label próprio, o componente cai no texto")
+        XCTAssertEqual(sut.text, "Livre hoje às 16h")
+    }
+
+    func testIconLabelKeepsCustomAccessibilityLabel() {
+        let sut = DSIconLabel(
+            systemImage: "location.fill",
+            text: "1,2 km",
+            accessibilityLabel: "a 1,2 quilômetros de você"
+        )
+        XCTAssertEqual(sut.accessibilityLabel, "a 1,2 quilômetros de você")
+    }
+
+    func testIconLabelColorsAreOptionalSoThemeCanDecide() {
+        let sut = DSIconLabel(systemImage: "clock", text: "16h")
+        XCTAssertNil(sut.iconColor, "nil deixa o tema escolher a cor da marca")
+        XCTAssertNil(sut.textColor)
+    }
+
+    // MARK: - DSCard
+
+    func testCardBackgroundIsNilByDefaultSoThemeDecides() {
+        let sut = DSCard { Text("x") }
+        XCTAssertNil(sut.background)
+    }
+
+    func testCardKeepsCustomBackground() {
+        let sut = DSCard(background: .orange) { Text("x") }
+        XCTAssertEqual(sut.background, .orange)
     }
 
     // MARK: - DSResendButton

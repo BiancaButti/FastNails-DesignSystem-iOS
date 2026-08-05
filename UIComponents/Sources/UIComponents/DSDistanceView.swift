@@ -37,18 +37,15 @@ public struct DSDistanceView: View {
     }
 
     public var body: some View {
-        HStack(spacing: DSSpacing.xs) {
-            Image(systemName: "location.fill")
-                .foregroundStyle(theme.brandColor)
-                .font(theme.captionFont)
-                .accessibilityHidden(true)
-
-            Text(distance)
-                .font(theme.captionFont)
-                .foregroundStyle(.secondary)
-        }
-        .accessibilityElement(children: .ignore)
+        // Um caso particular de `DSIconLabel` — mesma anatomia, ícone fixo.
+        DSIconLabel(
+            systemImage: "location.fill",
+            text: distance,
+            font: theme.captionFont,
+            accessibilityLabel: accessibilityLabel
+        )
+        // Sem label próprio a distância é decorativa: o texto já aparece no
+        // rótulo combinado da linha que a contém.
         .accessibilityHidden(accessibilityLabel == nil)
-        .accessibilityLabel(accessibilityLabel ?? "")
     }
 }
