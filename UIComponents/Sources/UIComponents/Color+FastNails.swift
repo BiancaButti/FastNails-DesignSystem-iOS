@@ -94,10 +94,6 @@ public extension Color {
     @available(*, deprecated, renamed: "tinta60",
                message: "Ícone de estado vazio usa Tinta 60.")
     static var appEmptyState: Color { .tinta60 }
-
-    @available(*, deprecated,
-               message: "Avaliações estão fora do MVP. Ver a doc Perfil do salão.")
-    static var appRating: Color { .ambar }
 }
 
 // MARK: - Superfícies

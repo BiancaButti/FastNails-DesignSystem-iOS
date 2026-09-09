@@ -74,8 +74,6 @@ public struct DSTheme: Equatable {
     public var successColor: Color
     /// Atenção sem erro. Padrão: Âmbar.
     public var warningColor: Color
-    /// Estrelas de avaliação. Padrão: Âmbar.
-    public var ratingColor: Color
     /// Fundo de cartão e campo. Padrão: branco.
     public var surfaceColor: Color
     /// Fundo da tela. Padrão: Papel.
@@ -113,7 +111,6 @@ public struct DSTheme: Equatable {
         errorColor: Color = .alerta,
         successColor: Color = .agua,
         warningColor: Color = .ambar,
-        ratingColor: Color = .appRating,
         surfaceColor: Color = .dsSurface,
         backgroundColor: Color = .papel,
         titleColor: Color = .tinta,
@@ -133,7 +130,6 @@ public struct DSTheme: Equatable {
         self.errorColor = errorColor
         self.successColor = successColor
         self.warningColor = warningColor
-        self.ratingColor = ratingColor
         self.surfaceColor = surfaceColor
         self.backgroundColor = backgroundColor
         self.titleColor = titleColor
