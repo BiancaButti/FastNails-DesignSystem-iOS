@@ -45,7 +45,7 @@ public struct DSCheckbox<Label: View>: View {
             HStack(alignment: .top, spacing: DSSpacing.sm) {
                 Image(systemName: isChecked ? "checkmark.square.fill" : "square")
                     .font(.title3)
-                    .foregroundStyle(isChecked ? theme.brandColor : Color.dsSystemGray)
+                    .foregroundStyle(isChecked ? theme.brandColor : Color.tinta60)
 
                 label
                     .frame(maxWidth: .infinity, alignment: .leading)

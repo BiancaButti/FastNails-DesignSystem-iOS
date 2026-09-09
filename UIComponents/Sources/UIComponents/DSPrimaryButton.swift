@@ -12,7 +12,7 @@ import SwiftUI
 /// DSPrimaryButton(
 ///     title: "Salvar",
 ///     isLoading: salvando,
-///     color: .appPink
+///     color: .esmalte
 /// ) {
 ///     Task {
 ///         salvando = true
@@ -90,8 +90,8 @@ public struct DSPrimaryButton: View {
             }
             .frame(maxWidth: .infinity)
             .frame(minHeight: 50)
-            .background(isInteractive ? activeColor : Color.dsSystemGray4)
-            .foregroundStyle(isInteractive ? Color.white : Color.dsSystemGray)
+            .background(isInteractive ? activeColor : Color.linha)
+            .foregroundStyle(isInteractive ? Color.white : Color.tinta60)
             .clipShape(Capsule())
             .shadow(color: isInteractive ? activeColor.opacity(0.3) : .clear, radius: 8, y: 4)
         }
