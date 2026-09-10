@@ -23,7 +23,7 @@ private struct CatalogDemoItem: Identifiable {
 
 private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
-        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Botão principal — estados e cores", content: AnyView(DSButtonShowcase())),
+        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSFormTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
@@ -116,7 +116,7 @@ private struct DSButtonShowcase: View {
             DSButton(title: "Enviando...", isLoading: true, isEnabled: true) {}
             DSButton(title: "Escolha uma opção", isEnabled: false) {}
 
-            Text("Toques: \(tapCount)")
+            Text("Touch: \(tapCount)")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }

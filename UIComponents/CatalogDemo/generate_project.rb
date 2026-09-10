@@ -31,8 +31,6 @@ app_target.build_configurations.each do |config|
   config.build_settings['INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents'] = 'YES'
   config.build_settings['GENERATE_INFOPLIST_FILE'] = 'YES'
   config.build_settings['CODE_SIGN_STYLE'] = 'Automatic'
-  # Team ID lido do ambiente para não versionar um identificador pessoal num repo público.
-  # Defina antes de gerar, ex.: `DEVELOPMENT_TEAM=XXXXXXXXXX ruby generate_project.rb`
   config.build_settings['DEVELOPMENT_TEAM'] = ENV['DEVELOPMENT_TEAM'] || ''
   config.build_settings['MARKETING_VERSION'] = '1.0'
   config.build_settings['CURRENT_PROJECT_VERSION'] = '1'
