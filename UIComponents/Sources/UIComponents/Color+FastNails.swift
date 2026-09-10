@@ -41,7 +41,7 @@ public extension Color {
     static let tinta60 = Color(hex: 0x6B6371)
 
     /// Fundo das telas.
-    static let papel = Color(hex: 0xF7F3F4)
+    static let papel = Color(hex: 0xFFFFFF)
 
     /// Fundo de elementos apoiados sobre o Papel — campos, células, chips.
     static let papel2 = Color(hex: 0xEDE6E8)
@@ -68,55 +68,10 @@ public extension Color {
     static let alerta = Color(hex: 0xB3261E)
 }
 
-// MARK: - Aliases antigos
-//
-// Mantidos para o código existente continuar compilando.
-// Cada um aponta para o token novo — os valores mudaram.
-
-public extension Color {
-
-    @available(*, deprecated, renamed: "esmalte",
-               message: "O rosa antigo dava 3,3:1 sobre branco, abaixo do mínimo de 4,5:1.")
-    static var appPink: Color { .esmalte }
-
-    @available(*, deprecated, renamed: "agua")
-    static var colorSuccess: Color { .agua }
-
-    @available(*, deprecated, renamed: "alerta")
-    static var colorDestructive: Color { .alerta }
-
-    @available(*, deprecated, renamed: "agua")
-    static var appOpenBadge: Color { .agua }
-
-    @available(*, deprecated, renamed: "alerta")
-    static var appClosedBadge: Color { .alerta }
-
-    @available(*, deprecated, renamed: "tinta60",
-               message: "Ícone de estado vazio usa Tinta 60.")
-    static var appEmptyState: Color { .tinta60 }
-}
 
 // MARK: - Superfícies
 
 extension Color {
     /// Fundo de cartão e campo. Branco puro sobre o Papel.
     public static let dsSurface = Color.white
-
-    // Nomes antigos, agora apontando para os tokens da marca em vez
-    // das cores do sistema — que traziam modo escuro de volta pela porta dos fundos.
-
-    @available(*, deprecated, renamed: "dsSurface")
-    static var dsSystemBackground: Color { .dsSurface }
-
-    @available(*, deprecated, renamed: "papel2")
-    static var dsSecondarySystemBackground: Color { .papel2 }
-
-    @available(*, deprecated, renamed: "tinta60")
-    static var dsSystemGray: Color { .tinta60 }
-
-    @available(*, deprecated, renamed: "linha")
-    static var dsSystemGray4: Color { .linha }
-
-    @available(*, deprecated, renamed: "papel2")
-    static var dsSystemGray5: Color { .papel2 }
 }

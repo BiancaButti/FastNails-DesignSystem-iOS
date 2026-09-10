@@ -10,18 +10,6 @@ struct CatalogDemoApp: App {
     }
 }
 
-// MARK: - Tema do catálogo
-
-/// Coral da marca (aprox. #D9856A) para testar o rebrand ao vivo no catálogo.
-private let fastNailsCoral = Color(red: 0.851, green: 0.522, blue: 0.416)
-
-private enum CatalogBrand: String, CaseIterable, Identifiable {
-    case pink = "appPink"
-    case coral = "Coral"
-    var id: String { rawValue }
-    var color: Color? { self == .coral ? fastNailsCoral : nil }
-}
-
 // MARK: - Item
 
 private struct CatalogDemoItem: Identifiable {
@@ -34,10 +22,8 @@ private struct CatalogDemoItem: Identifiable {
 // MARK: - Root
 
 private struct CatalogDemoRootView: View {
-    @State private var brand: CatalogBrand = .pink
-
     private let items: [CatalogDemoItem] = [
-        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Botão principal — estados e cores", content: AnyView(PrimaryButtonShowcase())),
+        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Botão principal — estados e cores", content: AnyView(DSButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSFormTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
@@ -67,16 +53,7 @@ private struct CatalogDemoRootView: View {
                 }
             }
             .navigationTitle("Componentes")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("Tema", selection: $brand) {
-                        ForEach(CatalogBrand.allCases) { Text($0.rawValue).tag($0) }
-                    }
-                    .pickerStyle(.segmented)
-                }
-            }
         }
-        .dsTheme(DSTheme(brandColor: .black))
     }
 }
 
@@ -126,28 +103,25 @@ private struct VariantRow<Content: View>: View {
 
 // MARK: - Showcases
 
-private struct PrimaryButtonShowcase: View {
+private struct DSButtonShowcase: View {
     @State private var tapCount = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            VariantRow(label: "Padrão (ativo)") {
-                DSPrimaryButton(title: "Entrar") { tapCount += 1 }
-            }
-            VariantRow(label: "Desabilitado") {
-                DSPrimaryButton(title: "Entrar", isEnabled: false) {}
-            }
-            VariantRow(label: "Carregando") {
-                DSPrimaryButton(title: "Entrar", isLoading: true) {}
-            }
-            VariantRow(label: "Cor custom (verde)") {
-                DSPrimaryButton(title: "Confirmar", color: .green) { tapCount += 1 }
-            }
-            Text("Toques: \(tapCount)").font(.footnote).foregroundStyle(.secondary)
+
+            DSButton(title: "Continuar", isEnabled: true) { tapCount += 1 }
+            DSButton(title: "Já tenho conta", style: .secondary, isEnabled: true) { tapCount += 1 }
+            DSButton(title: "Como chegar", style: .secondary, tone: .neutral, isEnabled: true) { tapCount += 1 }
+            DSButton(title: "Cancelar agendamento", style: .secondary, tone: .destructive, isEnabled: true) { tapCount += 1 }
+            DSButton(title: "Enviando...", isLoading: true, isEnabled: true) {}
+            DSButton(title: "Escolha uma opção", isEnabled: false) {}
+
+            Text("Toques: \(tapCount)")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
     }
 }
-
 private struct FormTextFieldShowcase: View {
     @State private var custom = ""
     @State private var system = ""
