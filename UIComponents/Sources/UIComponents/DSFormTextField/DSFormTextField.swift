@@ -1,5 +1,4 @@
 import SwiftUI
-#if canImport(UIKit)
 
 /// Campo de texto reutilizável com label, placeholder, validação e feedback visual.
 ///
@@ -38,8 +37,6 @@ public struct DSFormTextField: View {
     @Binding var text: String
     /// Mensagem de erro a exibir abaixo do campo. Tem prioridade sobre `successMessage`.
     var errorMessage: String? = nil
-    /// Mensagem de sucesso a exibir abaixo do campo.
-    var successMessage: String? = nil
     /// Tipo de teclado a apresentar. Padrão: `.default`.
     var keyboardType: UIKeyboardType = .default
     /// Política de autocapitalização. Padrão: `.words`.
@@ -48,8 +45,6 @@ public struct DSFormTextField: View {
     var textContentType: UITextContentType? = nil
     /// Quando `true`, usa o estilo nativo `.roundedBorder`; quando `false` (padrão), usa o estilo customizado do design system.
     var systemStyle: Bool = false
-    /// SF Symbol opcional exibido à esquerda do campo (apenas no estilo customizado).
-    var icon: String? = nil
     /// Callback disparado quando o campo perde o foco. Ideal para validação ao sair.
     var onLostFocus: () -> Void = {}
 
@@ -62,7 +57,6 @@ public struct DSFormTextField: View {
     ///   - placeholder: Texto de dica dentro do campo.
     ///   - text: Binding com o valor digitado.
     ///   - errorMessage: Mensagem de erro (tem prioridade sobre sucesso).
-    ///   - successMessage: Mensagem de sucesso.
     ///   - keyboardType: Tipo de teclado (padrão `.default`).
     ///   - autocapitalization: Política de capitalização (padrão `.words`).
     ///   - textContentType: Tipo para autofill (opcional).
@@ -73,56 +67,46 @@ public struct DSFormTextField: View {
         placeholder: String,
         text: Binding<String>,
         errorMessage: String? = nil,
-        successMessage: String? = nil,
         keyboardType: UIKeyboardType = .default,
         autocapitalization: TextInputAutocapitalization = .words,
         textContentType: UITextContentType? = nil,
         systemStyle: Bool = false,
-        icon: String? = nil,
         onLostFocus: @escaping () -> Void = {}
     ) {
         self.label = label
         self.placeholder = placeholder
         self._text = text
         self.errorMessage = errorMessage
-        self.successMessage = successMessage
         self.keyboardType = keyboardType
         self.autocapitalization = autocapitalization
         self.textContentType = textContentType
         self.systemStyle = systemStyle
-        self.icon = icon
         self.onLostFocus = onLostFocus
     }
 
-    private var feedback: (message: String, tone: DSFeedbackTone)? {
-        if let errorMessage, !errorMessage.isEmpty {
-            return (errorMessage, .failure)
-        }
-
-        if let successMessage, !successMessage.isEmpty {
-            return (successMessage, .success)
-        }
-
-        return nil
-    }
-
     public var body: some View {
-        VStack(alignment: .leading, spacing: DSSpacing.sm) {
-            Text(label)
-                .font(theme.labelFont)
-                .accessibilityHidden(true)
-
-            if systemStyle {
-                systemTextField
-            } else {
-                customTextField
-            }
-
+        VStack(alignment: .leading, spacing: DSSpacing.xs) {
+            headerLabel
+            systemTextField
+            
             if let feedback {
                 DSFeedbackLabel(message: feedback.message, tone: feedback.tone)
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color(.systemGray4), lineWidth: 1)
+        ).padding()
+    }
+}
+
+extension DSFormTextField {
+   private var headerLabel: some View {
+        Text(label)
+            .font(theme.labelFont)
+            .accessibilityHidden(true)
     }
 
     private var systemTextField: some View {
@@ -131,7 +115,6 @@ public struct DSFormTextField: View {
             .textInputAutocapitalization(autocapitalization)
             .textContentType(textContentType)
             .autocorrectionDisabled()
-            .textFieldStyle(.roundedBorder)
             .focused($isFocused)
             .accessibilityLabel(label)
             .accessibilityValue(feedback?.message ?? "")
@@ -140,36 +123,10 @@ public struct DSFormTextField: View {
             }
     }
 
-    private var customTextField: some View {
-        let borderColor = feedback.map { f in f.tone.color(for: theme).opacity(0.85) }
-            ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.linha)
-        return HStack(spacing: DSSpacing.sm) {
-            if let icon {
-                Image(systemName: icon)
-                    .foregroundStyle(theme.brandColor.opacity(0.7))
-                    .font(theme.labelFont)
-                    .accessibilityHidden(true)
-            }
-            TextField(placeholder, text: $text)
-                .keyboardType(keyboardType)
-                .textInputAutocapitalization(autocapitalization)
-                .textContentType(textContentType)
-                .autocorrectionDisabled()
-                .focused($isFocused)
+    private var feedback: (message: String, tone: DSFeedbackTone)? {
+        if let errorMessage, !errorMessage.isEmpty {
+            return (errorMessage, .failure)
         }
-        .padding(.horizontal, DSSpacing.md)
-        .padding(.vertical, DSSpacing.md)
-        .background(Color.papel2)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
-        .overlay(
-            RoundedRectangle(cornerRadius: DSRadius.lg)
-                .stroke(borderColor, lineWidth: isFocused || feedback != nil ? 1.5 : 1)
-        )
-        .accessibilityLabel(label)
-        .accessibilityValue(feedback?.message ?? "")
-        .onChange(of: isFocused) { newValue in
-            if !newValue { onLostFocus() }
-        }
+        return nil
     }
 }
-#endif

@@ -4,7 +4,7 @@ import SwiftUI
 
 /// Cobertura completa da resolução de aparência do `DSButton`.
 ///
-/// `DSButtonAppearance` traduz cada combinação de `DSButtonStyle` × `DSButtonTone`
+/// `DSButtonAppearance` traduz cada combinação de `DSButtonAppearance` × `DSButtonTone`
 /// nos tokens do `DSTheme` (fundo, cor de texto e borda). Os testes usam um tema
 /// com cores propositalmente distintas para que cada asserção seja inequívoca.
 struct DSButtonAppearanceTests {

@@ -4,7 +4,7 @@ import SwiftUI
 /// behavior across the application.
 ///
 /// `DSButton` delegates its visual configuration to `DSButtonAppearance`, using
-/// the current `DSTheme`, `DSButtonStyle`, and `DSButtonTone`. This view is
+/// the current `DSTheme`, `DSButtonAppearance`, and `DSButtonTone`. This view is
 /// responsible for applying the resolved appearance to the SwiftUI button
 /// hierarchy.
 ///

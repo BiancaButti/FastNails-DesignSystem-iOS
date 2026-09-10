@@ -130,16 +130,28 @@ private struct FormTextFieldShowcase: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VariantRow(label: "Estilo custom com ícone (design system)") {
+            VariantRow(label: "User insert name") {
                 DSFormTextField(
-                    label: "E-mail", placeholder: "seu@email.com", text: $custom,
-                    errorMessage: hasValidated && custom.isEmpty ? "Preencha o e-mail para continuar." : nil,
-                    successMessage: hasValidated && !custom.isEmpty ? "E-mail preenchido corretamente." : nil,
-                    icon: "envelope"
+                    label: "Name".uppercased(),
+                    placeholder: "James Hetfield",
+                    text: $custom,
+                    errorMessage: hasValidated && custom.isEmpty ? "Please enter your email to continue." : nil
                 )
             }
-            VariantRow(label: "Estilo nativo (systemStyle)") {
-                DSFormTextField(label: "E-mail", placeholder: "seu@email.com", text: $system, systemStyle: true)
+            VariantRow(label: "With placeholder") {
+                DSFormTextField(label: "E-mail",
+                                placeholder: "insert your email here",
+                                text: $system, systemStyle: true)
+            }
+            VariantRow(label: "Insert wrong address") {
+                DSFormTextField(label: "Address",
+                                placeholder: "742 Evergreen Terrace",
+                                text: $system, systemStyle: true)
+            }
+            VariantRow(label: "Insert wrong email") {
+                DSFormTextField(label: "Email",
+                                placeholder: "your_email@email.com",
+                                text: $system, systemStyle: true)
             }
             Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
         }
