@@ -142,7 +142,7 @@ public struct DSFormTextField: View {
 
     private var customTextField: some View {
         let borderColor = feedback.map { f in f.tone.color(for: theme).opacity(0.85) }
-            ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.papel2)
+            ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.linha)
         return HStack(spacing: DSSpacing.sm) {
             if let icon {
                 Image(systemName: icon)

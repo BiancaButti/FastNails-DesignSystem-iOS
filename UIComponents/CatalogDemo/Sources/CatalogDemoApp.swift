@@ -6,6 +6,7 @@ struct CatalogDemoApp: App {
     var body: some Scene {
         WindowGroup {
             CatalogDemoRootView()
+                .preferredColorScheme(.light)
         }
     }
 }
@@ -109,11 +110,11 @@ private struct DSButtonShowcase: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
 
-            DSButton(title: "Continuar", isEnabled: true) { tapCount += 1 }
-            DSButton(title: "Já tenho conta", style: .secondary, isEnabled: true) { tapCount += 1 }
-            DSButton(title: "Como chegar", style: .secondary, tone: .neutral, isEnabled: true) { tapCount += 1 }
-            DSButton(title: "Cancelar agendamento", style: .secondary, tone: .destructive, isEnabled: true) { tapCount += 1 }
-            DSButton(title: "Enviando...", isLoading: true, isEnabled: true) {}
+            DSButton(title: "Continuar") { tapCount += 1 }
+            DSButton(title: "Já tenho conta", style: .secondary) { tapCount += 1 }
+            DSButton(title: "Como chegar", style: .secondary, tone: .neutral) { tapCount += 1 }
+            DSButton(title: "Cancelar agendamento", style: .secondary, tone: .destructive) { tapCount += 1 }
+            DSButton(title: "Enviando...", isLoading: true) {}
             DSButton(title: "Escolha uma opção", isEnabled: false) {}
 
             Text("Touch: \(tapCount)")

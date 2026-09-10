@@ -1,3 +1,6 @@
+/* DSButton */
+"buttonLoadingAccessibility" = "Carregando";
+
 /* DSOrDivider */
 "dividerOr" = "ou";
 
@@ -63,3 +66,4 @@
 /* Accessibility */
 "accessibilitySuccess" = "Sucesso";
 "accessibilityError" = "Erro";
+

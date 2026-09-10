@@ -25,8 +25,8 @@ import SwiftUI
 /// }
 /// ```
 ///
-/// - Note: `isEnabled` controls the button's visual state. The button is
-///   explicitly disabled by SwiftUI only while `isLoading` is `true`.
+/// - Note: The button stops responding to taps while `isEnabled` is `false`
+///   or `isLoading` is `true`.
 public struct DSButton: View {
     @Environment(\.dsTheme) private var theme
 
@@ -47,23 +47,20 @@ public struct DSButton: View {
     ///
     /// When loading:
     /// - The button action is disabled.
+    /// - A circular progress indicator is displayed alongside the title.
     /// - The background color is displayed with reduced opacity.
     /// - The border color, when present, is displayed with reduced opacity.
     ///
     /// Defaults to `false`.
-    ///
-    /// - Note: The current implementation does not display a loading indicator.
     var isLoading: Bool = false
 
-    /// Controls the visual enabled state of the button.
+    /// Controls the enabled state of the button.
     ///
-    /// When `false`, the button uses disabled colors and removes its border.
+    /// When `false`, the button uses disabled colors, removes its border, and
+    /// stops responding to taps.
     ///
-    /// Defaults to `false`.
-    ///
-    /// - Important: This property currently controls the button's appearance
-    ///   only. Interaction is disabled when `isLoading` is `true`.
-    var isEnabled: Bool = false
+    /// Defaults to `true`.
+    var isEnabled: Bool = true
 
     /// An optional accessibility hint that provides additional context about
     /// the button's action.
@@ -83,8 +80,7 @@ public struct DSButton: View {
     ///   - tone: The semantic color tone of the button. Defaults to `.brand`.
     ///   - isLoading: Whether the button is currently loading. Defaults to
     ///     `false`.
-    ///   - isEnabled: Whether the button should appear enabled. Defaults to
-    ///     `false`.
+    ///   - isEnabled: Whether the button is enabled. Defaults to `true`.
     ///   - accessibilityHint: An optional hint providing additional
     ///     accessibility context.
     ///   - action: The closure to execute when the button is activated.
@@ -93,7 +89,7 @@ public struct DSButton: View {
         style: DSButtonStyle = .primary,
         tone: DSButtonTone = .brand,
         isLoading: Bool = false,
-        isEnabled: Bool = false,
+        isEnabled: Bool = true,
         accessibilityHint: String? = nil,
         action: @escaping () -> Void
     ) {
@@ -143,37 +139,57 @@ public struct DSButton: View {
             : theme.titleColor.opacity(0.45)
 
         Button(action: action) {
-            Text(title)
-                .font(theme.buttonFont)
-                .foregroundStyle(textColor)
-                .frame(maxWidth: style == .tertiary ? nil : .infinity)
-                .frame(minHeight: 48)
-                .padding(.horizontal, DSSpacing.lg)
-                .background(background)
-                .overlay {
-                    if let borderColor {
-                        RoundedRectangle(
-                            cornerRadius: DSRadius.controle
-                        )
-                        .strokeBorder(
-                            borderColor,
-                            lineWidth: 1.5
-                        )
-                    }
+            HStack(spacing: DSSpacing.sm) {
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(textColor)
                 }
-                .clipShape(
+                Text(title)
+                    .font(theme.buttonFont)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
+            }
+            .foregroundStyle(textColor)
+            .frame(maxWidth: style == .tertiary ? nil : .infinity)
+            .frame(minHeight: 48)
+            .padding(.horizontal, DSSpacing.lg)
+            .background(background)
+            .overlay {
+                if let borderColor {
                     RoundedRectangle(
                         cornerRadius: DSRadius.controle
                     )
+                    .strokeBorder(
+                        borderColor,
+                        lineWidth: 1.5
+                    )
+                }
+            }
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.controle
                 )
+            )
         }
         .buttonStyle(.plain)
-        .disabled(isLoading)
+        .disabled(!isEnabled || isLoading)
         .animation(
             .easeInOut(duration: 0.2),
             value: isEnabled
         )
+        .animation(
+            .easeInOut(duration: 0.2),
+            value: isLoading
+        )
         .accessibilityLabel(title)
+        .modifier(
+            OptionalAccessibilityValue(
+                value: isLoading
+                    ? String(localized: "buttonLoadingAccessibility", bundle: .module)
+                    : nil
+            )
+        )
         .modifier(
             OptionalAccessibilityHint(
                 hint: accessibilityHint
@@ -188,6 +204,29 @@ public struct DSButton: View {
 ///
 /// The modifier avoids applying an empty or missing accessibility hint when
 /// `hint` is `nil`.
+/// A view modifier that conditionally applies an accessibility value.
+///
+/// The modifier avoids applying an empty or missing accessibility value when
+/// `value` is `nil`, which prevents redundant announcements (for example, the
+/// native "dimmed" state already conveyed by `disabled`).
+private struct OptionalAccessibilityValue: ViewModifier {
+    /// The optional accessibility value to apply.
+    let value: String?
+
+    /// Applies the accessibility value when one is available.
+    ///
+    /// - Parameter content: The view to which the modifier is applied.
+    /// - Returns: The original view, optionally configured with an
+    ///   accessibility value.
+    func body(content: Content) -> some View {
+        if let value {
+            content.accessibilityValue(value)
+        } else {
+            content
+        }
+    }
+}
+
 private struct OptionalAccessibilityHint: ViewModifier {
     /// The optional accessibility hint to apply.
     let hint: String?

@@ -225,7 +225,7 @@ public struct DSFormSecureField: View {
             RoundedRectangle(cornerRadius: DSRadius.lg)
                 .stroke(
                     feedback.map { f in f.tone.color(for: theme).opacity(0.85) }
-                        ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.papel2),
+                        ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.linha),
                     lineWidth: isFocused || feedback != nil ? 1.5 : 1
                 )
         }
