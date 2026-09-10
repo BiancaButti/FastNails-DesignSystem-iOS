@@ -24,6 +24,11 @@ let package = Package(
             name: "UICatalog",
             dependencies: ["UIComponents"],
             path: "UIComponents/Sources/UICatalog"
+        ),
+        .testTarget(
+            name: "UIComponentsTests",
+            dependencies: ["UIComponents"],
+            path: "UIComponents/Tests/UIComponentsTests"
         )
     ]
 )

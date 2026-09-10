@@ -120,23 +120,16 @@ public struct DSButton: View {
             theme: theme
         )
 
-        let disabledFill = theme.secondaryColor.opacity(0.35)
+        let render = DSButtonRenderState(
+            appearance: appearance,
+            isEnabled: isEnabled,
+            isLoading: isLoading,
+            theme: theme
+        )
 
-        let background = !isEnabled
-            ? disabledFill
-            : (isLoading
-                ? appearance.background.opacity(0.6)
-                : appearance.background)
-
-        let borderColor: Color? = !isEnabled
-            ? nil
-            : appearance.borderColor.map {
-                isLoading ? $0.opacity(0.6) : $0
-            }
-
-        let textColor = isEnabled
-            ? appearance.textColor
-            : theme.titleColor.opacity(0.45)
+        let background = render.background
+        let borderColor = render.borderColor
+        let textColor = render.textColor
 
         Button(action: action) {
             HStack(spacing: DSSpacing.sm) {

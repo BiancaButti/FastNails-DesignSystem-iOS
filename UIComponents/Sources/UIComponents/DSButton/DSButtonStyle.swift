@@ -48,3 +48,38 @@ struct DSButtonAppearance {
         }
     }
 }
+
+/// The final colors applied to a `DSButton` once its interaction state
+/// (enabled, disabled, loading) is taken into account.
+///
+/// This separates the state-dependent color logic from the SwiftUI view so it
+/// can be verified in isolation.
+struct DSButtonRenderState: Equatable {
+    var background: Color
+    var borderColor: Color?
+    var textColor: Color
+
+    /// Resolves the render colors for a button.
+    ///
+    /// - When disabled: a dimmed fill, no border, and dimmed text.
+    /// - When loading (and enabled): the base colors displayed at reduced
+    ///   opacity.
+    /// - Otherwise: the base appearance colors unchanged.
+    init(
+        appearance: DSButtonAppearance,
+        isEnabled: Bool,
+        isLoading: Bool,
+        theme: DSTheme
+    ) {
+        guard isEnabled else {
+            background = theme.secondaryColor.opacity(0.35)
+            borderColor = nil
+            textColor = theme.titleColor.opacity(0.45)
+            return
+        }
+
+        background = isLoading ? appearance.background.opacity(0.6) : appearance.background
+        borderColor = appearance.borderColor.map { isLoading ? $0.opacity(0.6) : $0 }
+        textColor = appearance.textColor
+    }
+}
