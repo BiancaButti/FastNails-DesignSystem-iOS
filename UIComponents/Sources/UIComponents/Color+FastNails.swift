@@ -1,138 +1,77 @@
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-#endif
 
-/// Tokens de cor do design system FastNails.
-///
-/// Todas as cores adaptam automaticamente ao modo claro e escuro via `UIColor`
-/// dynamic provider (iOS/iPadOS) ou valor estático de fallback (macOS/outros).
-///
-/// ## Hierarquia de tokens
-/// - **Marca**: `appPink`
-/// - **Avaliações**: `appRating`
-/// - **Semânticas de estado**: `colorSuccess`, `colorDestructive`
-/// - **Aliases legados**: `appOpenBadge`, `appClosedBadge`
-///
-/// Estes tokens são **públicos**: o app consome os mesmos valores que os
-/// componentes da lib, em vez de manter cópias próprias que divergem com o tempo.
-public extension Color {
-    // MARK: - Brand / Primary
-    /// Cor rosa da marca. Mais clara no modo escuro para manter contraste adequado.
-    static let appPink: Color = {
-        #if canImport(UIKit)
-        return Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.96, green: 0.51, blue: 0.68, alpha: 1)
-                : UIColor(red: 0.92, green: 0.35, blue: 0.56, alpha: 1)
-        })
-        #else
-        return Color(red: 0.92, green: 0.35, blue: 0.56)
-        #endif
-    }()
-
-    // MARK: - Semantic / Rating
-    /// Cor dourada para estrelas de avaliação. Mais saturada no modo escuro.
-    static let appRating: Color = {
-        #if canImport(UIKit)
-        return Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 1.00, green: 0.82, blue: 0.35, alpha: 1)
-                : UIColor(red: 0.96, green: 0.72, blue: 0.18, alpha: 1)
-        })
-        #else
-        return Color(red: 0.96, green: 0.72, blue: 0.18)
-        #endif
-    }()
-
-    // MARK: - Semantic / Status
-    /// Cor semântica de sucesso — usada em badges, rótulos de feedback e barras de senha.
-    static let colorSuccess: Color = {
-        #if canImport(UIKit)
-        return Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.22, green: 0.78, blue: 0.49, alpha: 1)
-                : UIColor(red: 0.17, green: 0.63, blue: 0.39, alpha: 1)
-        })
-        #else
-        return Color(red: 0.17, green: 0.63, blue: 0.39)
-        #endif
-    }()
-
-    /// Cor semântica de erro/destrutivo — usada em validações, badges fechados e barras de senha fraca.
-    static let colorDestructive: Color = {
-        #if canImport(UIKit)
-        return Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 1.00, green: 0.42, blue: 0.38, alpha: 1)
-                : UIColor(red: 0.86, green: 0.27, blue: 0.24, alpha: 1)
-        })
-        #else
-        return Color(red: 0.86, green: 0.27, blue: 0.24)
-        #endif
-    }()
-
-    // MARK: - Legacy aliases (kept for backwards compatibility)
-    /// Alias de `colorSuccess`. Prefer `colorSuccess` em novo código.
-    static let appOpenBadge: Color = .colorSuccess
-    /// Alias de `colorDestructive`. Prefer `colorDestructive` em novo código.
-    static let appClosedBadge: Color = .colorDestructive
-
-    // MARK: - Empty state
-    /// Cor neutra para ícones de estado vazio. Cinza médio que adapta ao modo escuro.
-    static let appEmptyState: Color = {
-        #if canImport(UIKit)
-        return Color(UIColor { trait in
-            trait.userInterfaceStyle == .dark
-                ? UIColor(red: 0.60, green: 0.60, blue: 0.65, alpha: 1)
-                : UIColor(red: 0.70, green: 0.70, blue: 0.73, alpha: 1)
-        })
-        #else
-        return Color(red: 0.70, green: 0.70, blue: 0.73)
-        #endif
-    }()
-}
-
-// MARK: - Cross-platform system colors (internal)
+// MARK: - Hexadecimal
 
 extension Color {
-    static var dsSystemBackground: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .systemBackground)
-        #else
-        Color(NSColor.windowBackgroundColor)
-        #endif
+    /// Cria uma cor a partir de hexadecimal no formato `0xRRGGBB`.
+    ///
+    /// Existe para que os tokens abaixo possam ser escritos com os mesmos
+    /// valores da documentação, sem conversão manual para componentes.
+    init(hex: UInt32) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: 1
+        )
     }
+}
 
-    static var dsSecondarySystemBackground: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .secondarySystemBackground)
-        #else
-        Color(NSColor.controlBackgroundColor)
-        #endif
-    }
+// MARK: - Tokens
 
-    static var dsSystemGray: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .systemGray)
-        #else
-        Color(NSColor.systemGray)
-        #endif
-    }
+/// Cores do Fast Nails.
+///
+/// **Sem variação de modo escuro.** O app tem uma aparência só, e cada cor
+/// tem um valor. Suportar os dois modos significa manter duas paletas em
+/// sincronia e verificar contraste duas vezes — trabalho que não se paga
+/// enquanto o app não pedir.
+///
+/// Os valores são os mesmos da página **Design System**. Se divergirem,
+/// a página é a fonte da verdade.
+public extension Color {
 
-    static var dsSystemGray4: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .systemGray4)
-        #else
-        Color(NSColor.separatorColor)
-        #endif
-    }
+    // MARK: Estrutura
 
-    static var dsSystemGray5: Color {
-        #if canImport(UIKit)
-        Color(uiColor: .systemGray5)
-        #else
-        Color(NSColor.underPageBackgroundColor)
-        #endif
-    }
+    /// Fundo escuro da marca. Splash, ícone e cartão de agendamento.
+    /// Contraste com Blush: 12,8:1.
+    static let tinta = Color(hex: 0x241C2B)
+
+    /// Texto secundário sobre Papel. Contraste 5,9:1.
+    static let tinta60 = Color(hex: 0x6B6371)
+
+    /// Fundo das telas.
+    static let papel = Color(hex: 0xFFFFFF)
+
+    /// Fundo de elementos apoiados sobre o Papel — campos, células, chips.
+    static let papel2 = Color(hex: 0xEDE6E8)
+
+    /// Bordas e divisórias.
+    static let linha = Color(hex: 0xD9D0D3)
+
+    /// Texto claro sobre Tinta.
+    static let blush = Color(hex: 0xFADED3)
+
+    // MARK: Ação e estado
+
+    /// **A única cor de ação.** Botão principal, link, seleção.
+    /// Contraste sobre branco: 5,5:1 — passa em texto pequeno.
+    static let esmalte = Color(hex: 0xC4265E)
+
+    /// Confirmado, disponível, deu certo.
+    static let agua = Color(hex: 0x2F7D74)
+
+    /// Atenção sem erro. Sem conexão, agenda suspensa.
+    static let ambar = Color(hex: 0x9A6212)
+
+    /// Erro e ação destrutiva.
+    static let alerta = Color(hex: 0xB3261E)
+}
+
+
+// MARK: - Superfícies
+
+extension Color {
+    /// Fundo de cartão e campo. Branco puro sobre o Papel.
+    public static let dsSurface = Color.white
 }

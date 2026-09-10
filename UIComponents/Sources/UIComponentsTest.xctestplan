@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "A1B2C3D4-0000-0000-0000-000000000001",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:",
+      "identifier" : "UIComponentsTests",
+      "name" : "UIComponentsTests"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "UIComponentsTests",
+        "name" : "UIComponentsTests"
+      }
+    }
+  ],
+  "version" : 1
+}

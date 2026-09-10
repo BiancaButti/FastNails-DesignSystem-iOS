@@ -6,20 +6,9 @@ struct CatalogDemoApp: App {
     var body: some Scene {
         WindowGroup {
             CatalogDemoRootView()
+                .preferredColorScheme(.light)
         }
     }
-}
-
-// MARK: - Tema do catálogo
-
-/// Coral da marca (aprox. #D9856A) para testar o rebrand ao vivo no catálogo.
-private let fastNailsCoral = Color(red: 0.851, green: 0.522, blue: 0.416)
-
-private enum CatalogBrand: String, CaseIterable, Identifiable {
-    case pink = "appPink"
-    case coral = "Coral"
-    var id: String { rawValue }
-    var color: Color? { self == .coral ? fastNailsCoral : nil }
 }
 
 // MARK: - Item
@@ -34,31 +23,21 @@ private struct CatalogDemoItem: Identifiable {
 // MARK: - Root
 
 private struct CatalogDemoRootView: View {
-    @State private var brand: CatalogBrand = .pink
-
     private let items: [CatalogDemoItem] = [
-        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Botão principal — estados e cores", content: AnyView(PrimaryButtonShowcase())),
-        CatalogDemoItem(id: "socialButton", title: "DSSocialButton", summary: "Login social Apple/Google (claro e escuro)", content: AnyView(SocialButtonShowcase())),
+        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSFormTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
-        CatalogDemoItem(id: "passwordStrengthBar", title: "DSPasswordStrengthBar", summary: "Força da senha", content: AnyView(PasswordStrengthBarShowcase())),
         CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
         CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
         CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
-        CatalogDemoItem(id: "searchField", title: "DSSearchFieldView", summary: "Campo de busca", content: AnyView(SearchFieldShowcase())),
         CatalogDemoItem(id: "filterChips", title: "DSFilterChips", summary: "Chip e seção de filtros", content: AnyView(FilterChipsShowcase())),
-        CatalogDemoItem(id: "categories", title: "DSCategoriesSection", summary: "Grade de categorias", content: AnyView(CategoriesShowcase())),
-        CatalogDemoItem(id: "priceSlider", title: "DSPriceSliderRow", summary: "Slider de orçamento", content: AnyView(PriceSliderShowcase())),
         CatalogDemoItem(id: "header", title: "DSHeaderView", summary: "Cabeçalho com localização e avatar", content: AnyView(DSHeaderView(city: "São Paulo"))),
-        CatalogDemoItem(id: "ratingView", title: "DSRatingView", summary: "Avaliação (compacta e expandida)", content: AnyView(RatingViewShowcase())),
         CatalogDemoItem(id: "distanceView", title: "DSDistanceView", summary: "Distância até a profissional", content: AnyView(DistanceShowcase())),
         CatalogDemoItem(id: "statusBadgeView", title: "DSStatusBadgeView", summary: "Badge de status", content: AnyView(StatusBadgeViewShowcase())),
         CatalogDemoItem(id: "manicuristPhotoView", title: "DSManicuristPhotoView", summary: "Avatar de profissional", content: AnyView(ManicuristPhotoShowcase())),
-        CatalogDemoItem(id: "orDivider", title: "DSOrDivider", summary: "Divisor com texto", content: AnyView(DSOrDivider(label: "ou"))),
         CatalogDemoItem(id: "feedbackLabel", title: "DSFeedback / Error / Success", summary: "Mensagens de validação", content: AnyView(FeedbackLabelShowcase())),
-        CatalogDemoItem(id: "loadingView", title: "DSLoadingView", summary: "Indicador de carregamento", content: AnyView(DSLoadingView(message: "Buscando horários disponíveis"))),
-        CatalogDemoItem(id: "searchEmptyState", title: "DSSearchEmptyStateView", summary: "Estado vazio de busca", content: AnyView(DSSearchEmptyStateView()))
+        CatalogDemoItem(id: "loadingView", title: "DSLoadingView", summary: "Indicador de carregamento", content: AnyView(DSLoadingView(message: "Buscando horários disponíveis")))
     ]
 
     var body: some View {
@@ -75,16 +54,7 @@ private struct CatalogDemoRootView: View {
                 }
             }
             .navigationTitle("Componentes")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Picker("Tema", selection: $brand) {
-                        ForEach(CatalogBrand.allCases) { Text($0.rawValue).tag($0) }
-                    }
-                    .pickerStyle(.segmented)
-                }
-            }
         }
-        .dsTheme(DSTheme(brandColor: brand.color))
     }
 }
 
@@ -134,54 +104,25 @@ private struct VariantRow<Content: View>: View {
 
 // MARK: - Showcases
 
-private struct PrimaryButtonShowcase: View {
+private struct DSButtonShowcase: View {
     @State private var tapCount = 0
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            VariantRow(label: "Padrão (ativo)") {
-                DSPrimaryButton(title: "Entrar") { tapCount += 1 }
-            }
-            VariantRow(label: "Desabilitado") {
-                DSPrimaryButton(title: "Entrar", isEnabled: false) {}
-            }
-            VariantRow(label: "Carregando") {
-                DSPrimaryButton(title: "Entrar", isLoading: true) {}
-            }
-            VariantRow(label: "Cor custom (verde)") {
-                DSPrimaryButton(title: "Confirmar", color: .green) { tapCount += 1 }
-            }
-            Text("Toques: \(tapCount)").font(.footnote).foregroundStyle(.secondary)
-        }
-    }
-}
 
-private struct SocialButtonShowcase: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            themeBlock("Modo claro", scheme: .light, background: Color.white)
-            themeBlock("Modo escuro", scheme: .dark, background: Color(red: 0.11, green: 0.11, blue: 0.12))
-            Text("O logo do Google aqui é placeholder — usar o \"G\" oficial de 4 cores.")
-                .font(.caption2)
+            DSButton(title: "Continuar") { tapCount += 1 }
+            DSButton(title: "Já tenho conta", style: .secondary) { tapCount += 1 }
+            DSButton(title: "Como chegar", style: .secondary, tone: .neutral) { tapCount += 1 }
+            DSButton(title: "Cancelar agendamento", style: .secondary, tone: .destructive) { tapCount += 1 }
+            DSButton(title: "Enviando...", isLoading: true) {}
+            DSButton(title: "Escolha uma opção", isEnabled: false) {}
+
+            Text("Touch: \(tapCount)")
+                .font(.footnote)
                 .foregroundStyle(.secondary)
         }
     }
-
-    private func themeBlock(_ name: String, scheme: ColorScheme, background: Color) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(name).font(.caption).foregroundStyle(.secondary)
-            VStack(spacing: 10) {
-                DSSocialButton(style: .apple, title: "Continuar com a Apple", logo: Image(systemName: "apple.logo")) {}
-                DSSocialButton(style: .google, title: "Continuar com o Google", logo: Image(systemName: "g.circle.fill")) {}
-            }
-            .padding(14)
-            .background(background)
-            .clipShape(RoundedRectangle(cornerRadius: 14))
-            .environment(\.colorScheme, scheme)
-        }
-    }
 }
-
 private struct FormTextFieldShowcase: View {
     @State private var custom = ""
     @State private var system = ""
@@ -217,17 +158,7 @@ private struct FormSecureFieldShowcase: View {
                 successMessage: hasValidated && password.count >= 6 ? "Senha válida." : nil,
                 icon: "lock"
             )
-            DSPasswordStrengthBar(strength: strength)
             Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
-        }
-    }
-
-    private var strength: DSPasswordStrength {
-        switch password.count {
-        case 0: return .empty
-        case 1...5: return .weak
-        case 6...9: return .medium
-        default: return .strong
         }
     }
 }
@@ -244,23 +175,6 @@ private struct OTPFieldShowcase: View {
                 successMessage: hasValidated && code.count == 6 ? "Código preenchido corretamente." : nil
             )
             Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
-        }
-    }
-}
-
-private struct PasswordStrengthBarShowcase: View {
-    @State private var strength: DSPasswordStrength = .medium
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            DSPasswordStrengthBar(strength: strength)
-            Picker("Força", selection: $strength) {
-                Text("Vazia").tag(DSPasswordStrength.empty)
-                Text("Fraca").tag(DSPasswordStrength.weak)
-                Text("Média").tag(DSPasswordStrength.medium)
-                Text("Forte").tag(DSPasswordStrength.strong)
-            }
-            .pickerStyle(.segmented)
         }
     }
 }
@@ -373,13 +287,6 @@ private struct ResendButtonShowcase: View {
     }
 }
 
-private struct SearchFieldShowcase: View {
-    @State private var query = ""
-    var body: some View {
-        DSSearchFieldView(text: $query)
-    }
-}
-
 private struct FilterChipsShowcase: View {
     @State private var active: Set<String> = ["perto"]
 
@@ -403,38 +310,6 @@ private struct FilterChipsShowcase: View {
             VariantRow(label: "Seção rolável (toque para alternar)") {
                 DSFilterChipsSection(items: items)
             }
-        }
-    }
-}
-
-private struct CategoriesShowcase: View {
-    private var items: [DSCategoryItem] {
-        [("maos", "Mãos", "hand.raised.fill"), ("pes", "Pés", "shoeprints.fill"),
-         ("nailart", "Nail art", "paintbrush.fill"), ("along", "Alongamento", "sparkles")]
-            .map { id, label, icon in DSCategoryItem(id: id, label: label, systemIcon: icon, onTap: {}) }
-    }
-
-    var body: some View {
-        DSCategoriesSection(items: items)
-    }
-}
-
-private struct PriceSliderShowcase: View {
-    @State private var value: Double = 75
-
-    var body: some View {
-        DSPriceSliderRow(title: "Orçamento", value: $value, range: 25...200, step: 5)
-    }
-}
-
-private struct RatingViewShowcase: View {
-    @State private var rating = 4.5
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            DSRatingView(rating: rating, style: .expanded)
-            DSRatingView(rating: rating, style: .compact)
-            Slider(value: $rating, in: 0...5, step: 0.5)
         }
     }
 }

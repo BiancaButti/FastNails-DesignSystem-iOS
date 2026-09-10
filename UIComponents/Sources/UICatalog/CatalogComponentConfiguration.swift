@@ -8,10 +8,7 @@ enum CatalogComponentName: String, CaseIterable, Identifiable {
     case loadingView = "DSLoadingView"
     case manicuristPhotoView = "DSManicuristPhotoView"
     case otpField = "DSOTPField"
-    case orDivider = "DSOrDivider"
-    case passwordStrengthBar = "DSPasswordStrengthBar"
     case primaryButton = "DSPrimaryButton"
-    case ratingView = "DSRatingView"
     case statusBadgeView = "DSStatusBadgeView"
     case successLabel = "DSSuccessLabel"
 
@@ -33,14 +30,8 @@ enum CatalogComponentName: String, CaseIterable, Identifiable {
             return "Avatar genérico de profissional"
         case .otpField:
             return "Campo para código de verificação"
-        case .orDivider:
-            return "Divisor visual com texto"
-        case .passwordStrengthBar:
-            return "Indicador de força da senha"
         case .primaryButton:
             return "Botão principal de ação"
-        case .ratingView:
-            return "Exibição de avaliação"
         case .statusBadgeView:
             return "Badge de status com estados configuráveis"
         case .successLabel:
