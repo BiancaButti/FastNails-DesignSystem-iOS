@@ -11,7 +11,7 @@ import SwiftUI
 /// Cancellation is not part of the cycle. It interrupts it, and carries who
 /// did it and whether the salon had already confirmed — which is what tells
 /// "declined" apart from "cancelled".
-public enum DSBookingStatus: Equatable {
+public enum DSBookingStatusBadge: Equatable {
  
     /// Sent, waiting for the salon to answer.
     case requested
@@ -46,7 +46,7 @@ struct DSStatusAppearance {
     let background: Color
     let foreground: Color
  
-    init(status: DSBookingStatus, theme: DSTheme) {
+    init(status: DSBookingStatusBadge, theme: DSTheme) {
         switch status {
  
         case .requested:

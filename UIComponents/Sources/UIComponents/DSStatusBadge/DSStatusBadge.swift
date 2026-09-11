@@ -4,7 +4,7 @@ import SwiftUI
 /// A read-only badge showing the state of a booking.
 ///
 /// This is **not** a control. It has no action and no selected state; it only
-/// reflects the current `DSBookingStatus`.
+/// reflects the current `DSBookingStatusBadge`.
 ///
 /// ```swift
 /// DSStatusBadge(title: "Confirmed", status: .confirmed)
@@ -17,13 +17,13 @@ import SwiftUI
 public struct DSStatusBadge: View {
  
     let title: String
-    let status: DSBookingStatus
+    let status: DSBookingStatusBadge
  
     @Environment(\.dsTheme) private var theme
  
     public init(
         title: String,
-        status: DSBookingStatus) {
+        status: DSBookingStatusBadge) {
         self.title = title
         self.status = status
     }
