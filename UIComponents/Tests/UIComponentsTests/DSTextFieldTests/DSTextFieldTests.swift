@@ -16,7 +16,7 @@ struct DSTextFieldTests {
     
     @Test("TextField receive keyboard to insert telephone")
     func enabledKeyboardToWriteTelephone() {
-        #expect(DSTextFieldStyle.telephone.keyboardType == .phonePad)
+        #expect(DSTextFieldStyle.telephone.keyboardType == .numberPad)
     }
     
     @Test("TextField receive keyboard to insert name")
