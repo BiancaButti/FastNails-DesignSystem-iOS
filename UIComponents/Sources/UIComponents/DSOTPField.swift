@@ -149,10 +149,10 @@ public struct DSOTPField: View {
         let feedbackColor = feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
 
         ZStack {
-            RoundedRectangle(cornerRadius: DSRadius.sm)
+            RoundedRectangle(cornerRadius: DSRadius.superficie)
                 .fill(Color.dsSurface)
                 .overlay {
-                    RoundedRectangle(cornerRadius: DSRadius.sm)
+                    RoundedRectangle(cornerRadius: DSRadius.superficie)
                         .stroke(
                             feedbackColor
                                 ?? (isCurrentBox ? theme.brandColor : Color.linha),

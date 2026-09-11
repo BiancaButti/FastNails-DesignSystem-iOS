@@ -30,7 +30,7 @@ public struct DSStatusBadgeView: View {
         public var backgroundColor: Color {
             switch self {
             case .success:
-                return Color.agua
+                return Color.confirmed
             case .failure:
                 return Color.alerta
             }

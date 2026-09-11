@@ -42,7 +42,7 @@ public struct DSLoadingView: View {
 		.frame(maxWidth: .infinity)
 		.padding(DSSpacing.xl)
 		.background(Color.papel2)
-		.clipShape(RoundedRectangle(cornerRadius: DSRadius.xl))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.superficie))
 		.accessibilityElement(children: .ignore)
 		.accessibilityLabel(message)
 		.accessibilityAddTraits(.updatesFrequently)

@@ -24,29 +24,30 @@ import SwiftUI
 /// deixando os chips individuais navegáveis por swipe horizontal.
 ///
 /// - SeeAlso: `DSFilterChipView`, `DSFilterChipItem`
-public struct DSFilterChipsSection: View {
-
-    /// Lista ordenada de chips a exibir.
-    let items: [DSFilterChipItem]
-
-    /// Cria um `DSFilterChipsSection`.
-    /// - Parameter items: Array de `DSFilterChipItem` com label, estado e ação de cada chip.
-    public init(items: [DSFilterChipItem]) {
-        self.items = items
-    }
-
-    public var body: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: DSSpacing.sm) {
-                ForEach(items) { item in
-                    DSFilterChipView(
-                        label: item.label,
-                        isActive: item.isActive,
-                        action: item.onTap
-                    )
-                }
-            }
-            .padding(.horizontal, DSSpacing.lg)
-        }
-    }
-}
+//public struct DSFilterChipsSection: View {
+//
+//    /// Lista ordenada de chips a exibir.
+//    let items: [DSFilterChipItem]
+//
+//    /// Cria um `DSFilterChipsSection`.
+//    /// - Parameter items: Array de `DSFilterChipItem` com label, estado e ação de cada chip.
+//    public init(items: [DSFilterChipItem]) {
+//        self.items = items
+//    }
+//
+//    public var body: some View {
+//        ScrollView(.horizontal, showsIndicators: false) {
+//            HStack(spacing: DSSpacing.sm) {
+//                ForEach(items) { item in
+//                    DSFilterChipView(
+//                        label: item.label,
+//                        isActive: item.isActive,
+//                        bookingStatus: .inProgress,
+//                        action: item.onTap
+//                    )
+//                }
+//            }
+//            .padding(.horizontal, DSSpacing.lg)
+//        }
+//    }
+//}

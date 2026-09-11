@@ -59,7 +59,7 @@ public extension Color {
     static let esmalte = Color(hex: 0xC4265E)
 
     /// Confirmado, disponível, deu certo.
-    static let agua = Color(hex: 0x2F7D74)
+    static let confirmed = Color(hex: 0x2F7D74)
 
     /// Atenção sem erro. Sem conexão, agenda suspensa.
     static let ambar = Color(hex: 0x9A6212)

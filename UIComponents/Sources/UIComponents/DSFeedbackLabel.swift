@@ -14,7 +14,7 @@ public enum DSFeedbackTone: CaseIterable {
     public var color: Color {
         switch self {
         case .success:
-            return Color.agua
+            return Color.confirmed
         case .failure:
             return Color.alerta
         }

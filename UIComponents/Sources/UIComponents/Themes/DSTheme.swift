@@ -1,53 +1,6 @@
 import SwiftUI
 
-// MARK: - DSSpacing
 
-/// Escala de espaçamento.
-///
-/// Use sempre estes valores em vez de números soltos: ajuste global vira
-/// uma linha, e o espaçamento fica consistente entre telas.
-///
-/// ```swift
-/// .padding(DSSpacing.md)
-/// VStack(spacing: DSSpacing.sm) { ... }
-/// ```
-public enum DSSpacing {
-    /// 4 pt — entre ícone e texto.
-    public static let xs: CGFloat = 4
-    /// 8 pt — entre elementos relacionados.
-    public static let sm: CGFloat = 8
-    /// 12 pt — dentro de campos e células.
-    public static let md: CGFloat = 12
-    /// 16 pt — margem lateral padrão das telas.
-    public static let lg: CGFloat = 16
-    /// 24 pt — dentro de cartões, entre blocos.
-    public static let xl: CGFloat = 24
-    /// 32 pt — separação entre seções.
-    public static let xxl: CGFloat = 32
-}
-
-// MARK: - DSRadius
-
-/// Escala de arredondamento.
-///
-/// Os quatro valores da documentação, nomeados pelo uso e não pelo tamanho.
-public enum DSRadius {
-    /// 999 pt — pílula. Chips, etiquetas, seletores.
-    public static let pilula: CGFloat = 999
-    /// 12 pt — controle. Botões e campos.
-    public static let controle: CGFloat = 12
-    /// 14 pt — superfície. Cartões e blocos.
-    public static let superficie: CGFloat = 14
-    /// 20 pt — topo da folha modal.
-    public static let folha: CGFloat = 20
-
-    // Nomes antigos
-    @available(*, deprecated, renamed: "controle") public static let sm: CGFloat = 6
-    @available(*, deprecated, renamed: "controle") public static let md: CGFloat = 10
-    @available(*, deprecated, renamed: "controle") public static let lg: CGFloat = 12
-    @available(*, deprecated, renamed: "superficie") public static let xl: CGFloat = 16
-    @available(*, deprecated, renamed: "folha") public static let xxl: CGFloat = 20
-}
 
 // MARK: - DSTheme
 
@@ -109,7 +62,7 @@ public struct DSTheme: Equatable {
     public init(
         brandColor: Color = .esmalte,
         errorColor: Color = .alerta,
-        successColor: Color = .agua,
+        successColor: Color = .confirmed,
         warningColor: Color = .ambar,
         surfaceColor: Color = .dsSurface,
         backgroundColor: Color = .papel,
