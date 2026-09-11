@@ -1,6 +1,6 @@
 import SwiftUI
 
-public enum MaskFormatation {
+public enum DSTextFieldStyle {
     case address
     case telephone
     case email

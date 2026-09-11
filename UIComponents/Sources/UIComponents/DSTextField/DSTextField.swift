@@ -34,7 +34,7 @@ public struct DSTextField: View {
     /// Error message shown below the field.
     var errorMessage: String? = nil
     ///
-    var kind: MaskFormatation = .name
+    var kind: DSTextFieldStyle = .name
     /// Keyboard type to present. Default: `.default`.
     var keyboardType: UIKeyboardType = .default
     /// Autocapitalization policy. Default: `.words`.
@@ -62,7 +62,7 @@ public struct DSTextField: View {
         label: String,
         placeholder: String,
         text: Binding<String>,
-        kind: MaskFormatation = .name,
+        kind: DSTextFieldStyle = .name,
         errorMessage: String? = nil,
         keyboardType: UIKeyboardType = .default,
         autocapitalization: TextInputAutocapitalization = .words,
