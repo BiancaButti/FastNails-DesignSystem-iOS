@@ -191,9 +191,9 @@ public struct DSFormSecureField: View {
         .padding(.horizontal, DSSpacing.sm)
         .padding(.vertical, DSSpacing.sm)
         .background(Color.dsSurface)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.sm))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.superficie))
         .overlay {
-            RoundedRectangle(cornerRadius: DSRadius.sm)
+            RoundedRectangle(cornerRadius: DSRadius.superficie)
                 .stroke(
                     feedback.map { f in f.tone.color(for: theme).opacity(0.8) }
                         ?? (isFocused ? theme.brandColor.opacity(0.5) : Color.linha),
@@ -220,9 +220,9 @@ public struct DSFormSecureField: View {
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.md)
         .background(Color.papel2)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.lg))
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.superficie))
         .overlay {
-            RoundedRectangle(cornerRadius: DSRadius.lg)
+            RoundedRectangle(cornerRadius: DSRadius.superficie)
                 .stroke(
                     feedback.map { f in f.tone.color(for: theme).opacity(0.85) }
                         ?? (isFocused ? theme.brandColor.opacity(0.6) : Color.linha),

@@ -25,19 +25,21 @@ private struct CatalogDemoItem: Identifiable {
 private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
         CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
-        CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
-        CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
-        CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
-        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
-        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
-        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
-        CatalogDemoItem(id: "filterChips", title: "DSFilterChips", summary: "Chip e seção de filtros", content: AnyView(FilterChipsShowcase())),
-        CatalogDemoItem(id: "header", title: "DSHeaderView", summary: "Cabeçalho com localização e avatar", content: AnyView(DSHeaderView(city: "São Paulo"))),
-        CatalogDemoItem(id: "distanceView", title: "DSDistanceView", summary: "Distância até a profissional", content: AnyView(DistanceShowcase())),
-        CatalogDemoItem(id: "statusBadgeView", title: "DSStatusBadgeView", summary: "Badge de status", content: AnyView(StatusBadgeViewShowcase())),
-        CatalogDemoItem(id: "manicuristPhotoView", title: "DSManicuristPhotoView", summary: "Avatar de profissional", content: AnyView(ManicuristPhotoShowcase())),
-        CatalogDemoItem(id: "feedbackLabel", title: "DSFeedback / Error / Success", summary: "Mensagens de validação", content: AnyView(FeedbackLabelShowcase())),
-        CatalogDemoItem(id: "loadingView", title: "DSLoadingView", summary: "Indicador de carregamento", content: AnyView(DSLoadingView(message: "Buscando horários disponíveis")))
+        CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
+        CatalogDemoItem(id: "filterChips", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase()))
+        
+//        CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
+//        CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
+//        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
+//        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
+//        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
+//
+//        CatalogDemoItem(id: "header", title: "DSHeaderView", summary: "Cabeçalho com localização e avatar", content: AnyView(DSHeaderView(city: "São Paulo"))),
+//        CatalogDemoItem(id: "distanceView", title: "DSDistanceView", summary: "Distância até a profissional", content: AnyView(DistanceShowcase())),
+//        CatalogDemoItem(id: "statusBadgeView", title: "DSStatusBadgeView", summary: "Badge de status", content: AnyView(StatusBadgeViewShowcase())),
+//        CatalogDemoItem(id: "manicuristPhotoView", title: "DSManicuristPhotoView", summary: "Avatar de profissional", content: AnyView(ManicuristPhotoShowcase())),
+//        CatalogDemoItem(id: "feedbackLabel", title: "DSFeedback / Error / Success", summary: "Mensagens de validação", content: AnyView(FeedbackLabelShowcase())),
+//        CatalogDemoItem(id: "loadingView", title: "DSLoadingView", summary: "Indicador de carregamento", content: AnyView(DSLoadingView(message: "Buscando horários disponíveis")))
     ]
 
     var body: some View {
@@ -123,7 +125,7 @@ private struct DSButtonShowcase: View {
         }
     }
 }
-private struct FormTextFieldShowcase: View {
+private struct DSTextFieldShowcase: View {
     @State private var custom = ""
     @State private var email = ""
     @State private var address = ""
@@ -154,6 +156,22 @@ private struct FormTextFieldShowcase: View {
                             kind: .address)
             }
         }
+    }
+}
+
+private struct DSStatusBadgeShowcase: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: DSSpacing.md) {
+            DSStatusBadge(title: "Aguardando o salão", status: .requested)
+            DSStatusBadge(title: "Confirmado", status: .confirmed)
+            DSStatusBadge(title: "Finzalizado", status: .finished)
+            DSStatusBadge(title: "Você desistiu", status: .withdrawn)
+            DSStatusBadge(title: "Pedido recusado", status: .declined)
+            DSStatusBadge(title: "Cancelado por você", status: .cancelled(by: .customer))
+            DSStatusBadge(title: "Cancelado pelo salão", status: .cancelled(by: .salon))
+        }
+        .padding(DSSpacing.lg)
+        .background(Color.papel)
     }
 }
 
@@ -298,32 +316,7 @@ private struct ResendButtonShowcase: View {
     }
 }
 
-private struct FilterChipsShowcase: View {
-    @State private var active: Set<String> = ["perto"]
 
-    private var items: [DSFilterChipItem] {
-        [("perto", "Perto de mim"), ("aberto", "Aberto agora"), ("promo", "Promoção"), ("top", "Bem avaliadas")]
-            .map { id, label in
-                DSFilterChipItem(id: id, label: label, isActive: active.contains(id)) {
-                    if active.contains(id) { active.remove(id) } else { active.insert(id) }
-                }
-            }
-    }
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            VariantRow(label: "Chip individual (ativo / inativo)") {
-                HStack {
-                    DSFilterChipView(label: "Ativo", isActive: true) {}
-                    DSFilterChipView(label: "Inativo", isActive: false) {}
-                }
-            }
-            VariantRow(label: "Seção rolável (toque para alternar)") {
-                DSFilterChipsSection(items: items)
-            }
-        }
-    }
-}
 
 private struct DistanceShowcase: View {
     var body: some View {
