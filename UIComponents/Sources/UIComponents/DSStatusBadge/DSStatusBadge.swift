@@ -3,12 +3,12 @@ import SwiftUI
  
 /// A read-only badge showing the state of a booking.
 ///
-/// This is **not** a control. It has no action and no selected state — for
-/// something tappable, use `DSFilterChip`.
+/// This is **not** a control. It has no action and no selected state; it only
+/// reflects the current `DSBookingStatus`.
 ///
 /// ```swift
-/// DSStatusBadge(status: .confirmed)
-/// DSStatusBadge(status: .cancelled(by: .salon))
+/// DSStatusBadge(title: "Confirmed", status: .confirmed)
+/// DSStatusBadge(title: "Cancelled by salon", status: .cancelled(by: .salon))
 /// ```
 ///
 /// ## Accessibility

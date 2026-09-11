@@ -13,7 +13,7 @@ import SwiftUI
 ///
 /// ```swift
 /// ComponenteView()
-///     .dsTheme(DSTheme(brandColor: .agua))   // só para experimentar
+///     .dsTheme(DSTheme(brandColor: .confirmed))   // só para experimentar
 /// ```
 public struct DSTheme: Equatable {
 

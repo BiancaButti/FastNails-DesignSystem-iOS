@@ -37,7 +37,7 @@ public struct DSCard<Content: View>: View {
     ///   - spacing: Espaçamento entre os itens (padrão `DSSpacing.lg`, 16 pt).
     ///   - padding: Espaçamento interno (padrão 20 pt).
     ///   - cornerRadius: Raio dos cantos (padrão 24 pt — mais pronunciado que
-    ///     `DSRadius.xl`, que serve para sheets e modais).
+    ///     `DSRadius.folha`, que serve para sheets e modais).
     ///   - background: Cor de fundo. Quando `nil`, usa `surfaceColor` do tema.
     ///     Informe para destacar um cartão do resto da tela — por exemplo, o
     ///     próximo agendamento preenchido com a cor da marca.
