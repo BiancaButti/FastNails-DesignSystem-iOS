@@ -4,7 +4,7 @@ enum CatalogComponentName: String, CaseIterable, Identifiable {
     case errorLabel = "DSErrorLabel"
     case feedbackLabel = "DSFeedbackLabel"
     case formSecureField = "DSFormSecureField"
-    case formTextField = "DSFormTextField"
+    case formTextField = "DSTextField"
     case loadingView = "DSLoadingView"
     case manicuristPhotoView = "DSManicuristPhotoView"
     case otpField = "DSOTPField"

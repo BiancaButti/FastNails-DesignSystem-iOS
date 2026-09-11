@@ -25,7 +25,7 @@ private struct CatalogDemoItem: Identifiable {
 private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
         CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
-        CatalogDemoItem(id: "formTextField", title: "DSFormTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
+        CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Campo de texto (custom e nativo)", content: AnyView(FormTextFieldShowcase())),
         CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
         CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
         CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
@@ -125,23 +125,34 @@ private struct DSButtonShowcase: View {
 }
 private struct FormTextFieldShowcase: View {
     @State private var custom = ""
-    @State private var system = ""
+    @State private var email = ""
+    @State private var address = ""
+    @State private var wrongEmail = ""
     @State private var hasValidated = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            VariantRow(label: "Estilo custom com ícone (design system)") {
-                DSFormTextField(
-                    label: "E-mail", placeholder: "seu@email.com", text: $custom,
-                    errorMessage: hasValidated && custom.isEmpty ? "Preencha o e-mail para continuar." : nil,
-                    successMessage: hasValidated && !custom.isEmpty ? "E-mail preenchido corretamente." : nil,
-                    icon: "envelope"
+            VariantRow(label: "Name") {
+                DSTextField(
+                    label: "Name".uppercased(),
+                    placeholder: "James Hetfield",
+                    text: $custom,
+                    kind: .name,
+                    errorMessage: hasValidated && custom.isEmpty ? "Please enter your email to continue." : nil
                 )
             }
-            VariantRow(label: "Estilo nativo (systemStyle)") {
-                DSFormTextField(label: "E-mail", placeholder: "seu@email.com", text: $system, systemStyle: true)
+            VariantRow(label: "Email") {
+                DSTextField(label: "E-mail",
+                            placeholder: "insert your email here",
+                            text: $email,
+                            kind: .email)
             }
-            Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
+            VariantRow(label: "Address") {
+                DSTextField(label: "Address",
+                                placeholder: "742 Evergreen Terrace",
+                                text: $address,
+                            kind: .address)
+            }
         }
     }
 }
