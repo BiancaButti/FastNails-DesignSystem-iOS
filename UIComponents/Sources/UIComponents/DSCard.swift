@@ -10,7 +10,7 @@ import SwiftUI
 ///
 /// ```swift
 /// DSCard {
-///     DSFormTextField(label: "E-mail", placeholder: "seu@email.com", text: $email)
+///     DSTextField(label: "E-mail", placeholder: "seu@email.com", text: $email)
 ///     DSPrimaryButton(title: "Entrar") { }
 /// }
 /// ```

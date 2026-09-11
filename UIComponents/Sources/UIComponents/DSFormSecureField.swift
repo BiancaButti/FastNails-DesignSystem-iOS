@@ -7,7 +7,7 @@ import SwiftUI
 /// eliminando a necessidade de `@State` no chamador. Use o init com `isVisible: Binding<Bool>`
 /// apenas quando precisar ler ou controlar a visibilidade externamente.
 ///
-/// Suporta dois estilos visuais (igual ao `DSFormTextField`):
+/// Suporta dois estilos visuais (igual ao `DSTextField`):
 /// - **Customizado** (padrão): fundo `secondarySystemBackground`, ícone preenchido.
 /// - **Sistema** (`systemStyle: true`): borda nativa do iOS, ícone outline.
 ///
