@@ -26,9 +26,8 @@ private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
         CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
-        CatalogDemoItem(id: "filterChips", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase()))
-        
-//        CatalogDemoItem(id: "formSecureField", title: "DSFormSecureField", summary: "Campo seguro + força de senha", content: AnyView(FormSecureFieldShowcase())),
+        CatalogDemoItem(id: "statusBadge", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase())),
+        CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase()))
 //        CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
 //        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
 //        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
@@ -172,6 +171,42 @@ private struct DSStatusBadgeShowcase: View {
         }
         .padding(DSSpacing.lg)
         .background(Color.papel)
+    }
+}
+
+struct DSFilterChipsSectionShowcase: View {
+
+    var body: some View {
+        DSFilterChipsSection(title: "FILTRO", 
+            description: "Editável no topo da lista. Mostra por que a lista tem aquele tamanho e permite corrigir sem voltar quatro telas.",
+            items: [
+                DSFilterChipItem(
+                    id: "hands",
+                    label: "Mãos",
+                    isActive: true,
+                    onTap: {}
+                ),
+                DSFilterChipItem(
+                    id: "salon",
+                    label: "Salão",
+                    isActive: true,
+                    onTap: {}
+                ),
+                DSFilterChipItem(
+                    id: "price",
+                    label: "Até R$ 90",
+                    isActive: false,
+                    onTap: {}
+                ),
+                DSFilterChipItem(
+                    id: "accessible",
+                    label: "Acessível",
+                    isActive: true,
+                    systemImage: "accessibility",
+                    onTap: {}
+                )
+            ]
+        )
     }
 }
 
