@@ -27,8 +27,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
         CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
         CatalogDemoItem(id: "statusBadge", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase())),
-        CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase()))
-//        CatalogDemoItem(id: "otpField", title: "DSOTPField", summary: "Código de verificação", content: AnyView(OTPFieldShowcase())),
+        CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase())),
+        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Código de verificação", content: AnyView(DSSelectableOptionShowcase()))
 //        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
 //        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
 //        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
@@ -209,6 +209,25 @@ struct DSFilterChipsSectionShowcase: View {
         )
     }
 }
+
+private struct DSSelectableOptionShowcase: View {
+    @State private var selection: Set<String> = ["maos"]
+    
+    var body: some View {
+        DSSelectableOptionList(
+            titulo: "Selectable Options",
+            options: [
+                .init(id: "maos", titulo: "Mãos", descricao: "Manicure, a partir de 30 min"),
+                .init(id: "pes", titulo: "Pés", descricao: "Pedicure, a partir de 45 min")
+            ],
+            selection: $selection
+        )
+        .padding(8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color.papel)
+    }
+}
+
 
 private struct FormSecureFieldShowcase: View {
     @State private var password = ""

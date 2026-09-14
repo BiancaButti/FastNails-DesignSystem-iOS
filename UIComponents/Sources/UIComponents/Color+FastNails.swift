@@ -3,10 +3,10 @@ import SwiftUI
 // MARK: - Hexadecimal
 
 extension Color {
-    /// Cria uma cor a partir de hexadecimal no formato `0xRRGGBB`.
+    /// Creates a color from a hexadecimal value in the `0xRRGGBB` format.
     ///
-    /// Existe para que os tokens abaixo possam ser escritos com os mesmos
-    /// valores da documentação, sem conversão manual para componentes.
+    /// Exists so the tokens below can be written with the same values as the
+    /// documentation, without manually converting to components.
     init(hex: UInt32) {
         self.init(
             .sRGB,
@@ -20,58 +20,66 @@ extension Color {
 
 // MARK: - Tokens
 
-/// Cores do Fast Nails.
+/// Fast Nails colors.
 ///
-/// **Sem variação de modo escuro.** O app tem uma aparência só, e cada cor
-/// tem um valor. Suportar os dois modos significa manter duas paletas em
-/// sincronia e verificar contraste duas vezes — trabalho que não se paga
-/// enquanto o app não pedir.
+/// **No dark mode variation.** The app has a single appearance, and each color
+/// has one value. Supporting both modes would mean keeping two palettes in
+/// sync and checking contrast twice — work that doesn't pay off until the app
+/// asks for it.
 ///
-/// Os valores são os mesmos da página **Design System**. Se divergirem,
-/// a página é a fonte da verdade.
+/// The values are the same as the **Design System** page. If they diverge,
+/// the page is the source of truth.
 public extension Color {
 
-    // MARK: Estrutura
+    // MARK: Structure
 
-    /// Fundo escuro da marca. Splash, ícone e cartão de agendamento.
-    /// Contraste com Blush: 12,8:1.
+    /// Dark brand background. Splash, icon and booking card.
+    /// Contrast with Blush: 12.8:1.
     static let tinta = Color(hex: 0x241C2B)
 
-    /// Texto secundário sobre Papel. Contraste 5,9:1.
+    /// Secondary text over Papel. Contrast 5.9:1.
     static let tinta60 = Color(hex: 0x6B6371)
 
-    /// Fundo das telas.
+    /// Screen background.
     static let papel = Color(hex: 0xFFFFFF)
 
-    /// Fundo de elementos apoiados sobre o Papel — campos, células, chips.
+    /// Background for elements resting on Papel — fields, cells, chips.
     static let papel2 = Color(hex: 0xEDE6E8)
 
-    /// Bordas e divisórias.
+    /// Borders and dividers.
     static let linha = Color(hex: 0xD9D0D3)
 
-    /// Texto claro sobre Tinta.
+    /// Actionable control border — darker than Linha to signal that there is
+    /// something interactive. Contrast over Papel: ~3.7:1.
+    static let control = Color(hex: 0x878787)
+
+    /// Light text over Tinta.
     static let blush = Color(hex: 0xFADED3)
 
-    // MARK: Ação e estado
+    // MARK: Action and state
 
-    /// **A única cor de ação.** Botão principal, link, seleção.
-    /// Contraste sobre branco: 5,5:1 — passa em texto pequeno.
+    /// **The only action color.** Primary button, link, selection.
+    /// Contrast over white: 5.5:1 — passes for small text.
     static let esmalte = Color(hex: 0xC4265E)
 
-    /// Confirmado, disponível, deu certo.
+    /// Esmalte at 6%, already flattened over Papel. Selection background that
+    /// keeps dark text legible on top.
+    static let softEnamel = Color(hex: 0xFBF2F5)
+
+    /// Confirmed, available, succeeded.
     static let confirmed = Color(hex: 0x2F7D74)
 
-    /// Atenção sem erro. Sem conexão, agenda suspensa.
+    /// Attention without error. No connection, suspended schedule.
     static let ambar = Color(hex: 0x9A6212)
 
-    /// Erro e ação destrutiva.
+    /// Error and destructive action.
     static let alerta = Color(hex: 0xB3261E)
 }
 
 
-// MARK: - Superfícies
+// MARK: - Surfaces
 
 extension Color {
-    /// Fundo de cartão e campo. Branco puro sobre o Papel.
+    /// Card and field background. Pure white over Papel.
     public static let dsSurface = Color.white
 }
