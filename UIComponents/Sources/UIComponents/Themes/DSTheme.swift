@@ -60,15 +60,15 @@ public struct DSTheme: Equatable {
     public var numberFont: Font
 
     public init(
-        brandColor: Color = .esmalte,
-        errorColor: Color = .alerta,
+        brandColor: Color = .enamel,
+        errorColor: Color = .alert,
         successColor: Color = .confirmed,
-        warningColor: Color = .ambar,
+        warningColor: Color = .amber,
         surfaceColor: Color = .dsSurface,
-        backgroundColor: Color = .papel,
-        titleColor: Color = .tinta,
-        secondaryColor: Color = .tinta60,
-        borderColor: Color = .linha,
+        backgroundColor: Color = .paper,
+        titleColor: Color = .ink,
+        secondaryColor: Color = .ink60,
+        borderColor: Color = .line,
         titleFont: Font = DSFont.titulo,
         sectionFont: Font = DSFont.secao,
         bodyFont: Font = DSFont.corpo,
