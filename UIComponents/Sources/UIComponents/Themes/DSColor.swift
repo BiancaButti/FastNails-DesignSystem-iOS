@@ -35,34 +35,34 @@ public extension Color {
 
     /// Dark brand background. Splash, icon and booking card.
     /// Contrast with Blush: 12.8:1.
-    static let tinta = Color(hex: 0x241C2B)
+    static let ink = Color(hex: 0x241C2B)
 
-    /// Secondary text over Papel. Contrast 5.9:1.
-    static let tinta60 = Color(hex: 0x6B6371)
+    /// Secondary text over Paper. Contrast 5.9:1.
+    static let ink60 = Color(hex: 0x6B6371)
 
     /// Screen background.
-    static let papel = Color(hex: 0xFFFFFF)
+    static let paper = Color(hex: 0xFFFFFF)
 
-    /// Background for elements resting on Papel — fields, cells, chips.
-    static let papel2 = Color(hex: 0xEDE6E8)
+    /// Background for elements resting on Paper — fields, cells, chips.
+    static let paper2 = Color(hex: 0xEDE6E8)
 
     /// Borders and dividers.
-    static let linha = Color(hex: 0xD9D0D3)
+    static let line = Color(hex: 0xD9D0D3)
 
-    /// Actionable control border — darker than Linha to signal that there is
-    /// something interactive. Contrast over Papel: ~3.7:1.
+    /// Actionable control border — darker than Line to signal that there is
+    /// something interactive. Contrast over Paper: ~3.7:1.
     static let control = Color(hex: 0x878787)
 
-    /// Light text over Tinta.
+    /// Light text over Ink.
     static let blush = Color(hex: 0xFADED3)
 
     // MARK: Action and state
 
     /// **The only action color.** Primary button, link, selection.
     /// Contrast over white: 5.5:1 — passes for small text.
-    static let esmalte = Color(hex: 0xC4265E)
+    static let enamel = Color(hex: 0xC4265E)
 
-    /// Esmalte at 6%, already flattened over Papel. Selection background that
+    /// Enamel at 6%, already flattened over Paper. Selection background that
     /// keeps dark text legible on top.
     static let softEnamel = Color(hex: 0xFBF2F5)
 
@@ -70,16 +70,16 @@ public extension Color {
     static let confirmed = Color(hex: 0x2F7D74)
 
     /// Attention without error. No connection, suspended schedule.
-    static let ambar = Color(hex: 0x9A6212)
+    static let amber = Color(hex: 0x9A6212)
 
     /// Error and destructive action.
-    static let alerta = Color(hex: 0xB3261E)
+    static let alert = Color(hex: 0xB3261E)
 }
 
 
 // MARK: - Surfaces
 
 extension Color {
-    /// Card and field background. Pure white over Papel.
+    /// Card and field background. Pure white over Paper.
     public static let dsSurface = Color.white
 }

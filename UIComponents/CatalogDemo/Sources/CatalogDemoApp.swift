@@ -28,7 +28,7 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
         CatalogDemoItem(id: "statusBadge", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase())),
         CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase())),
-        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Código de verificação", content: AnyView(DSSelectableOptionShowcase()))
+        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase()))
 //        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
 //        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
 //        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
@@ -170,7 +170,7 @@ private struct DSStatusBadgeShowcase: View {
             DSStatusBadge(title: "Cancelado pelo salão", status: .cancelled(by: .salon))
         }
         .padding(DSSpacing.lg)
-        .background(Color.papel)
+        .background(Color.paper)
     }
 }
 
@@ -211,205 +211,20 @@ struct DSFilterChipsSectionShowcase: View {
 }
 
 private struct DSSelectableOptionShowcase: View {
-    @State private var selection: Set<String> = ["maos"]
-    
+    @State private var selection: Set<String> = ["hands"]
+
     var body: some View {
         DSSelectableOptionList(
-            titulo: "Selectable Options",
+            title: "Selectable Options",
             options: [
-                .init(id: "maos", titulo: "Mãos", descricao: "Manicure, a partir de 30 min"),
-                .init(id: "pes", titulo: "Pés", descricao: "Pedicure, a partir de 45 min")
+                .init(id: "hands", title: "Hands", description: "Manicure, from 30 min"),
+                .init(id: "feet", title: "Feet", description: "Pedicure, from 45 min")
             ],
             selection: $selection
         )
         .padding(8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.papel)
+        .background(Color.paper)
     }
 }
-
-
-private struct FormSecureFieldShowcase: View {
-    @State private var password = ""
-    @State private var hasValidated = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            DSFormSecureField(
-                label: "Senha", placeholder: "Digite sua senha", text: $password,
-                errorMessage: hasValidated && !password.isEmpty && password.count < 6 ? "A senha deve ter ao menos 6 caracteres." : nil,
-                successMessage: hasValidated && password.count >= 6 ? "Senha válida." : nil,
-                icon: "lock"
-            )
-            Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
-        }
-    }
-}
-
-private struct OTPFieldShowcase: View {
-    @State private var code = ""
-    @State private var hasValidated = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            DSOTPField(
-                label: "Código de verificação", code: $code,
-                errorMessage: hasValidated && !code.isEmpty && code.count < 6 ? "Digite os 6 números enviados." : nil,
-                successMessage: hasValidated && code.count == 6 ? "Código preenchido corretamente." : nil
-            )
-            Button("Validar") { hasValidated = true }.buttonStyle(.bordered)
-        }
-    }
-}
-
-private struct CheckboxShowcase: View {
-    @State private var newsletter = true
-    @State private var terms = false
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            VariantRow(label: "Rótulo simples") {
-                DSCheckbox(isChecked: $newsletter) {
-                    Text("Quero receber novidades por e-mail.")
-                        .font(.subheadline)
-                }
-            }
-            VariantRow(label: "Rótulo estilizado (aceite de termos)") {
-                DSCheckbox(isChecked: $terms) {
-                    (
-                        Text("Li e aceito os ")
-                        + Text("Termos de Uso").foregroundColor(.accentColor)
-                        + Text(" e a ")
-                        + Text("Política de Privacidade").foregroundColor(.accentColor)
-                        + Text(".")
-                    )
-                    .font(.footnote)
-                }
-            }
-        }
-    }
-}
-
-private struct IconLabelAndTagShowcase: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            VariantRow(label: "Apoio (ícone colorido, texto discreto)") {
-                DSIconLabel(systemImage: "location.fill", text: "1,2 km")
-            }
-            VariantRow(label: "Destaque (texto na cor do ícone)") {
-                DSIconLabel(
-                    systemImage: "clock",
-                    text: "Livre hoje às 16h",
-                    font: .footnote.weight(.semibold),
-                    textColor: .accentColor
-                )
-            }
-            VariantRow(label: "Etiquetas informativas") {
-                HStack(spacing: 6) {
-                    DSTag(text: "Em casa")
-                    DSTag(systemImage: "house", text: "No espaço dela")
-                }
-            }
-            VariantRow(label: "Cartão em destaque") {
-                DSCard(spacing: 4, padding: 14, cornerRadius: 18, background: .accentColor) {
-                    Text("Seu próximo horário")
-                        .font(.caption2)
-                        .foregroundStyle(.white.opacity(0.85))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    Text("Juliana Lima · quinta, 14h")
-                        .font(.subheadline.weight(.semibold))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
-        }
-    }
-}
-
-private struct ResendButtonShowcase: View {
-    @State private var seconds = 0
-    @State private var isSending = false
-    @State private var ticker: Task<Void, Never>?
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            VariantRow(label: "Disponível") {
-                DSResendButton(title: "Reenviar e-mail") {}
-            }
-            VariantRow(label: "Enviando") {
-                DSResendButton(isLoading: true, title: "Reenviar e-mail") {}
-            }
-            VariantRow(label: "Em espera") {
-                DSResendButton(secondsRemaining: 45) {}
-            }
-            VariantRow(label: "Interativo (toque e veja a contagem)") {
-                DSResendButton(
-                    secondsRemaining: seconds,
-                    isLoading: isSending,
-                    title: "Reenviar e-mail"
-                ) {
-                    startCountdown()
-                }
-            }
-        }
-        .onDisappear { ticker?.cancel() }
-    }
-
-    private func startCountdown() {
-        ticker?.cancel()
-        ticker = Task {
-            isSending = true
-            try? await Task.sleep(nanoseconds: 800_000_000)
-            isSending = false
-            for remaining in stride(from: 10, through: 0, by: -1) {
-                guard !Task.isCancelled else { return }
-                seconds = remaining
-                try? await Task.sleep(nanoseconds: 1_000_000_000)
-            }
-        }
-    }
-}
-
-
-
-private struct DistanceShowcase: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            DSDistanceView(distance: "1,2 km")
-            DSDistanceView(distance: "850 m")
-        }
-    }
-}
-
-private struct StatusBadgeViewShowcase: View {
-    @State private var isOpen = true
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
-            DSStatusBadgeView(isOpen: isOpen)
-            HStack(spacing: 12) {
-                DSStatusBadgeView(text: "Sucesso", tone: .success)
-                DSStatusBadgeView(text: "Fracasso", tone: .failure)
-            }
-            Toggle("Estabelecimento aberto", isOn: $isOpen)
-        }
-    }
-}
-
-private struct ManicuristPhotoShowcase: View {
-    var body: some View {
-        HStack(spacing: 16) {
-            DSManicuristPhotoView(size: 64)
-            DSManicuristPhotoView(size: 96)
-        }
-    }
-}
-
-private struct FeedbackLabelShowcase: View {
-    var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            DSErrorLabel(message: "Este campo é obrigatório.")
-            DSSuccessLabel(message: "Dados validados com sucesso.")
-        }
-    }
-}
+ 

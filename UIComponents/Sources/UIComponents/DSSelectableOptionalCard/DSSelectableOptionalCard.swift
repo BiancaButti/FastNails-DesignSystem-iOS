@@ -17,8 +17,8 @@ import SwiftUI
 /// ```swift
 /// let option = SelectableOption(
 ///     id: "hands",
-///     titulo: "Hands",
-///     descricao: "Manicure, from 30 min"
+///     title: "Hands",
+///     description: "Manicure, from 30 min"
 /// )
 /// ```
 ///
@@ -29,21 +29,21 @@ public struct SelectableOption: Identifiable, Hashable {
     public let id: String
 
     /// The option's title, displayed as the primary text on the card.
-    public let titulo: String
+    public let title: String
 
     /// The option's description, displayed as supporting text below the title.
-    public let descricao: String
+    public let description: String
 
     /// Creates a selectable option.
     ///
     /// - Parameters:
     ///   - id: A stable identifier that persists across list rebuilds.
-    ///   - titulo: The primary text shown on the card.
-    ///   - descricao: The supporting text shown below the title.
-    public init(id: String, titulo: String, descricao: String) {
+    ///   - title: The primary text shown on the card.
+    ///   - description: The supporting text shown below the title.
+    public init(id: String, title: String, description: String) {
         self.id = id
-        self.titulo = titulo
-        self.descricao = descricao
+        self.title = title
+        self.description = description
     }
 }
 
@@ -76,7 +76,8 @@ public struct SelectableOption: Identifiable, Hashable {
 /// - SeeAlso: ``SelectableOption``
 /// - SeeAlso: `DSSelectableOptionList`
 struct DSSelectableCheckboxCard: View {
-
+    @Environment(\.dsTheme)
+    private var theme
     /// The size of the checkbox indicator, following Dynamic Type along with
     /// the text.
     @ScaledMetric(relativeTo: .body)
@@ -107,13 +108,13 @@ struct DSSelectableCheckboxCard: View {
                 checkbox
                     .padding(.top, 1)
 
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(option.titulo)
-                        .font(.body.weight(.semibold))
-                        .foregroundStyle(palette.title)
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(option.title)
+                        .font(theme.buttonFont)
+                        .minimumScaleFactor(0.8)
 
-                    Text(option.descricao)
-                        .font(.subheadline)
+                    Text(option.description)
+                        .font(.system(size: 12, weight: .regular))
                         .foregroundStyle(palette.subtitle)
                 }
 
@@ -132,8 +133,8 @@ struct DSSelectableCheckboxCard: View {
         }
         .buttonStyle(.plain)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.15), value: isSelected)
-        .accessibilityLabel("\(option.titulo), \(option.descricao)")
-        .accessibilityValue(isSelected ? "Selecionado" : "Não selecionado")
+        .accessibilityLabel("\(option.title), \(option.description)")
+        .accessibilityValue(isSelected ? "Selected" : "Not selected")
     }
 
     private var checkbox: some View {

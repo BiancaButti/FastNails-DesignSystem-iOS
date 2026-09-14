@@ -20,12 +20,12 @@ struct DSSelectableOptionCardPalette {
     /// Not selected. The box border uses Controle (3.7:1) because it is the
     /// only signal that there is something actionable; Linha (1.5:1) won't do here.
     static let idle = DSSelectableOptionCardPalette(
-        surface: .papel,
-        border: .linha,
+        surface: .paper,
+        border: .line,
         borderWidth: 1,
-        title: .tinta,      // 18.5:1
-        subtitle: .tinta60, // 5.8:1
-        box: .papel,
+        title: .ink,      // 18.5:1
+        subtitle: .ink, // 5.8:1
+        box: .paper,
         boxBorder: .control,
         check: .clear
     )
@@ -34,13 +34,13 @@ struct DSSelectableOptionCardPalette {
     /// stays dark and keeps the same contrast as the normal state.
     static let selected = DSSelectableOptionCardPalette(
         surface: .softEnamel,
-        border: .esmalte,
+        border: .enamel,
         borderWidth: 1.5,
-        title: .tinta,
-        subtitle: .tinta60,
-        box: .esmalte,
-        boxBorder: .esmalte,
-        check: .papel // 5.5:1 over Esmalte
+        title: .ink,
+        subtitle: .ink60,
+        box: .enamel,
+        boxBorder: .enamel,
+        check: .paper // 5.5:1 over Esmalte
     )
 
     /// Solid-fill variant, in case the Design System wants that weight.
@@ -48,13 +48,13 @@ struct DSSelectableOptionCardPalette {
     /// and fails AA for small text. Hierarchy here comes from size and weight,
     /// not color.
     static let selectedSolid = DSSelectableOptionCardPalette(
-        surface: .esmalte,
-        border: .esmalte,
+        surface: .enamel,
+        border: .enamel,
         borderWidth: 1.5,
-        title: .papel,
-        subtitle: .papel,
-        box: .papel,
-        boxBorder: .papel,
-        check: .esmalte
+        title: .paper,
+        subtitle: .paper,
+        box: .paper,
+        boxBorder: .paper,
+        check: .enamel
     )
 }

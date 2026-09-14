@@ -19,8 +19,8 @@ import SwiftUI
 /// DSSelectableOptionList(
 ///     title: "Selectable Options",
 ///     options: [
-///         SelectableOption(id: "hands", titulo: "Hands", descricao: "Manicure, from 30 min"),
-///         SelectableOption(id: "feet", titulo: "Feet", descricao: "Pedicure, from 45 min")
+///         SelectableOption(id: "hands", title: "Hands", description: "Manicure, from 30 min"),
+///         SelectableOption(id: "feet", title: "Feet", description: "Pedicure, from 45 min")
 ///     ],
 ///     selection: $selection
 /// )
@@ -76,8 +76,10 @@ public struct DSSelectableOptionList: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(Color.tinta60)
+                .font(DSFont.etiqueta)
+                .textCase(.uppercase)
+                .tracking(1.2)
+                .foregroundStyle(Color.ink60)
                 .accessibilityAddTraits(.isHeader)
 
             ForEach(options) { option in
@@ -94,6 +96,6 @@ public struct DSSelectableOptionList: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("\(title). Selecione uma ou mais opções.")
+        .accessibilityLabel("\(title). Select one or more options.")
     }
 }
