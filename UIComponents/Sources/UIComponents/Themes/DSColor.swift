@@ -74,6 +74,32 @@ public extension Color {
 
     /// Error and destructive action.
     static let alert = Color(hex: 0xB3261E)
+
+    // MARK: DSSalonCard
+
+    /// Default colors backing ``DSSalonCardPalette``. Kept here so the palette
+    /// reads as a list of tokens instead of raw color literals, and so the
+    /// eventual migration to shared tokens happens in one place.
+    /// Thin outline around the card, in place of a shadow in dense lists.
+    static let salonCardBorder = Color(hex: 0xE0E3E8)
+
+    /// Price label, aligned to the trailing edge of the header.
+    static let salonCardPrice = Color(hex: 0xC70F4A)
+
+    /// Tinted background behind the placeholder thumbnail icon.
+    static let salonCardThumbnailBackground = Color(hex: 0xF5E6EB)
+
+    /// Placeholder thumbnail icon (the SF Symbol) shown while there is no photo.
+    static let salonCardThumbnailForeground = Color(hex: 0x6B7380)
+
+    /// Capsule background behind each accessibility feature tag in the footer.
+    static let salonCardFeatureBackground = Color(hex: 0xE0F0ED)
+
+    /// Rounded square behind the icon inside an accessibility feature tag.
+    static let salonCardFeatureIconBackground = Color(hex: 0x296BDB)
+
+    /// Text of an accessibility feature tag.
+    static let salonCardFeatureForeground = Color(hex: 0x404D54)
 }
 
 
