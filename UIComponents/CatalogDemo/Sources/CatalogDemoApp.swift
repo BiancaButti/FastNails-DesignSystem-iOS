@@ -28,17 +28,9 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
         CatalogDemoItem(id: "statusBadge", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase())),
         CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase())),
-        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase()))
-//        CatalogDemoItem(id: "checkbox", title: "DSCheckbox", summary: "Caixa de seleção com rótulo (ex.: aceite de termos)", content: AnyView(CheckboxShowcase())),
-//        CatalogDemoItem(id: "resend", title: "DSResendButton", summary: "Reenviar código com espera entre tentativas", content: AnyView(ResendButtonShowcase())),
-//        CatalogDemoItem(id: "iconlabel", title: "DSIconLabel + DSTag", summary: "Informações de apoio e etiquetas de atributo", content: AnyView(IconLabelAndTagShowcase())),
-//
-//        CatalogDemoItem(id: "header", title: "DSHeaderView", summary: "Cabeçalho com localização e avatar", content: AnyView(DSHeaderView(city: "São Paulo"))),
-//        CatalogDemoItem(id: "distanceView", title: "DSDistanceView", summary: "Distância até a profissional", content: AnyView(DistanceShowcase())),
-//        CatalogDemoItem(id: "statusBadgeView", title: "DSStatusBadgeView", summary: "Badge de status", content: AnyView(StatusBadgeViewShowcase())),
-//        CatalogDemoItem(id: "manicuristPhotoView", title: "DSManicuristPhotoView", summary: "Avatar de profissional", content: AnyView(ManicuristPhotoShowcase())),
-//        CatalogDemoItem(id: "feedbackLabel", title: "DSFeedback / Error / Success", summary: "Mensagens de validação", content: AnyView(FeedbackLabelShowcase())),
-//        CatalogDemoItem(id: "loadingView", title: "DSLoadingView", summary: "Indicador de carregamento", content: AnyView(DSLoadingView(message: "Buscando horários disponíveis")))
+        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase())),
+        CatalogDemoItem(id: "salonCard", title: "DSSalonCard", summary: "Salon listing card — thumbnail, price, distance and accessibility tags", content: AnyView(DSSalonCardShowcase())),
+        CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase()))
     ]
 
     var body: some View {
@@ -228,3 +220,101 @@ private struct DSSelectableOptionShowcase: View {
     }
 }
  
+private struct DSSalonCardShowcase: View {
+    @State private var tapped = "—"
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VariantRow(label: "Básico") {
+                DSSalonCard(
+                    name: "Studio Ana Lima",
+                    price: 35
+                ) { tapped = "Studio Ana Lima" }
+            }
+
+            VariantRow(label: "Com distância e disponibilidade") {
+                DSSalonCard(
+                    name: "Espaço Belle",
+                    price: 89.90,
+                    distanceInMeters: 300,
+                    availability: "vagas hoje até 19h"
+                ) { tapped = "Espaço Belle" }
+            }
+
+            VariantRow(label: "Com selos de acessibilidade") {
+                DSSalonCard(
+                    name: "Salão Aurora",
+                    price: 120,
+                    distanceInMeters: 1500,
+                    availability: "próxima vaga amanhã",
+                    accessibilityFeatures: [.semDegrau, .atendimentoEmLibras]
+                ) { tapped = "Salão Aurora" }
+            }
+
+            VariantRow(label: "Miniatura personalizada") {
+                DSSalonCard(
+                    name: "Nails & Co.",
+                    price: 60,
+                    distanceInMeters: 850,
+                    accessibilityFeatures: [.banheiroAdaptado],
+                    action: { tapped = "Nails & Co." }
+                ) {
+                    DSSalonCardThumbnail(systemImage: "sparkles")
+                }
+            }
+
+            VariantRow(label: "Não interativo (sem ação)") {
+                DSSalonCard(
+                    name: "Beleza Natural",
+                    price: 45,
+                    distanceInMeters: 200,
+                    availability: "sem vagas hoje"
+                )
+            }
+
+            Text("Último toque: \(tapped)")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.paper)
+    }
+}
+
+private struct DSCardShowcase: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            VariantRow(label: "Estado vazio (conteúdo centralizado)") {
+                DSCard {
+                    Text("Nenhum salão até R$60")
+                        .font(.headline)
+                        .foregroundStyle(Color.ink)
+                        .multilineTextAlignment(.center)
+
+                    Text("O filtro de orçamento está segurando o resultado. Com até R$90 aparecem 14 salões")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.ink60)
+                        .multilineTextAlignment(.center)
+
+                    DSButton(title: "Aumentar para R$90", style: .secondary) {}
+                }
+                
+                DSCard(borderColor: Color.line) {
+                    Text("Sem internet")
+                        .font(.headline)
+                        .foregroundStyle(Color.ink)
+                        .multilineTextAlignment(.center)
+
+                    Text("Seu agendamento continua marcado. A lista atualiza quando a conexão voltar")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.ink60)
+                        .multilineTextAlignment(.center)
+
+                    DSButton(title: "Tentar novamente", style: .secondary, tone: .neutral) {}
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.paper)
+    }
+}
