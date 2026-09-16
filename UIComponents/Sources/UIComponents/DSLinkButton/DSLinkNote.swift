@@ -88,29 +88,38 @@ public struct DSLinkNote: View {
     
     // MARK: - AttributedString Builder
  
-    private static func attributed(format: String, links: [DSLink]) -> AttributedString {
+    static func attributed(format: String, links: [DSLink]) -> AttributedString {
         var result = AttributedString()
         var currentPosition = format.startIndex
         var nextSequentialIndex = 0
         
-        /// Safe initialization via explicit string compilation to completely bypass compiler syntax misinterpretation
-        let placeholderRegex = try! Regex("%(?:(?<index>\\d+)\\$)?@")
- 
+        /// Safe initialization via explicit string compilation to completely bypass compiler syntax misinterpretation.
+        /// `%%` matches an escaped literal percent; `%@` / `%1$@` match link placeholders.
+        let placeholderRegex = try! Regex("%%|%(?:(?<index>\\d+)\\$)?@")
+
         // Safely iterate through regex matches using Swift Substrings
         for match in format.matches(of: placeholderRegex) {
             // Append static text preceding the match
             let textBeforeMatch = format[currentPosition..<match.range.lowerBound]
             result += AttributedString(textBeforeMatch)
- 
-            // Determine the explicit or sequential index for this link parameter
+
+            // An escaped `%%` renders as a single literal percent, never a link.
+            if format[match.range] == "%%" {
+                result += AttributedString("%")
+                currentPosition = match.range.upperBound
+                continue
+            }
+
+            // Determine the explicit or sequential index for this link parameter.
+            // Runtime-compiled captures are `Substring`, so read `.substring` directly.
             let index: Int
-            if let indexOutput = match.output["index"]?.value as? String, let explicitIndex = Int(indexOutput) {
+            if let indexOutput = match.output["index"]?.substring, let explicitIndex = Int(indexOutput) {
                 index = explicitIndex - 1
             } else {
                 index = nextSequentialIndex
                 nextSequentialIndex += 1
             }
- 
+
             // Build and style the inline link chunk if a corresponding token model exists
             if links.indices.contains(index) {
                 var linkSnippet = AttributedString(links[index].title)
