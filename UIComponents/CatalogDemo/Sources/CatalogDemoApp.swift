@@ -123,6 +123,7 @@ private struct DSTextFieldShowcase: View {
     @State private var email = ""
     @State private var address = ""
     @State private var wrongEmail = ""
+    @State private var password = ""
     @State private var hasValidated = false
 
     var body: some View {
@@ -147,6 +148,14 @@ private struct DSTextFieldShowcase: View {
                                 placeholder: "742 Evergreen Terrace",
                                 text: $address,
                             kind: .address)
+            }
+            VariantRow(label: "Password") {
+                DSTextField(
+                    label: "Nova senha",
+                    placeholder: "",
+                    text: $password,
+                    kind: .password(.new)
+                )
             }
         }
     }
