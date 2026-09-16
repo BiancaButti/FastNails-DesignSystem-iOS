@@ -151,7 +151,7 @@ public struct DSButton: View {
             .overlay {
                 if let borderColor {
                     RoundedRectangle(
-                        cornerRadius: DSRadius.controle
+                        cornerRadius: DSRadius.control
                     )
                     .strokeBorder(
                         borderColor,
@@ -161,7 +161,7 @@ public struct DSButton: View {
             }
             .clipShape(
                 RoundedRectangle(
-                    cornerRadius: DSRadius.controle
+                    cornerRadius: DSRadius.control
                 )
             )
         }

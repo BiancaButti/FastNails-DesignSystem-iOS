@@ -96,7 +96,7 @@ public struct DSCard<Content: View>: View {
     ///   - spacing: Spacing between the items (default `DSSpacing.lg`, 16 pt).
     ///   - padding: Inner spacing (default 20 pt).
     ///   - cornerRadius: Corner radius (default 24 pt — more pronounced than
-    ///     `DSRadius.folha`, which is for sheets and modals).
+    ///     `DSRadius.control`, giving cards a softer, blockier look).
     ///   - background: Background color. When `nil`, uses the theme's
     ///     `surfaceColor`. Provide it to set a card apart from the rest of the
     ///     screen — for example, the next appointment filled with the brand color.
