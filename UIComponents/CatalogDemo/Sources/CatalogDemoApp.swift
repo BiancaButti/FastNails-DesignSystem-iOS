@@ -30,7 +30,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase())),
         CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase())),
         CatalogDemoItem(id: "salonCard", title: "DSSalonCard", summary: "Salon listing card — thumbnail, price, distance and accessibility tags", content: AnyView(DSSalonCardShowcase())),
-        CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase()))
+        CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase())),
+        CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase()))
     ]
 
     var body: some View {
@@ -317,4 +318,23 @@ private struct DSCardShowcase: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.paper)
     }
+}
+
+private struct DSLinkShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+                DSLinkNote(link: DSLink("Esqueci minha senha") {
+                    print("Abrir recuperação de senha")
+                })
+         
+                DSLinkNote(
+                    "Ao criar conta você concorda com os %@ e a %@.",
+                    links: DSLink("Termos de uso", url: URL(string: "https://exemplo.com/termos")!),
+                           DSLink("Política de privacidade") { print("Abrir privacidade") }
+                )
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color(white: 0.08))
+        }
 }

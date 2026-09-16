@@ -2,17 +2,14 @@ import SwiftUI
 
 // MARK: - DSRadius
 
-/// Escala de arredondamento.
+/// Radius scale.
 ///
-/// Os quatro valores da documentação, nomeados pelo uso e não pelo tamanho.
+/// The documentation values, named by usage and ordered from smallest to largest.
 public enum DSRadius {
-    /// 999 pt — pílula. Chips, etiquetas, seletores.
-    public static let pilula: CGFloat = 999
-    /// 12 pt — controle. Botões e campos.
-    public static let controle: CGFloat = 12
-    /// 14 pt — superfície. Cartões e blocos.
-    public static let superficie: CGFloat = 14
-    /// 20 pt — topo da folha modal.
-    public static let folha: CGFloat = 20
-
+    /// 8 pt — small. Small components, badges, or inner borders.
+        public static let small: CGFloat = 8
+        
+        /// 12 pt — control. Buttons and fields.
+        public static let control: CGFloat = 12
+        
 }
