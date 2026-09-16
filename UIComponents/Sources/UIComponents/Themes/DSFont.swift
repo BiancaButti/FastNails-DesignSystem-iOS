@@ -112,6 +112,9 @@ public enum DSFont {
 
     /// Etiqueta de status dentro de cartão. 10pt.
     public static let selo = fonte(.mono, tamanho: 10, relativaA: .caption2, peso: .semibold)
+    
+    /// Dígito de código de verificação. 22pt.
+    public static let digito = fonte(.mono, tamanho: 22, relativaA: .title2, peso: .bold)
 }
 
 // MARK: - Registro das fontes
