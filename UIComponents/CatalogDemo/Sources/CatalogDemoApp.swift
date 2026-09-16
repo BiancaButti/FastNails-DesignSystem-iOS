@@ -31,7 +31,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase())),
         CatalogDemoItem(id: "salonCard", title: "DSSalonCard", summary: "Salon listing card — thumbnail, price, distance and accessibility tags", content: AnyView(DSSalonCardShowcase())),
         CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase())),
-        CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase()))
+        CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase())),
+        CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase()))
     ]
 
     var body: some View {
@@ -337,4 +338,29 @@ private struct DSLinkShowcase: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(white: 0.08))
         }
+}
+
+private struct DSOTPFieldShowcase: View {
+    var body: some View {
+        VStack(spacing: 40) {
+                DSOTPField(
+                    label: "Estado Inicial / Digitando",
+                    code: .constant("123")
+                )
+                
+                DSOTPField(
+                    label: "Estado de Erro",
+                    code: .constant("123456"),
+                    errorMessage: "Código expirado. Solicite um novo."
+                )
+                
+                DSOTPField(
+                    label: "Estado de Sucesso",
+                    code: .constant("123456"),
+                    successMessage: "Sucesso!"
+                )
+            }
+            .padding()
+            .environment(\.dsTheme, DSTheme())
+    }
 }
