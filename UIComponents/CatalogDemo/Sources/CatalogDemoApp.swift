@@ -118,45 +118,76 @@ private struct DSButtonShowcase: View {
         }
     }
 }
+
 private struct DSTextFieldShowcase: View {
-    @State private var custom = ""
+    @State private var name = ""
     @State private var email = ""
     @State private var address = ""
-    @State private var wrongEmail = ""
-    @State private var password = ""
-    @State private var hasValidated = false
+    @State private var newPassword = ""
+    @State private var showErrors = false
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
+
             VariantRow(label: "Name") {
                 DSTextField(
-                    label: "Name".uppercased(),
-                    placeholder: "James Hetfield",
-                    text: $custom,
-                    kind: .name,
-                    errorMessage: hasValidated && custom.isEmpty ? "Please enter your email to continue." : nil
+                    label: "Nome",
+                    placeholder: "Como o salão vai te chamar",
+                    text: $name,
+                    kind: .name
                 )
             }
+
             VariantRow(label: "Email") {
-                DSTextField(label: "E-mail",
-                            placeholder: "insert your email here",
-                            text: $email,
-                            kind: .email)
-            }
-            VariantRow(label: "Address") {
-                DSTextField(label: "Address",
-                                placeholder: "742 Evergreen Terrace",
-                                text: $address,
-                            kind: .address)
-            }
-            VariantRow(label: "Password") {
                 DSTextField(
-                    label: "Nova senha",
-                    placeholder: "",
-                    text: $password,
-                    kind: .password(.new)
+                    label: "E-mail",
+                    placeholder: "Como o salão te avisa",
+                    text: $email,
+                    kind: .email
                 )
             }
+
+            VariantRow(label: "Address") {
+                DSTextField(
+                    label: "Endereço",
+                    placeholder: "Rua e número",
+                    text: $address,
+                    kind: .address
+                )
+            }
+
+            VariantRow(label: "Error state") {
+                DSTextField(
+                    label: "E-mail",
+                    placeholder: "Como o salão te avisa",
+                    text: .constant("bianca@"),
+                    kind: .email,
+                    errorMessage: showErrors ? "Falta o final do e-mail, depois do @." : nil
+                )
+            }
+
+            VariantRow(label: "New password") {
+                VStack(alignment: .leading, spacing: DSSpacing.md) {
+                    DSTextField(
+                        label: "Nova senha",
+                        text: $newPassword,
+                        kind: .password(.new)
+                    )
+                    DSPasswordRequirements(requirements: [
+                        .init(id: "length",
+                              text: "Pelo menos 8 caracteres",
+                              isMet: newPassword.count >= 8,
+                              isRequired: true),
+                        .init(id: "strength",
+                              text: "12 ou mais deixa sua conta mais segura",
+                              isMet: newPassword.count >= 12,
+                              isRequired: false)
+                    ])
+                }
+            }
+
+            Toggle("Show error state", isOn: $showErrors)
+                .font(.footnote)
         }
     }
 }
