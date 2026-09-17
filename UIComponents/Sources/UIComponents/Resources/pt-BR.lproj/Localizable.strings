@@ -63,6 +63,9 @@
 /* DSLoadingView */
 "loadingDefault" = "Carregando...";
 
+/* DSTabBar */
+"tabBarBadgeValue" = "%d novos"; /* fallback — plural rules defined in Localizable.stringsdict */
+
 /* Accessibility */
 "accessibilitySuccess" = "Sucesso";
 "accessibilityError" = "Erro";

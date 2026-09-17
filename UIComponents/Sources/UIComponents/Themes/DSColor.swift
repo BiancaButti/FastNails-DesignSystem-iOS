@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - Hexadecimal
 
-extension Color {
+public extension Color {
     /// Creates a color from a hexadecimal value in the `0xRRGGBB` format.
     ///
     /// Exists so the tokens below can be written with the same values as the
@@ -18,7 +18,7 @@ extension Color {
     }
 }
 
-// MARK: - Tokens
+// MARK: - Design System Tokens
 
 /// Fast Nails colors.
 ///
@@ -30,6 +30,18 @@ extension Color {
 /// The values are the same as the **Design System** page. If they diverge,
 /// the page is the source of truth.
 public extension Color {
+    
+    // MARK: - Legacy DSColor (Migrated to Hex)
+    
+    /// Brand color. Original value ~ #B8144A
+    static let brand = Color(hex: 0xB8144A)
+    
+    /// Content Tertiary color. Original value ~ #B5B0B2
+    static let contentTertiary = Color(hex: 0xB5B0B2)
+    
+    /// Divider line with transparency.
+    static let divider = Color.black.opacity(0.08)
+
     // MARK: - Structure
 
     /// Dark brand background. Splash, icon and booking card.
@@ -62,7 +74,7 @@ public extension Color {
     /// Cor: Rosa-bebê bem claro / Pêssego pastel
     static let blush = Color(hex: 0xFADED3)
 
-    // MARK: - Action and state
+    // MARK: - Action and State
 
     /// **The only action color.** Primary button, link, selection.
     /// Contrast over white: 5.5:1 — passes for small text.
@@ -71,7 +83,7 @@ public extension Color {
 
     /// Enamel at 6%, already flattened over Paper. Selection background that
     /// keeps dark text legible on top.
-    /// Cor: Rosa pastel esbranquiçado
+    /// Cor: Rosa pastel esbrançado
     static let softEnamel = Color(hex: 0xFBF2F5)
 
     /// Confirmed, available, succeeded.
@@ -86,7 +98,8 @@ public extension Color {
     /// Cor: Vermelho vivo
     static let alert = Color(hex: 0xB3261E)
 
-    // MARK:  - DSSalonCard
+    // MARK: - DSSalonCard
+    
     /// Cor: Cinza-azulado bem claro (gelo)
     static let salonCardBorder = Color(hex: 0xE0E3E8)
 
@@ -131,6 +144,4 @@ public extension Color {
     /// Primary gray tone for body text, descriptions, and labels.
     /// Cor: Cinza médio-escuro (grafite)
     static let text = Color(hex: 0x737373)
-
-
 }

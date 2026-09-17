@@ -115,6 +115,8 @@ public enum DSFont {
     
     /// Dígito de código de verificação. 22pt.
     public static let digito = fonte(.mono, tamanho: 22, relativaA: .title2, peso: .bold)
+    
+    public static let tabLabel = fonte(.display, tamanho: 16, relativaA: .caption2, peso: .medium)
 }
 
 // MARK: - Registro das fontes
