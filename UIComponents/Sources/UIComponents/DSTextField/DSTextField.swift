@@ -146,10 +146,14 @@ public struct DSTextField: View {
         !(errorMessage ?? "").isEmpty
     }
 
-    /// Both password rules satisfied: at least 8 characters, and 12 or more.
     private var passwordRequirementsMet: Bool {
         guard kind.isSecure else { return false }
-        return text.count >= 8 && text.count >= 12
+        return DSTextField.passwordRequirementsMet(for: text)
+    }
+
+    /// Both password rules satisfied: at least 8 characters, and 12 or more.
+    static func passwordRequirementsMet(for text: String) -> Bool {
+        text.count >= 8 && text.count >= 12
     }
 
     private var borderColor: Color {
