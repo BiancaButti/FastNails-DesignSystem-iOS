@@ -58,8 +58,8 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
     /// the button's ``accessibilityValue(_:)`` instead.
     @ViewBuilder
     private var badgeView: some View {
-        if let badge, badge > 0 {
-            Text(badge > 99 ? "99+" : "\(badge)")
+        if let text = DSTabBarBadge.displayText(badge) {
+            Text(text)
                 .font(.caption2.weight(.bold))
                 .monospacedDigit()
                 .foregroundStyle(.white)
@@ -81,14 +81,35 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
     }
  
     /// The VoiceOver value announcing the badge count, or empty when there is none.
-    ///
-    /// Localized with plural rules from `Localizable.stringsdict`, so "1 novo"
-    /// and "2 novos" agree in number.
     private var badgeAccessibilityValue: Text {
-        guard let badge, badge > 0 else { return Text(verbatim: "") }
+        guard let value = DSTabBarBadge.accessibilityValue(badge) else { return Text(verbatim: "") }
+        return Text(value)
+    }
+}
+
+/// Badge helpers shared by the tab bar, kept separate so the count logic can be
+/// unit tested without rendering a view.
+enum DSTabBarBadge {
+
+    /// The localized VoiceOver value for a badge count, or `nil` when there is
+    /// nothing to announce.
+    ///
+    /// Uses the plural rules from `Localizable.stringsdict`, so "1 novo" and
+    /// "2 novos" agree in number.
+    static func accessibilityValue(_ count: Int?) -> String? {
+        guard let count, count > 0 else { return nil }
         let format = NSLocalizedString("tabBarBadgeValue",
                                        bundle: .module,
                                        comment: "Tab bar badge count announced by VoiceOver")
-        return Text(String(format: format, badge))
+        return String(format: format, count)
+    }
+
+    /// The text drawn inside the badge capsule, capped at `99+`.
+    ///
+    /// Returns `nil` when there is no positive count, matching the visual badge
+    /// being hidden.
+    static func displayText(_ count: Int?) -> String? {
+        guard let count, count > 0 else { return nil }
+        return count > 99 ? "99+" : "\(count)"
     }
 }
