@@ -32,7 +32,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "salonCard", title: "DSSalonCard", summary: "Salon listing card — thumbnail, price, distance and accessibility tags", content: AnyView(DSSalonCardShowcase())),
         CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase())),
         CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase())),
-        CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase()))
+        CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase())),
+        CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase()))
     ]
 
     var body: some View {
@@ -402,5 +403,53 @@ private struct DSOTPFieldShowcase: View {
             }
             .padding()
             .environment(\.dsTheme, DSTheme())
+    }
+}
+ 
+// MARK: - TAB BAR Example
+private enum AppTab: DSTabItem {
+    case home, bookings, profile
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .home: "Home"
+        case .bookings: "Bookings"
+        case .profile: "Profile"
+        }
+    }
+
+    var icon: Image {
+        switch self {
+        case .home: Image(systemName: "house")
+        case .bookings: Image(systemName: "calendar")
+        case .profile: Image(systemName: "person.crop.circle")
+        }
+    }
+
+    var selectedIcon: Image {
+        switch self {
+        case .home: Image(systemName: "house.fill")
+        case .bookings: Image(systemName: "calendar")
+        case .profile: Image(systemName: "person.crop.circle.fill")
+        }
+    }
+}
+
+private struct DSTabBarShowcase: View {
+    @State private var selection: AppTab = .home
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
+            VariantRow(label: "Default (with badge)") {
+                DSTabBar(selection: $selection,
+                         badges: [.bookings: 2])
+            }
+
+            VariantRow(label: "Custom style") {
+                DSTabBar(selection: $selection)
+                    .dsTabBarStyle(.init(selectedColor: .indigo,
+                                         dividerColor: nil))
+            }
+        }
     }
 }
