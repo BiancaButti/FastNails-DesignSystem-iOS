@@ -135,6 +135,11 @@ public struct DSStatusCard<Actions: View>: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.background,
                     in: .rect(cornerRadius: DSRadius.large, style: .continuous))
+        // Single-appearance lock: the design system has no dark variants, so the
+        // card must look identical whichever appearance the device is in. Every
+        // color above is a fixed token, and we pin the color scheme to the
+        // card's *own* surface (never the system's), so any nested control still
+        // renders for the surface it sits on — the iOS dark theme can't alter it.
         .environment(\.colorScheme, palette.isDark ? .dark : .light)
         .accessibilityElement(children: .contain)
     }
