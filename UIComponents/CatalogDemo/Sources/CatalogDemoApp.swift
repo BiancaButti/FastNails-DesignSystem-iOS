@@ -33,7 +33,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase())),
         CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase())),
         CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase())),
-        CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase()))
+        CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase())),
+        CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase()))
     ]
 
     var body: some View {
@@ -451,5 +452,88 @@ private struct DSTabBarShowcase: View {
                                          dividerColor: nil))
             }
         }
+    }
+}
+
+private struct DSStatusCardShowcase: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
+            // MARK: - Aguardando pedido ou Pedido finalizado
+            VariantRow(label: "Expandido · pedido enviado (sem ações)") {
+                DSStatusCard(
+                    eyebrow: "Pedido enviado",
+                    title: "Sexta, 28/08 · 14:00",
+                    details: ["Studio Ana Lima · Mãos · R$ 35"],
+                    status: DSStatusBadge(title: "Aguardando o salão",
+                                          status: .requested)
+                )
+                DSStatusCard(
+                    eyebrow: "Próximo horário",
+                    title: "Quinta, 04/09 · 11:00",
+                    details: ["Enviado hoje às 09:41"],
+                    status: DSStatusBadge(title: "Aguardando o salão",
+                                          status: .requested)
+                )
+                .statusCardVariant(.compact)
+                
+                DSStatusCard(
+                    eyebrow: "Concluído",
+                    title: "28 de agosto · 14:00",
+                    details: ["Studio Ana Lima · Mãos"],
+                    status: DSStatusBadge(title: "Finalizado",
+                                          status: .finished)
+                )
+                .statusCardVariant(.compact)
+            }
+            
+            // MARK: - Pedido confirmado
+            VariantRow(label: "Expandido/Compacto · confirmado (com/sem ações)") {
+                DSStatusCard(
+                    eyebrow: "Seu próximo horário",
+                    title: "Sexta, 28/08 · 14:00",
+                    details: ["Studio Ana Lima · Mãos · R$ 35", "R. Aurora, 120 · 300 m"],
+                    status:
+                        DSStatusBadge(title: "Confirmado",
+                                      status: .confirmed)
+                ) {
+                    DSStatusCardButton(title: "Como chegar", action: {})
+                    DSStatusCardButton(title: "Ver detalhes", action: {})
+                }
+                
+                DSStatusCard(
+                    eyebrow: "Próximo horário",
+                    title: "Hoje, 02/09 · 16:00",
+                    details: ["Studio Ana Lima · 300 m de você"],
+                    status: DSStatusBadge(title: "Confirmado pelo salão",
+                                          status: .confirmed)
+                )
+            }
+            
+            // MARK: - Pedido cancelado
+            VariantRow(label: "Expandido/Compacto · cancelado (crítico)") {
+                DSStatusCard(
+                    eyebrow: "Agendamento cancelado",
+                    title: "Sexta, 28/08 · 14:00",
+                    details: [
+                        "O Studio Ana Lima cancelou hoje às 11:20",
+                        "Motivo: imprevisto na agenda"
+                    ],
+                    status: DSStatusBadge(title: "Cancelado pelo salão",
+                                          status: .cancelled(by: .salon))
+                ) {
+                    Button("Ver horários livres") {}
+                    Button("Ver detalhes") {}
+                }
+                
+                DSStatusCard(
+                    eyebrow: "Agendamento",
+                    title: "Era sexta, 04/09 · 14:00",
+                    details: ["Motivo: imprevisto na agenda"],
+                    status: DSStatusBadge(title: "Cancelado pelo salão",
+                                          status: .cancelled(by: .salon))
+                )
+                .statusCardVariant(.compact)
+            }
+        } .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

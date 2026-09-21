@@ -36,6 +36,35 @@ public enum DSCancelledBy: Equatable {
     case customer
     case salon
 }
+
+// MARK: - Localized label
+
+public extension DSBookingStatusBadge {
+
+    /// A localized, human-readable label for the status.
+    ///
+    /// The host app passes only the status; the wording lives in
+    /// `Localizable.strings` (resolved via `Bundle.module`), so callers never
+    /// hardcode the phrases.
+    var localizedLabel: String {
+        switch self {
+        case .requested:
+            String(localized: "bookingStatusRequested", bundle: .module)
+        case .confirmed:
+            String(localized: "bookingStatusConfirmed", bundle: .module)
+        case .finished:
+            String(localized: "bookingStatusFinished", bundle: .module)
+        case .withdrawn:
+            String(localized: "bookingStatusWithdrawn", bundle: .module)
+        case .declined:
+            String(localized: "bookingStatusDeclined", bundle: .module)
+        case .cancelled(.customer):
+            String(localized: "bookingStatusCancelledByCustomer", bundle: .module)
+        case .cancelled(.salon):
+            String(localized: "bookingStatusCancelledBySalon", bundle: .module)
+        }
+    }
+}
  
 // MARK: - Appearance
 //

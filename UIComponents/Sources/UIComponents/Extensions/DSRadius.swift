@@ -11,4 +11,7 @@ public enum DSRadius {
 
     /// 12 pt — control. Buttons and fields.
     public static let control: CGFloat = 12
+
+    /// 16 pt — large. Cards and elevated surfaces.
+    public static let large: CGFloat = 16
 }

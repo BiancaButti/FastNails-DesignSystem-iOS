@@ -94,6 +94,9 @@ public enum DSFont {
     /// Explicação abaixo de campo, mensagem de erro. 13pt.
     public static let apoio = fonte(.body, tamanho: 13, relativaA: .footnote, peso: .regular)
 
+    /// Texto de apoio em destaque. 13pt.
+    public static let apoioForte = fonte(.body, tamanho: 13, relativaA: .footnote, peso: .semibold)
+
     /// Metadado, legenda. 12pt.
     public static let legenda = fonte(.body, tamanho: 12, relativaA: .caption, peso: .regular)
 
