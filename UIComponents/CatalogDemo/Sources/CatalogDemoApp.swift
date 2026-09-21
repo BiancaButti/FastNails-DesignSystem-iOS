@@ -34,7 +34,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase())),
         CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase())),
         CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase())),
-        CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase()))
+        CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase())),
+        CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase()))
     ]
 
     var body: some View {
@@ -536,4 +537,71 @@ private struct DSStatusCardShowcase: View {
             }
         } .frame(maxWidth: .infinity, alignment: .leading)
     }
+}
+
+private struct DSMerchantCardShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            // MARK: - One image inside
+            DSMerchantCard(
+                title: "Espaço Camila",
+                subtitle: "A partir de R$ 45",
+                textPrice: "800 m"
+            ) {
+                ZStack {
+                    Color.teal.opacity(0.15)
+                    Image(systemName: "sparkles")
+                        .font(.system(size: 40))
+                        .foregroundColor(.teal)
+                }
+            } tagsContent: {
+                Text("Espaço dela")
+                    .font(.system(size: 11, weight: .medium))
+                    .padding(.horizontal, 8).padding(.vertical, 4)
+                    .background(Color(.systemGray5)).cornerRadius(6)
+            }
+            
+            // MARK: - Two images inside
+            DSMerchantCard(
+                title: "Studio Ana Lima",
+                subtitle: "A partir de R$ 35",
+                textPrice: "Vagas hoje até 19h",
+                isCarousel: true 
+            ) {
+                ZStack {
+                    Color.purple.opacity(0.15)
+                    Image(systemName: "scissors")
+                        .font(.system(size: 40))
+                        .foregroundColor(.purple)
+                }
+                
+                ZStack {
+                    Color.blue.opacity(0.15)
+                    Image(systemName: "comb")
+                        .font(.system(size: 40))
+                        .foregroundColor(.blue)
+                }
+                
+                ZStack {
+                    Color.orange.opacity(0.15)
+                    Image(systemName: "face.smiling")
+                        .font(.system(size: 40))
+                        .foregroundColor(.orange)
+                }
+            } tagsContent: {
+                HStack(spacing: 6) {
+                    Text("No salão")
+                        .padding(.horizontal, 8).padding(.vertical, 4)
+                        .background(Color(.systemGray5)).cornerRadius(6)
+                    Text("Sem degrau")
+                        .padding(.horizontal, 8).padding(.vertical, 4)
+                        .background(Color(.systemGray5)).cornerRadius(6)
+                }
+                .font(.system(size: 11, weight: .medium))
+            }
+        }
+        .padding()
+
+    }
+
 }
