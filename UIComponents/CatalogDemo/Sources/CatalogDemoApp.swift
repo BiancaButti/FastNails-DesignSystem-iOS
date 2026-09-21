@@ -35,7 +35,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase())),
         CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase())),
         CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase())),
-        CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase()))
+        CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase())),
+        CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase()))
     ]
 
     var body: some View {
@@ -603,5 +604,72 @@ private struct DSMerchantCardShowcase: View {
         .padding()
 
     }
+}
 
+private struct DSInlineMessageShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            
+            // Exemplo 1: Onde você está? (Estilo Info com borda)
+            DSInlineMessageCard(
+                title: "Onde você está?",
+                description: "Com sua localização, mostramos os salões mais perto e conferimos se atendemos sua região.",
+                actionTitle: "Informar localização",
+                style: .info
+            ) {
+                Image(systemName: "mappin.and.ellipse")
+                    .foregroundColor(.red)
+            } action: {
+                print("Solicitar localização do usuário")
+            }
+            
+            // Exemplo 2: Ainda não atendemos Itaquera (Estilo Warning com Fundo Bege)
+            DSInlineMessageCard(
+                title: "Ainda não atendemos Itaquera",
+                description: "Você está na lista de espera. Enquanto isso, dá para conhecer os salões da zona norte.",
+                actionTitle: "Usar outro endereço",
+                style: .warning
+            ) {
+                Image(systemName: "mappin.circle.fill")
+                    .foregroundColor(.red)
+            } action: {
+                print("Trocar endereço")
+            }
+            
+            // Exemplo 3: Sem Internet (Estilo Warning alternativo)
+            DSInlineMessageCard(
+                title: "Sem internet",
+                description: "Estes salões são da última vez que você abriu. Preços e horários podem ter mudado.",
+                actionTitle: "Tentar de novo",
+                style: .warning
+            ) {
+                Image(systemName: "antenna.radiowaves.left.and.right")
+                    .foregroundColor(.blue)
+            } action: {
+                print("Forçar recarregamento de rede")
+            }
+            
+            // Exemplo 4: Horário reservado (Estilo Erro com Fundo Rosa/Vermelho)
+            DSInlineMessageCard(
+                title: "Esse horário acabou de ser reservado",
+                description: "Alguém marcou as 16:00 enquanto você conferia. Escolha outro horário — o resto continua igual.",
+                style: .error
+            ) {
+                Image(systemName: "exclamationmark.triangle")
+                    .foregroundColor(.red)
+            }
+            
+            // Exemplo 5: Endereços servem para atendimento em casa (Estilo Info básico sem ação)
+            DSInlineMessageCard(
+                title: "Endereços servem para atendimento em casa",
+                description: "Também ajudam a mostrar os salões mais perto de onde você vai estar.",
+                style: .info
+            ) {
+                // Sem ícone aparente no print original, podemos passar uma View vazia ou omitir
+                EmptyView()
+            }
+            
+        }
+        .padding()
+    }
 }
