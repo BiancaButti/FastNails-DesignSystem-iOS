@@ -18,34 +18,58 @@ public struct DSStatusBadge: View {
  
     let title: String
     let status: DSBookingStatusBadge
- 
+
     @Environment(\.dsTheme) private var theme
- 
+
+    /// When set (by a host ``DSStatusCard``), the badge drops its semantic
+    /// colors in favor of these, so it stays legible on the card's colored
+    /// surface instead of blending into it.
+    @Environment(\.statusBadgeOnCard) private var onCardAppearance
+
     public init(
         title: String,
         status: DSBookingStatusBadge) {
         self.title = title
         self.status = status
     }
- 
+
     public var body: some View {
         let appearance = DSStatusAppearance(status: status, theme: theme)
- 
+        let foreground = onCardAppearance?.foreground ?? appearance.foreground
+        let background = onCardAppearance?.background ?? appearance.background
+
         HStack(spacing: DSSpacing.xs) {
             Circle()
-                .fill(appearance.foreground)
+                .fill(foreground)
                 .frame(width: 6, height: 6)
- 
+
             Text(title)
         }
         .font(theme.badgeFont)
-        .foregroundStyle(appearance.foreground)
+        .foregroundStyle(foreground)
         .padding(.horizontal, DSSpacing.md)
         .padding(.vertical, DSSpacing.sm)
-        .background(appearance.background)
+        .background(background)
         .clipShape(Capsule())
         // One element, not a dot plus a label.
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(title)
     }
+}
+
+// MARK: - On-card appearance
+
+/// The colors a ``DSStatusBadge`` uses when it sits on a ``DSStatusCard``.
+///
+/// The card fills this from its own palette so the badge borrows the same
+/// legible text color and a translucent tint of it for the background.
+struct DSStatusBadgeOnCardAppearance {
+    let foreground: Color
+    let background: Color
+}
+
+extension EnvironmentValues {
+    /// Set by a ``DSStatusCard`` on its status badge; `nil` everywhere else, so
+    /// a standalone ``DSStatusBadge`` keeps its default semantic appearance.
+    @Entry var statusBadgeOnCard: DSStatusBadgeOnCardAppearance? = nil
 }

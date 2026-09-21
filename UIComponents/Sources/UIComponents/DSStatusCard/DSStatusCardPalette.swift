@@ -12,10 +12,7 @@ public struct DSStatusCardPalette {
     /// Fill behind the whole card.
     let background: Color
 
-    /// Color of the title.
-    let primary: Color
-
-    /// Color of the eyebrow and detail lines.
+    /// Color of the eyebrow, title and detail lines.
     let secondary: Color
 
     /// Fill behind the action buttons.
@@ -52,7 +49,6 @@ public struct DSStatusCardPalette {
     /// Dark, brand-colored card — the default expanded appearance.
     static let inverse = Self(
         background: .ink,
-        primary: .paper,
         secondary: .blush,
         actionBackground: .blush.opacity(0.15),
         actionForeground: .blush,
@@ -62,7 +58,6 @@ public struct DSStatusCardPalette {
     /// Error / cancellation.
     static let critical = Self(
         background: .terracota,
-        primary: .paper,
         secondary: .blush,
         actionBackground: .paper.opacity(0.15),
         actionForeground: .blush,
@@ -72,7 +67,6 @@ public struct DSStatusCardPalette {
     /// Light card highlighting a positive status.
     static let positive = Self(
         background: .confirmed,
-        primary: .paper,
         secondary: .blush,
         actionBackground: .paper.opacity(0.15),
         actionForeground: .blush,
@@ -82,7 +76,6 @@ public struct DSStatusCardPalette {
     /// Neutral light card.
     static let subtle = Self(
         background: .paper2,
-        primary: .ink,
         secondary: .ink60,
         actionBackground: .enamel,
         actionForeground: .paper,

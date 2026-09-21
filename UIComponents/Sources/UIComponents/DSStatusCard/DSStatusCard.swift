@@ -7,8 +7,8 @@ import SwiftUI
 /// optional actions.
 ///
 /// The layout adapts to ``DSStatusCardVariant`` read from the environment:
-/// `.expanded` shows a large title and the action buttons, `.compact` shows a
-/// smaller title and hides the actions.
+/// `.expanded` shows the action buttons, `.compact` uses tighter padding and
+/// hides them.
 ///
 /// ```swift
 /// DSStatusCard(
@@ -17,7 +17,7 @@ import SwiftUI
 ///     details: ["Studio Ana Lima · Hands · R$ 35"],
 ///     status: DSStatusBadge(title: "Confirmed", status: .confirmed)
 /// ) {
-///     DSButton(title: "Directions") {}
+///     DSStatusCardButton(title: "Directions") {}
 /// }
 /// ```
 public struct DSStatusCard<Actions: View>: View {
@@ -28,9 +28,6 @@ public struct DSStatusCard<Actions: View>: View {
 
     @Environment(\.statusCardEmphasis)
     private var emphasis
-
-    @Environment(\.dsTheme)
-    private var theme
     
     /// The uppercase overline shown above the title.
     private let eyebrow: String
@@ -76,14 +73,7 @@ public struct DSStatusCard<Actions: View>: View {
     /// promotes the card to the positive (green) appearance, while `.declined`
     /// and `.cancelled` promote it to the critical (red) one.
     private var resolvedEmphasis: DSStatusCardEmphasis {
-        guard emphasis == .standard else { return emphasis }
-
-        switch status?.status {
-        case .confirmed:            return .positive
-        case .declined, .cancelled: return .critical
-        case .requested, .finished: return .muted
-        default:                    return .standard
-        }
+        DSStatusCardEmphasis.resolved(explicit: emphasis, for: status?.status)
     }
 
     /// Whether the card should render its action row.
@@ -107,7 +97,7 @@ public struct DSStatusCard<Actions: View>: View {
                 .font(DSFont.titulo)
                 .foregroundStyle(palette.secondary)
 
-            ForEach(details, id: \.self) { line in
+            ForEach(Array(details.enumerated()), id: \.offset) { _, line in
                 Text(line)
                     .font(DSFont.apoio)
                     .foregroundStyle(palette.secondary)
@@ -115,6 +105,10 @@ public struct DSStatusCard<Actions: View>: View {
 
             if let status {
                 status
+                    .environment(\.statusBadgeOnCard,
+                                 DSStatusBadgeOnCardAppearance(
+                                    foreground: palette.secondary,
+                                    background: palette.secondary.opacity(0.18)))
                     .padding(.top, DSSpacing.xs)
             }
 
