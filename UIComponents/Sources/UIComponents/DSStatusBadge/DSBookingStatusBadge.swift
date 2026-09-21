@@ -36,7 +36,7 @@ public enum DSCancelledBy: Equatable {
     case customer
     case salon
 }
- 
+
 // MARK: - Appearance
 //
 // Plain Swift: the rules live here, the view only lays out.

@@ -144,4 +144,6 @@ public extension Color {
     /// Primary gray tone for body text, descriptions, and labels.
     /// Cor: Cinza médio-escuro (grafite)
     static let text = Color(hex: 0x737373)
+    
+    static let terracota = Color(hex: 0x7A1B16)
 }
