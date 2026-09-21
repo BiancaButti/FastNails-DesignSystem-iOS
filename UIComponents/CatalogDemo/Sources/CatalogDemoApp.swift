@@ -36,7 +36,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase())),
         CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase())),
         CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase())),
-        CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase()))
+        CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase())),
+        CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase()))
     ]
 
     var body: some View {
@@ -543,133 +544,213 @@ private struct DSStatusCardShowcase: View {
 private struct DSMerchantCardShowcase: View {
     var body: some View {
         VStack(spacing: 16) {
-            // MARK: - One image inside
-            DSMerchantCard(
-                title: "Espaço Camila",
-                subtitle: "A partir de R$ 45",
-                textPrice: "800 m"
-            ) {
-                ZStack {
-                    Color.teal.opacity(0.15)
-                    Image(systemName: "sparkles")
-                        .font(.system(size: 40))
-                        .foregroundColor(.teal)
+            VariantRow(label: "Merchant Cards with one or more pictures") {
+                // MARK: - One image inside
+                DSMerchantCard(
+                    title: "Espaço Camila",
+                    subtitle: "A partir de R$ 45",
+                    textPrice: "800 m"
+                ) {
+                    ZStack {
+                        Color.teal.opacity(0.15)
+                        Image(systemName: "sparkles")
+                            .font(.system(size: 40))
+                            .foregroundColor(.teal)
+                    }
+                } tagsContent: {
+                    Text("Espaço dela")
+                        .font(.system(size: 11, weight: .medium))
+                        .padding(.horizontal, 8).padding(.vertical, 4)
+                        .background(Color(.systemGray5)).cornerRadius(6)
                 }
-            } tagsContent: {
-                Text("Espaço dela")
+                
+                // MARK: - Two images inside
+                DSMerchantCard(
+                    title: "Studio Ana Lima",
+                    subtitle: "A partir de R$ 35",
+                    textPrice: "Vagas hoje até 19h",
+                    isCarousel: true
+                ) {
+                    ZStack {
+                        Color.purple.opacity(0.15)
+                        Image(systemName: "scissors")
+                            .font(.system(size: 40))
+                            .foregroundColor(.purple)
+                    }
+                    
+                    ZStack {
+                        Color.blue.opacity(0.15)
+                        Image(systemName: "comb")
+                            .font(.system(size: 40))
+                            .foregroundColor(.blue)
+                    }
+                    
+                    ZStack {
+                        Color.orange.opacity(0.15)
+                        Image(systemName: "face.smiling")
+                            .font(.system(size: 40))
+                            .foregroundColor(.orange)
+                    }
+                } tagsContent: {
+                    HStack(spacing: 6) {
+                        Text("No salão")
+                            .padding(.horizontal, 8).padding(.vertical, 4)
+                            .background(Color(.systemGray5)).cornerRadius(6)
+                        Text("Sem degrau")
+                            .padding(.horizontal, 8).padding(.vertical, 4)
+                            .background(Color(.systemGray5)).cornerRadius(6)
+                    }
                     .font(.system(size: 11, weight: .medium))
-                    .padding(.horizontal, 8).padding(.vertical, 4)
-                    .background(Color(.systemGray5)).cornerRadius(6)
+                }
             }
-            
-            // MARK: - Two images inside
-            DSMerchantCard(
-                title: "Studio Ana Lima",
-                subtitle: "A partir de R$ 35",
-                textPrice: "Vagas hoje até 19h",
-                isCarousel: true 
-            ) {
-                ZStack {
-                    Color.purple.opacity(0.15)
-                    Image(systemName: "scissors")
-                        .font(.system(size: 40))
-                        .foregroundColor(.purple)
-                }
-                
-                ZStack {
-                    Color.blue.opacity(0.15)
-                    Image(systemName: "comb")
-                        .font(.system(size: 40))
-                        .foregroundColor(.blue)
-                }
-                
-                ZStack {
-                    Color.orange.opacity(0.15)
-                    Image(systemName: "face.smiling")
-                        .font(.system(size: 40))
-                        .foregroundColor(.orange)
-                }
-            } tagsContent: {
-                HStack(spacing: 6) {
-                    Text("No salão")
-                        .padding(.horizontal, 8).padding(.vertical, 4)
-                        .background(Color(.systemGray5)).cornerRadius(6)
-                    Text("Sem degrau")
-                        .padding(.horizontal, 8).padding(.vertical, 4)
-                        .background(Color(.systemGray5)).cornerRadius(6)
-                }
-                .font(.system(size: 11, weight: .medium))
-            }
+            .padding()
         }
-        .padding()
-
     }
 }
 
 private struct DSInlineMessageShowcase: View {
     var body: some View {
         VStack(spacing: 16) {
-            
-            // Exemplo 1: Onde você está? (Estilo Info com borda)
-            DSInlineMessageCard(
-                title: "Onde você está?",
-                description: "Com sua localização, mostramos os salões mais perto e conferimos se atendemos sua região.",
-                actionTitle: "Informar localização",
-                style: .info
-            ) {
-                Image(systemName: "mappin.and.ellipse")
-                    .foregroundColor(.red)
-            } action: {
-                print("Solicitar localização do usuário")
+            VariantRow(label: "Estilo Info com borda") {
+                DSInlineMessageCard(
+                    title: "Onde você está?",
+                    description: "Com sua localização, mostramos os salões mais perto e conferimos se atendemos sua região.",
+                    actionTitle: "Informar localização",
+                    style: .info
+                ) {
+                    Image(systemName: "mappin.and.ellipse")
+                        .foregroundColor(.red)
+                } action: {
+                    print("Solicitar localização do usuário")
+                }
             }
-            
-            // Exemplo 2: Ainda não atendemos Itaquera (Estilo Warning com Fundo Bege)
-            DSInlineMessageCard(
-                title: "Ainda não atendemos Itaquera",
-                description: "Você está na lista de espera. Enquanto isso, dá para conhecer os salões da zona norte.",
-                actionTitle: "Usar outro endereço",
-                style: .warning
-            ) {
-                Image(systemName: "mappin.circle.fill")
-                    .foregroundColor(.red)
-            } action: {
-                print("Trocar endereço")
+            VariantRow(label: "Estilo Warning com Fundo Bege") {
+                DSInlineMessageCard(
+                    title: "Ainda não atendemos Itaquera",
+                    description: "Você está na lista de espera. Enquanto isso, dá para conhecer os salões da zona norte.",
+                    actionTitle: "Usar outro endereço",
+                    style: .warning
+                ) {
+                    Image(systemName: "mappin.circle.fill")
+                        .foregroundColor(.red)
+                } action: {
+                    print("Trocar endereço")
+                }
             }
-            
-            // Exemplo 3: Sem Internet (Estilo Warning alternativo)
-            DSInlineMessageCard(
-                title: "Sem internet",
-                description: "Estes salões são da última vez que você abriu. Preços e horários podem ter mudado.",
-                actionTitle: "Tentar de novo",
-                style: .warning
-            ) {
-                Image(systemName: "antenna.radiowaves.left.and.right")
-                    .foregroundColor(.blue)
-            } action: {
-                print("Forçar recarregamento de rede")
+            VariantRow(label: "Estilo Warning alternativo") {
+                DSInlineMessageCard(
+                    title: "Sem internet",
+                    description: "Estes salões são da última vez que você abriu. Preços e horários podem ter mudado.",
+                    actionTitle: "Tentar de novo",
+                    style: .warning
+                ) {
+                    Image(systemName: "antenna.radiowaves.left.and.right")
+                        .foregroundColor(.blue)
+                } action: {
+                    print("Forçar recarregamento de rede")
+                }
             }
-            
-            // Exemplo 4: Horário reservado (Estilo Erro com Fundo Rosa/Vermelho)
-            DSInlineMessageCard(
-                title: "Esse horário acabou de ser reservado",
-                description: "Alguém marcou as 16:00 enquanto você conferia. Escolha outro horário — o resto continua igual.",
-                style: .error
-            ) {
-                Image(systemName: "exclamationmark.triangle")
-                    .foregroundColor(.red)
+            VariantRow(label: "Estilo Erro com Fundo Rosa/Vermelho") {
+                DSInlineMessageCard(
+                    title: "Esse horário acabou de ser reservado",
+                    description: "Alguém marcou as 16:00 enquanto você conferia. Escolha outro horário — o resto continua igual.",
+                    style: .error
+                ) {
+                    Image(systemName: "exclamationmark.triangle")
+                        .foregroundColor(.red)
+                }
             }
-            
-            // Exemplo 5: Endereços servem para atendimento em casa (Estilo Info básico sem ação)
-            DSInlineMessageCard(
-                title: "Endereços servem para atendimento em casa",
-                description: "Também ajudam a mostrar os salões mais perto de onde você vai estar.",
-                style: .info
-            ) {
-                // Sem ícone aparente no print original, podemos passar uma View vazia ou omitir
-                EmptyView()
+            VariantRow(label: "Estilo Info básico sem ação") {
+                DSInlineMessageCard(
+                    title: "Endereços servem para atendimento em casa",
+                    description: "Também ajudam a mostrar os salões mais perto de onde você vai estar.",
+                    style: .info
+                ) {
+                    EmptyView()
+                }
             }
-            
         }
         .padding()
+    }
+}
+
+private struct DSSummaryCardShowcase: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                VariantRow(label: "Atendimento em Casa (Ela vai até você)") {
+                    DSSummaryCard(
+                        totalLabel: "Total no atendimento",
+                        totalPrice: "R$ 100"
+                    ) {
+                        Text("🏡")
+                            .font(.system(size: 24))
+                    } headerContent: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Ela vai até você")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(.ink)
+                            
+                            Text("R. Aurora, 120 · apto 42")
+                                .font(.system(size: 12))
+                                .foregroundColor(.ink60)
+                            
+                            Text("Freguesia do Ó")
+                                .font(.system(size: 12))
+                                .foregroundColor(.ink60)
+                        }
+                    } detailsContent: {
+                        VStack(spacing: 10) {
+                            detailRow(label: "Quem", value: "Espaço Camila")
+                            detailRow(label: "Quando", value: "Quinta, 03/09 · 11:00 às 12:15")
+                            detailRow(label: "Serviços", value: "Mãos e pés · 75 min")
+                        }
+                    }
+                }
+                VariantRow(label: "Atendimento no Estabelecimento (Studio Ana Lima)") {
+                    DSSummaryCard(
+                        totalLabel: "Total no salão",
+                        totalPrice: "R$ 35"
+                    ) {
+                        Text("🏢")
+                            .font(.system(size: 24))
+                    } headerContent: {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Studio Ana Lima")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(.ink)
+                            
+                            Text("R. Aurora, 120 · Freguesia do Ó")
+                                .font(.system(size: 12))
+                                .foregroundColor(.ink60)
+                        }
+                    } detailsContent: {
+                        VStack(spacing: 10) {
+                            detailRow(label: "Quando", value: "Hoje, 02/09 · 16:00 às 16:30")
+                            detailRow(label: "Serviço", value: "Mãos · 30 min")
+                        }
+                    }
+                }
+            }.padding()
+        }
+        .background(Color.surface)
+    }
+    
+    /// Helper privado para criar as linhas de detalhes perfeitamente alinhadas nas pontas
+    @ViewBuilder
+    private func detailRow(label: String, value: String) -> some View {
+        HStack(alignment: .top) {
+            Text(label)
+                .foregroundColor(.ink60)
+                .frame(width: 65, alignment: .leading)
+            
+            Spacer()
+            
+            Text(value)
+                .foregroundColor(.ink)
+                .fontWeight(.medium)
+                .multilineTextAlignment(.trailing)
+        }
+        .font(.system(size: 13))
     }
 }
