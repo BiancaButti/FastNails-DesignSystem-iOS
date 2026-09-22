@@ -54,43 +54,46 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
     
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center, spacing: 12) {
+            HStack(alignment: .center, spacing: DSSpacing.md) {
                 iconContent
                     .frame(width: 44, height: 44)
                     .background(Color.surface)
-                    .cornerRadius(10)
-                
+                    .clipShape(RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous))
+
                 headerContent
             }
-            .padding(.bottom, 16)
-            
+            .padding(.bottom, DSSpacing.lg)
+
             Color.line
                 .frame(height: 1)
-                .padding(.bottom, 14)
-            
+                .padding(.bottom, DSSpacing.md)
+
             detailsContent
-                .font(.system(size: 14))
-                .foregroundColor(Color.ink60)
-                .padding(.bottom, 14)
-            
+                .font(DSFont.rotulo)
+                .foregroundStyle(Color.ink60)
+                .padding(.bottom, DSSpacing.md)
+
             HStack(alignment: .bottom) {
                 Text(totalLabel)
-                    .font(.system(size: 14))
-                    .foregroundColor(Color.ink60)
-                
+                    .font(DSFont.rotulo)
+                    .foregroundStyle(Color.ink60)
+
                 Spacer()
-                
+
                 Text(totalPrice)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(Color.salonCardPrice)
+                    .font(DSFont.corpoForte)
+                    .foregroundStyle(Color.salonCardPrice)
             }
         }
-        .padding(16)
+        .padding(DSSpacing.lg)
         .background(Color.paper)
-        .cornerRadius(16)
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
                 .stroke(Color.line, lineWidth: 1)
         )
+        // Single-appearance lock: the design system is light-only.
+        .environment(\.colorScheme, .light)
+        .accessibilityElement(children: .contain)
     }
 }

@@ -21,10 +21,6 @@ public struct DSStatusCardPalette {
     /// Color of the action buttons' labels.
     let actionForeground: Color
 
-    /// Whether the background is dark, so the card can force the matching
-    /// color scheme for its content.
-    let isDark: Bool
-
     /// The palette for a given card variant and emphasis.
     ///
     /// - Parameters:
@@ -51,8 +47,7 @@ public struct DSStatusCardPalette {
         background: .ink,
         secondary: .blush,
         actionBackground: .blush.opacity(0.15),
-        actionForeground: .blush,
-        isDark: true
+        actionForeground: .blush
     )
 
     /// Error / cancellation.
@@ -60,8 +55,7 @@ public struct DSStatusCardPalette {
         background: .terracota,
         secondary: .blush,
         actionBackground: .paper.opacity(0.15),
-        actionForeground: .blush,
-        isDark: true
+        actionForeground: .blush
     )
 
     /// Light card highlighting a positive status.
@@ -69,8 +63,7 @@ public struct DSStatusCardPalette {
         background: .confirmed,
         secondary: .blush,
         actionBackground: .paper.opacity(0.15),
-        actionForeground: .blush,
-        isDark: true
+        actionForeground: .blush
     )
 
     /// Neutral light card.
@@ -78,7 +71,6 @@ public struct DSStatusCardPalette {
         background: .paper2,
         secondary: .ink60,
         actionBackground: .enamel,
-        actionForeground: .paper,
-        isDark: false
+        actionForeground: .paper
     )
 }

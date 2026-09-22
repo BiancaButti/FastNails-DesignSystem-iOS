@@ -41,12 +41,15 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
     private let headerContent: HeaderContent
     private let tagsContent: TagsContent
     private let isCarousel: Bool
-    
+
+    /// The fixed height of the media area.
+    private let mediaHeight: CGFloat = 140
+
     /// Initializes a new `DSMerchantCard`.
     ///
     /// - Parameters:
     ///   - title: The bold primary header text (capped to 1 line).
-    ///   - subtitle: The secondary highlighted text (renders in branding pink color).
+    ///   - subtitle: The secondary highlighted text (renders in the brand price color).
     ///   - textPrice: Optional tertiary label for auxiliary data (e.g., distance or dynamic availability).
     ///   - isCarousel: When `true`, embeds header elements into a horizontal `TabView` with page indicators. Default is `false`.
     ///   - headerContent: A `@ViewBuilder` closure supplying the card media layout (single image or multiple page elements).
@@ -66,10 +69,10 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
         self.headerContent = headerContent()
         self.tagsContent = tagsContent()
     }
-    
+
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            
+
             // Media Area: applies page style automatically if isCarousel is active
             Group {
                 if isCarousel {
@@ -82,38 +85,41 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
                 }
             }
             .frame(maxWidth: .infinity)
-            .frame(height: 140)
-            .background(Color(.systemGray6))
+            .frame(height: mediaHeight)
+            .background(Color.surface)
             .clipped()
-            
+
             // Text Body
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(title)
-                    .font(.system(size: 16, weight: .bold))
-                    .foregroundColor(.primary)
+                    .font(DSFont.corpoForte)
+                    .foregroundStyle(Color.ink)
                     .lineLimit(1)
-                
+
                 Text(subtitle)
-                    .font(.system(size: 14, weight: .semibold))
-                    .foregroundColor(Color(red: 0.8, green: 0.1, blue: 0.4))
-                
-                if let textPrice = textPrice {
+                    .font(DSFont.rotulo)
+                    .foregroundStyle(Color.salonCardPrice)
+
+                if let textPrice {
                     Text(textPrice)
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
+                        .font(DSFont.legenda)
+                        .foregroundStyle(Color.ink60)
                 }
-                
+
                 tagsContent
-                    .padding(.top, 6)
+                    .padding(.top, DSSpacing.sm)
             }
-            .padding(12)
+            .padding(DSSpacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color(.systemBackground))
+            .background(Color.paper)
         }
-        .cornerRadius(16)
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
-                .stroke(Color(.systemGray5), lineWidth: 1)
+            RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+                .stroke(Color.line, lineWidth: 1)
         )
+        // Single-appearance lock: the design system is light-only.
+        .environment(\.colorScheme, .light)
+        .accessibilityElement(children: .contain)
     }
 }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 /// Defines the background and border styling for the banner component using Fast Nails tokens.
-public enum DSInlineAlertStyle {
+public enum DSInlineMessageStyle {
     case info
     case warning
     case error       

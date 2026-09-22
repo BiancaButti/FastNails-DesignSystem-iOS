@@ -52,14 +52,12 @@ struct DSStatusCardPaletteTests {
     func standardExpandedIsInverse() {
         let palette = DSStatusCardPalette.resolve(.expanded, emphasis: .standard)
         #expect(palette.background == Color.ink)
-        #expect(palette.isDark)
     }
 
     @Test("Standard emphasis uses the light subtle palette when compact")
     func standardCompactIsSubtle() {
         let palette = DSStatusCardPalette.resolve(.compact, emphasis: .standard)
         #expect(palette.background == Color.paper2)
-        #expect(!palette.isDark)
     }
 
     @Test("Positive emphasis is green regardless of variant")
@@ -78,6 +76,5 @@ struct DSStatusCardPaletteTests {
     func mutedIsSubtle() {
         let muted = DSStatusCardPalette.resolve(.expanded, emphasis: .muted)
         #expect(muted.background == Color.paper2)
-        #expect(!muted.isDark)
     }
 }

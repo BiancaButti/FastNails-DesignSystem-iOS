@@ -8,11 +8,11 @@ public struct DSInlineMessageCard<IconContent: View>: View {
     private let title: String
     private let description: String
     private let actionTitle: String?
-    private let style: DSInlineAlertStyle
+    private let style: DSInlineMessageStyle
     private let iconContent: IconContent
     private let action: (() -> Void)?
     
-    /// Initializes a new `DSInlineAlertCard`.
+    /// Initializes a new `DSInlineMessageCard`.
     /// - Parameters:
     ///   - title: The bold title text describing the event state.
     ///   - description: Main body paragraph explaining details or feedback.
@@ -24,7 +24,7 @@ public struct DSInlineMessageCard<IconContent: View>: View {
         title: String,
         description: String,
         actionTitle: String? = nil,
-        style: DSInlineAlertStyle = .info,
+        style: DSInlineMessageStyle = .info,
         @ViewBuilder iconContent: () -> IconContent,
         action: (() -> Void)? = nil
     ) {
@@ -37,43 +37,46 @@ public struct DSInlineMessageCard<IconContent: View>: View {
     }
     
     public var body: some View {
-        HStack(alignment: .top, spacing: 14) {
+        HStack(alignment: .top, spacing: DSSpacing.md) {
             iconContent
                 .font(.system(size: 20))
-                .foregroundColor(style.titleColor)
+                .foregroundStyle(style.titleColor)
                 .frame(width: 24, alignment: .top)
-            
-            VStack(alignment: .leading, spacing: 6) {
+
+            VStack(alignment: .leading, spacing: DSSpacing.sm) {
                 Text(title)
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundColor(style.titleColor)
+                    .font(DSFont.corpoForte)
+                    .foregroundStyle(style.titleColor)
                     .fixedSize(horizontal: false, vertical: true)
-                
+
                 Text(description)
-                    .font(.system(size: 13))
-                    .foregroundColor(Color.ink60)
-                    .lineSpacing(3)
+                    .font(DSFont.apoio)
+                    .foregroundStyle(Color.ink60)
+                    .lineSpacing(DSSpacing.xs)
                     .fixedSize(horizontal: false, vertical: true)
-                
-                if let actionTitle = actionTitle {
+
+                if let actionTitle {
                     Button(action: { action?() }) {
                         Text(actionTitle)
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(DSFont.rotulo)
                             .underline()
-                            .foregroundColor(style.actionColor)
+                            .foregroundStyle(style.actionColor)
                     }
-                    .padding(.top, 4)
+                    .padding(.top, DSSpacing.xs)
                     .buttonStyle(.plain)
                 }
             }
         }
-        .padding(16)
+        .padding(DSSpacing.lg)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(style.backgroundColor)
-        .cornerRadius(12)
+        .clipShape(RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)
                 .stroke(style.borderColor, lineWidth: 1)
         )
+        // Single-appearance lock: the design system is light-only.
+        .environment(\.colorScheme, .light)
+        .accessibilityElement(children: .contain)
     }
 }

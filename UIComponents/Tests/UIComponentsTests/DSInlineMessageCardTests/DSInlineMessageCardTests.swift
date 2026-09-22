@@ -2,7 +2,7 @@ import XCTest
 import SwiftUI
 @testable import UIComponents
 
-final class DSInlineAlertCardTests: XCTestCase {
+final class DSInlineMessageCardTests: XCTestCase {
     
     func testInitialization_withActionTitle_shouldNotBeNil() {
         // Given
@@ -23,7 +23,7 @@ final class DSInlineAlertCardTests: XCTestCase {
         }
         
         // Then
-        XCTAssertNotNil(card, "DSInlineAlertCard should successfully initialize with an action button.")
+        XCTAssertNotNil(card, "DSInlineMessageCard should successfully initialize with an action button.")
     }
     
     func testInitialization_withoutActionTitle_shouldNotBeNil() {
@@ -42,15 +42,15 @@ final class DSInlineAlertCardTests: XCTestCase {
         }
         
         // Then
-        XCTAssertNotNil(card, "DSInlineAlertCard should successfully initialize without an action button.")
+        XCTAssertNotNil(card, "DSInlineMessageCard should successfully initialize without an action button.")
     }
     
     /// Validates that the Style mapping returns the exact colors from the Design System tokens.
     func testStyleMapping_shouldReturnCorrectTokens() {
         // Given
-        let infoStyle = DSInlineAlertStyle.info
-        let warningStyle = DSInlineAlertStyle.warning
-        let errorStyle = DSInlineAlertStyle.error
+        let infoStyle = DSInlineMessageStyle.info
+        let warningStyle = DSInlineMessageStyle.warning
+        let errorStyle = DSInlineMessageStyle.error
         
         // Then & Expected token verifications
         XCTAssertEqual(infoStyle.backgroundColor, Color.paper, "Info background must map to Color.paper")
