@@ -37,7 +37,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase())),
         CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase())),
         CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase())),
-        CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase()))
+        CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase())),
+        CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase()))
     ]
 
     var body: some View {
@@ -752,5 +753,39 @@ private struct DSSummaryCardShowcase: View {
                 .multilineTextAlignment(.trailing)
         }
         .font(.system(size: 13))
+    }
+}
+
+private struct DSPriceReceiptCardShowcase: View {
+    var body: some View {
+        ZStack {
+            Color(.systemGray6).edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
+                VariantRow(label: "Apenas um item comprado") {
+                    DSPriceReceiptCard(
+                        sectionTitle: "O que",
+                        items: [
+                            ("Mãos - manicure", "R$ 35")
+                        ],
+                        totalTitle: "Total",
+                        totalValue: "R$ 35",
+                        totalColor: .brand
+                    )
+                }
+                VariantRow(label: "Múltiplos itens comprados") {
+                    DSPriceReceiptCard(
+                        sectionTitle: "O que",
+                        items: [
+                            ("Mãos - manicure", "R$ 45"),
+                            ("Pés - pedicure", "R$ 55")
+                        ],
+                        totalTitle: "Total",
+                        totalValue: "R$ 100",
+                        totalColor: .brand
+                    )
+                }
+            }.padding()
+        }
     }
 }
