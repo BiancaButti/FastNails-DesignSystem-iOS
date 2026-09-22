@@ -38,7 +38,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase())),
         CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase())),
         CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase())),
-        CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase()))
+        CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase())),
+        CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase()))
     ]
 
     var body: some View {
@@ -789,3 +790,46 @@ private struct DSPriceReceiptCardShowcase: View {
         }
     }
 }
+
+private struct DSDayPickerShowcase: View {
+    // App variables simulating raw items fetched from a API/Database
+    @State private var availableDays: [DSDayPicker.DayItem] = [
+        .init(weekday: "Hoje", dayNumber: "02", subtitle: "3 vagas", isSelected: true),
+        .init(weekday: "Qui", dayNumber: "03", subtitle: "4 vagas"),
+        .init(weekday: "Sex", dayNumber: "04", subtitle: "lotado", isFull: true),
+        .init(weekday: "Sáb", dayNumber: "05", subtitle: "9 vagas")
+    ]
+    
+    var body: some View {
+        ZStack {
+            Color.surface.edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                // Call the generic component from the SPM
+                DSDayPicker(
+                    title: "Escolha seu dia",
+                    days: availableDays
+                ) { selectedDay in
+                    // Logic to update selection in the container app
+                    availableDays = availableDays.map { day in
+                        var updatedDay = day
+                        updatedDay = .init(
+                            id: day.id,
+                            weekday: day.weekday,
+                            dayNumber: day.dayNumber,
+                            subtitle: day.subtitle,
+                            isSelected: day.id == selectedDay.id, // Only true for the clicked one
+                            isFull: day.isFull
+                        )
+                        return updatedDay
+                    }
+                    print("Selected day index: \(selectedDay.dayNumber)")
+                }
+                .padding()
+                
+                Spacer()
+            }
+        }
+    }
+}
+
