@@ -29,9 +29,10 @@ public struct DSDayPicker: View {
         }
     }
     
-    private let title: String
-    private let days: [DayItem]
-    private let onDaySelected: (DayItem) -> Void
+    let title: String
+    let days: [DayItem]
+    let onDaySelected: (DayItem) -> Void 
+
     
     /// Public initializer structured for the SPM package.
     /// - Parameters:
