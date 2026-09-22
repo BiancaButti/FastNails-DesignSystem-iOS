@@ -39,7 +39,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase())),
         CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase())),
         CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase())),
-        CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase()))
+        CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase())),
+        CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
     ]
 
     var body: some View {
@@ -833,3 +834,41 @@ private struct DSDayPickerShowcase: View {
     }
 }
 
+struct DSTimeSlotPickerShowcase: View {
+    @State private var afternoonSlots: [DSTimeSlotPicker.TimeSlotItem] = [
+        .init(time: "13:00", isAvailable: false),
+        .init(time: "14:00", isAvailable: false),
+        .init(time: "15:00", isAvailable: false),
+        .init(time: "16:00", isSelected: true),
+        .init(time: "17:00"),
+        .init(time: "18:00")
+    ]
+    
+    var body: some View {
+        ZStack {
+            Color.surface.edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                DSTimeSlotPicker(
+                    sectionTitle: "Tarde",
+                    slots: afternoonSlots
+                ) { selectedSlot in
+                    // Toggle execution matching selection rules inside the host app
+                    afternoonSlots = afternoonSlots.map { slot in
+                        var updatedSlot = slot
+                        updatedSlot = .init(
+                            id: slot.id,
+                            time: slot.time,
+                            isSelected: slot.id == selectedSlot.id,
+                            isAvailable: slot.isAvailable
+                        )
+                        return updatedSlot
+                    }
+                }
+                .padding()
+                
+                Spacer()
+            }
+        }
+    }
+}
