@@ -26,11 +26,26 @@ enum DSSalonCardFormatter {
 
     /// Currency, hiding cents when the price is a whole number: "R$ 35" / "R$ 35,50".
     static func priceText(_ price: Decimal) -> String {
+        var roundedPrice = Decimal()
+        var value = price
+
+        NSDecimalRound(
+            &roundedPrice,
+            &value,
+            0,
+            .plain
+        )
+
+        let hasCents = price != roundedPrice
+
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = Locale(identifier: "pt_BR")
+        formatter.minimumFractionDigits = hasCents ? 2 : 0
+        formatter.maximumFractionDigits = hasCents ? 2 : 0
+
         let number = NSDecimalNumber(decimal: price)
-        let hasCents = number.doubleValue.truncatingRemainder(dividingBy: 1) != 0
-        currency.minimumFractionDigits = hasCents ? 2 : 0
-        currency.maximumFractionDigits = hasCents ? 2 : 0
-        return currency.string(from: number) ?? "R$ \(number)"
+        return formatter.string(from: number) ?? "R$ \(number)"
     }
 
     /// Price spelled for VoiceOver: "1 real" / "35 reais".
