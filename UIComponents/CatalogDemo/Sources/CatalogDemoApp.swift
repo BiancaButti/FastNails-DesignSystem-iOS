@@ -41,6 +41,7 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase())),
         CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase())),
         CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
+        CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase()))
     ]
 
     var body: some View {
@@ -806,35 +807,36 @@ private struct DSDayPickerShowcase: View {
             Color.surface.edgesIgnoringSafeArea(.all)
             
             VStack {
-                // Call the generic component from the SPM
-                DSDayPicker(
-                    title: "Escolha seu dia",
-                    days: availableDays
-                ) { selectedDay in
-                    // Logic to update selection in the container app
-                    availableDays = availableDays.map { day in
-                        var updatedDay = day
-                        updatedDay = .init(
-                            id: day.id,
-                            weekday: day.weekday,
-                            dayNumber: day.dayNumber,
-                            subtitle: day.subtitle,
-                            isSelected: day.id == selectedDay.id, // Only true for the clicked one
-                            isFull: day.isFull
-                        )
-                        return updatedDay
+                VariantRow(label: "Dias com e sem vagas") {
+                    DSDayPicker(
+                        title: "Escolha seu dia",
+                        days: availableDays
+                    ) { selectedDay in
+                        // Logic to update selection in the container app
+                        availableDays = availableDays.map { day in
+                            var updatedDay = day
+                            updatedDay = .init(
+                                id: day.id,
+                                weekday: day.weekday,
+                                dayNumber: day.dayNumber,
+                                subtitle: day.subtitle,
+                                isSelected: day.id == selectedDay.id, // Only true for the clicked one
+                                isFull: day.isFull
+                            )
+                            return updatedDay
+                        }
+                        print("Selected day index: \(selectedDay.dayNumber)")
                     }
-                    print("Selected day index: \(selectedDay.dayNumber)")
+                    .padding()
+                    
+                    Spacer()
                 }
-                .padding()
-                
-                Spacer()
             }
         }
     }
 }
 
-struct DSTimeSlotPickerShowcase: View {
+private struct DSTimeSlotPickerShowcase: View {
     @State private var afternoonSlots: [DSTimeSlotPicker.TimeSlotItem] = [
         .init(time: "13:00", isAvailable: false),
         .init(time: "14:00", isAvailable: false),
@@ -849,26 +851,70 @@ struct DSTimeSlotPickerShowcase: View {
             Color.surface.edgesIgnoringSafeArea(.all)
             
             VStack {
-                DSTimeSlotPicker(
-                    sectionTitle: "Tarde",
-                    slots: afternoonSlots
-                ) { selectedSlot in
-                    // Toggle execution matching selection rules inside the host app
-                    afternoonSlots = afternoonSlots.map { slot in
-                        var updatedSlot = slot
-                        updatedSlot = .init(
-                            id: slot.id,
-                            time: slot.time,
-                            isSelected: slot.id == selectedSlot.id,
-                            isAvailable: slot.isAvailable
-                        )
-                        return updatedSlot
+                VariantRow(label: "Horários disponíveis e indisponíveis") {
+                    DSTimeSlotPicker(
+                        sectionTitle: "Tarde",
+                        slots: afternoonSlots
+                    ) { selectedSlot in
+                        // Toggle execution matching selection rules inside the host app
+                        afternoonSlots = afternoonSlots.map { slot in
+                            var updatedSlot = slot
+                            updatedSlot = .init(
+                                id: slot.id,
+                                time: slot.time,
+                                isSelected: slot.id == selectedSlot.id,
+                                isAvailable: slot.isAvailable
+                            )
+                            return updatedSlot
+                        }
                     }
                 }
                 .padding()
                 
                 Spacer()
             }
+        }
+    }
+}
+
+private struct DSTimelineShowcase: View {
+
+    /// Fixed flow definition (title + optional subtitle), rendered by the timeline.
+    private let flow: [(title: String, subtitle: String?)] = [
+        ("Pedido enviado", "Hoje, 14:00"),
+        ("Confirmado pelo salão", "Aguardando atendimento..."),
+        ("Finalizado", nil)
+    ]
+
+    /// How far the flow has progressed: the index currently `.current`.
+    /// When it reaches `flow.count`, every step is `.completed` (flow finished).
+    @State private var progress = 0
+
+    private var steps: [DSTimelineStepItem] {
+        flow.enumerated().map { index, item in
+            let state: DSTimelineStepState =
+                index < progress ? .completed
+                : (index == progress ? .current : .pending)
+            return .init(id: item.title, title: item.title, subtitle: item.subtitle, state: state)
+        }
+    }
+
+    private var isFinished: Bool { progress >= flow.count }
+
+    var body: some View {
+        ZStack {
+            Color.surface.edgesIgnoringSafeArea(.all)
+
+            VStack(spacing: DSSpacing.lg) {
+                DSTimeline(steps: steps)
+
+                DSButton(title: isFinished ? "Reiniciar fluxo" : "Avançar etapa") {
+                    withAnimation(.easeInOut(duration: 0.35)) {
+                        progress = isFinished ? 0 : progress + 1
+                    }
+                }
+            }
+            .padding()
         }
     }
 }
