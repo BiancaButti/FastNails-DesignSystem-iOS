@@ -49,8 +49,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase())),
         CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase())),
         CatalogDemoItem(id: "profileCard", title: "DSProfileCard", summary: "show image, name and email", content: AnyView(DSProfileCardShowcase())),
-        CatalogDemoItem(id: "menuList", title: "DSMenuList", summary: "grouped profile navigation table rows", content: AnyView(DSMenuListShowcase())
-        )
+        CatalogDemoItem(id: "menuList", title: "DSMenuList", summary: "grouped profile navigation table rows", content: AnyView(DSMenuListShowcase())),
+        CatalogDemoItem(id: "alertModal", title: "DSAlert", summary: "contextual overlay confirmation dialog modal", content: AnyView(DSAlertShowcase()))
     ]
 
     var body: some View {
@@ -1299,5 +1299,39 @@ private struct DSMenuListShowcase: View {
             .padding()
         }
         .background(Color(.systemGray6))
+    }
+}
+
+private struct DSAlertShowcase: View {
+    @State private var showAlert = false
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Button("Testar Sair da Conta") {
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                    showAlert = true
+                }
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.enamel)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color(.systemGray6))
+        .dsAlert(isPresented: $showAlert) {
+            DSAlert(
+                title: "Sair da conta?",
+                message: "Seus agendamentos continuam salvos. Para vê-los de novo, entre com seu e-mail e senha.",
+                primaryButtonTitle: "Cancelar",
+                secondaryButtonTitle: "Sair",
+                isSecondaryDestructive: true,
+                primaryAction: {
+                    withAnimation(.easeInOut(duration: 0.2)) { showAlert = false }
+                },
+                secondaryAction: {
+                    print("Executou a limpeza da sessão e deslogou o usuário")
+                    withAnimation(.easeInOut(duration: 0.2)) { showAlert = false }
+                }
+            )
+        }
     }
 }

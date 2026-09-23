@@ -36,4 +36,8 @@ public extension View {
         )
     }
 
+    /// Presents a custom design system dynamic overlay dialog over the current layout context hierarchy.
+    func dsAlert(isPresented: Binding<Bool>, @ViewBuilder alert: @escaping () -> DSAlert) -> some View {
+        self.modifier(DSAlertModifier(isPresented: isPresented, alert: alert))
+    }
 }
