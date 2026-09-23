@@ -47,7 +47,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase())),
         CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase())),
         CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase())),
-        CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase()))
+        CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase())),
+        CatalogDemoItem(id: "profileCard", title: "DSProfileCard", summary: "show image, name and email", content: AnyView(DSProfileCardShowcase()))
     ]
 
     var body: some View {
@@ -1223,6 +1224,30 @@ private struct DSAvatarShowcase: View {
             
             VariantRow(label: "Avatar com Imagem Carregada") {
                 DSAvatar(initial: "B", image: Image(systemName: "person.crop.square.filled.and.at.rectangle"))
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+    }
+}
+
+private struct DSProfileCardShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            VariantRow(label: "Só a inicial") {
+                DSProfileCard(
+                    name: "Bianca",
+                    description: "bianca@email.com",
+                    avatarInitial: "B"
+                )
+            }
+            VariantRow(label: "Só a imagem") {
+                DSProfileCard(
+                    name: "Bianca",
+                    description: "bianca@email.com",
+                    avatarInitial: "B",
+                    avatarImage: Image(systemName: "person.crop.square.filled.and.at.rectangle")
+                )
             }
         }
         .padding()
