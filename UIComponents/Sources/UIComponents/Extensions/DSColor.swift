@@ -146,4 +146,14 @@ public extension Color {
     static let text = Color(hex: 0x737373)
     
     static let terracota = Color(hex: 0x7A1B16)
+
+    // MARK: - DSEventCard highlight
+
+    /// Very light warm surface behind a highlighted (ongoing) event card.
+    /// Cor: Creme quase branco
+    static let eventHighlightSurface = Color(hex: 0xFFFDF6)
+
+    /// Border of a highlighted (ongoing) event card.
+    /// Cor: Bege dourado
+    static let eventHighlightBorder = Color(hex: 0xC5A880)
 }
