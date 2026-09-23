@@ -46,7 +46,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())),
         CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase())),
         CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase())),
-        CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase()))
+        CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase())),
+        CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase()))
     ]
 
     var body: some View {
@@ -1206,6 +1207,22 @@ private struct DSNoticeCardShowcase: View {
                     title: "Antes de continuar",
                     items: sampleItems
                 )
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+    }
+}
+
+private struct DSAvatarShowcase: View {
+    var body: some View {
+        VStack(spacing: 8) {
+            VariantRow(label: "Avatar Padrão com Inicial (Igual à Imagem)") {
+                DSAvatar(initial: "B")
+            }
+            
+            VariantRow(label: "Avatar com Imagem Carregada") {
+                DSAvatar(initial: "B", image: Image(systemName: "person.crop.square.filled.and.at.rectangle"))
             }
         }
         .padding()
