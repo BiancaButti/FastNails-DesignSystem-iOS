@@ -43,9 +43,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
         CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase())),
         CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase())),
-        CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())
-        )
-
+        CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())),
+        CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase()))
     ]
 
     var body: some View {
@@ -1089,6 +1088,42 @@ private struct DSInfoCardShowcase: View {
                         .padding(.top, 4)
                     }
                 }
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+    }
+}
+
+// MARK: - DSSegmentedControlShowcase
+
+private enum AppointingPeriod: String, CaseIterable, Hashable {
+    case upcoming = "Próximos"
+    case past = "Anteriores"
+    
+    var title: String { self.rawValue }
+}
+
+private struct DSSegmentedControlShowcase: View {
+    @State private var selectionFirstExample = AppointingPeriod.upcoming
+    @State private var selectionSecondExample = AppointingPeriod.past
+
+    var body: some View {
+        VStack(spacing: 24) {
+            VariantRow(label: "Segmented Control - Próximos Selecionado") {
+                DSSegmentedControl(
+                    selection: $selectionFirstExample,
+                    options: AppointingPeriod.allCases,
+                    titleKeyPath: \.title
+                )
+            }
+            
+            VariantRow(label: "Segmented Control - Anteriores Selecionado") {
+                DSSegmentedControl(
+                    selection: $selectionSecondExample,
+                    options: AppointingPeriod.allCases,
+                    titleKeyPath: \.title
+                )
             }
         }
         .padding()
