@@ -42,7 +42,10 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase())),
         CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
         CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase())),
-        CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase()))
+        CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase())),
+        CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())
+        )
+
     ]
 
     var body: some View {
@@ -978,6 +981,114 @@ private struct DSEventCardShowcase: View {
                         status: .finished),
                     hasHighlightBorder: false
                 )
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
+    }
+}
+
+private struct DSInfoCardShowcase: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            VariantRow(label: "Info Card - Quando") {
+                DSInfoCard(title: "Quando") {
+                    HStack(spacing: 16) {
+                        VStack(spacing: 2) {
+                            Text("SET")
+                                .font(.system(size: 10, weight: .bold))
+                                .foregroundColor(.ink60)
+                            Text("02")
+                                .font(.system(size: 18, weight: .bold))
+                                .foregroundColor(.ink)
+                        }
+                        .frame(width: 48, height: 48)
+                        .background(Color.paper)
+                        .cornerRadius(12)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .stroke(Color.line, lineWidth: 1)
+                        )
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Hoje, terça-feira")
+                                .font(.headline)
+                                .foregroundColor(.ink)
+                            Text("16:00 às 16:30 · 30 min")
+                                .font(.subheadline)
+                                .foregroundColor(.ink60)
+                        }
+                    }
+                }
+            }
+        
+            VariantRow(label: "Info Card - Quem") {
+                DSInfoCard(title: "Quem") {
+                    HStack(spacing: 16) {
+                        ZStack {
+                            Image(systemName: "chair.lounge.fill")
+                                .foregroundColor(.terracota)
+                                .font(.system(size: 20))
+                        }
+                        .frame(width: 48, height: 48)
+                        .background(Color.paper2)
+                        .cornerRadius(12)
+                        
+                        // Textos de Informação
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Espaço Camila")
+                                .font(.headline)
+                                .foregroundColor(.ink)
+                            Text("Casa Verde · 800 m de você")
+                                .font(.subheadline)
+                                .foregroundColor(.ink60)
+                        }
+                    }
+                }
+            }
+            
+            // 3. EXEMPLO: ONDE (Where)
+            VariantRow(label: "Info Card - Onde") {
+                DSInfoCard(title: "Onde") {
+                    VStack(alignment: .leading, spacing: 12) {
+                        HStack(spacing: 16) {
+                            // Miniatura do Salão / Prédio
+                            ZStack {
+                                Image(systemName: "building.2.fill") // SF Symbol correspondente à imagem
+                                    .foregroundColor(.ink60)
+                                    .font(.system(size: 20))
+                            }
+                            .frame(width: 48, height: 48)
+                            .background(Color.paper2)
+                            .cornerRadius(12)
+                            
+                            // Textos de Informação
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Studio Ana Lima")
+                                    .font(.headline)
+                                    .foregroundColor(.ink)
+                                Text("R. Aurora, 120 · Freguesia do Ó")
+                                    .font(.subheadline)
+                                    .foregroundColor(.ink60)
+                                Text("300 m de você")
+                                    .font(.subheadline)
+                                    .foregroundColor(.ink60)
+                            }
+                        }
+                        
+                        // Link de Ação Inferior
+                        Button(action: {
+                            // Ação para abrir mapa / rotas
+                        }) {
+                            Text("Como chegar")
+                                .font(.subheadline)
+                                .fontWeight(.medium)
+                                .foregroundColor(.link)
+                                .underline()
+                        }
+                        .padding(.top, 4)
+                    }
+                }
             }
         }
         .padding()
