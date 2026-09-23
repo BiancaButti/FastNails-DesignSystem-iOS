@@ -692,6 +692,15 @@ private struct DSInlineMessageShowcase: View {
                     EmptyView()
                 }
             }
+            VariantRow(label: "Estilo Info básico atualizando") {
+                DSInlineMessageCard(
+                    title: "Atualizando...",
+                    description: "Buscando seu agendamento e os salões.",
+                    style: .warning
+                ) {
+                    Image(systemName: "hourglass.tophalf.filled")
+                }
+            }
         }
         .padding()
     }
