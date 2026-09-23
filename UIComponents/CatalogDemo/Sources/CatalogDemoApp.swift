@@ -44,7 +44,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase())),
         CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase())),
         CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())),
-        CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase()))
+        CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase())),
+        CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase()))
     ]
 
     var body: some View {
@@ -1128,5 +1129,41 @@ private struct DSSegmentedControlShowcase: View {
         }
         .padding()
         .background(Color(.systemGray6))
+    }
+}
+
+private struct DSToastShowcase: View {
+    @State private var showToast = false
+
+    var body: some View {
+        VStack(spacing: 24) {
+            VariantRow(label: "Toast - Confirmação do Salão") {
+                DSToast(message: "O salão confirmou seu horário.")
+            }
+            
+            VariantRow(label: "Toast - Atenção / Alerta genérico") {
+                DSToast(
+                    message: "Não foi possível sincronizar a agenda.",
+                    dotColor: .amber
+                )
+            }
+        }
+        VariantRow(label: "Com temporazidor") {
+            VStack(spacing: 16) {
+                Button("Disparar Confirmação") {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        showToast = true
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.enamel)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .dsToast(
+                isPresented: $showToast,
+                message: "O salão confirmou seu horário."
+            )
+            .padding()
+        }
     }
 }
