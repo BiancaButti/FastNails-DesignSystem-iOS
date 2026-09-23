@@ -45,7 +45,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase())),
         CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())),
         CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase())),
-        CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase()))
+        CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase())),
+        CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase()))
     ]
 
     var body: some View {
@@ -1174,5 +1175,40 @@ private struct DSToastShowcase: View {
             )
             .padding()
         }
+    }
+}
+
+
+private struct DSNoticeCardShowcase: View {
+    // Array populado seguindo fielmente as strings e tokens da imagem enviada
+    private let sampleItems = [
+        DSNoticeItem(
+            systemIconName: "creditcard.fill",
+            iconColor: Color(hex: 0xC5A880), // Dourado sutil combinando com a carteira/cartão
+            title: "O pagamento é combinado direto no salão."
+        ),
+        DSNoticeItem(
+            systemIconName: "clock.fill",
+            iconColor: .contentTertiary, // Cinza médio institucional
+            title: "Cancelamento gratuito até 14:00 de hoje."
+        ),
+        DSNoticeItem(
+            systemIconName: "hourglass",
+            iconColor: .ink60, // Cinza-asfalto
+            title: "Atrasos acima de 15 min podem perder a vaga."
+        )
+    ]
+
+    var body: some View {
+        VStack(spacing: 16) {
+            VariantRow(label: "Notice Card - Pré-requisitos de Agendamento") {
+                DSNoticeCard(
+                    title: "Antes de continuar",
+                    items: sampleItems
+                )
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
     }
 }
