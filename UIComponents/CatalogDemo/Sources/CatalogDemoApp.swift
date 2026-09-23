@@ -41,7 +41,8 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase())),
         CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase())),
         CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
-        CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase()))
+        CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase())),
+        CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase()))
     ]
 
     var body: some View {
@@ -916,5 +917,55 @@ private struct DSTimelineShowcase: View {
             }
             .padding()
         }
+    }
+}
+
+private struct DSEventCardShowcase: View {
+    var body: some View {
+        VStack(spacing: 16) {
+            VariantRow(label: "Card com evento confirmado") {
+                DSEventCard(
+                    day: "02",
+                    month: "Set",
+                    startTime: "16:00",
+                    endTime: "16:30",
+                    title: "Studio Ana Lima",
+                    serviceDetails: "Mãos · 30 min · no salão",
+                    price: "R$ 35",
+                    status: DSStatusBadge(title: "Confirmado", status: .confirmed),
+                    hasHighlightBorder: false
+                )
+            }
+            VariantRow(label: "Card com evento em andamento") {
+                DSEventCard(
+                    day: "05",
+                    month: "Set",
+                    startTime: "16:00",
+                    endTime: "16:30",
+                    title: "Studio Ana Lima",
+                    serviceDetails: "Mãos · 30 min · no salão",
+                    price: "R$ 35",
+                    status: DSStatusBadge(title: "Em andamento", status: .requested),
+                    hasHighlightBorder: true
+                )
+            }
+            VariantRow(label: "Card com evento onde o usuário aguarda confirmação do salão") {
+                DSEventCard(
+                    day: "04",
+                    month: "Set",
+                    startTime: "12:15",
+                    endTime: "14:00",
+                    title: "Camila",
+                    serviceDetails: "Mãos · 75 min · em casa",
+                    price: "R$ 100",
+                    status: DSStatusBadge(
+                        title: "Aguardando o salão",
+                        status: .finished),
+                    hasHighlightBorder: false
+                )
+            }
+        }
+        .padding()
+        .background(Color(.systemGray6))
     }
 }
