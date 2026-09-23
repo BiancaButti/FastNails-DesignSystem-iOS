@@ -342,12 +342,12 @@ private struct DSCardShowcase: View {
                         .font(.headline)
                         .foregroundStyle(Color.ink)
                         .multilineTextAlignment(.center)
-
+                    
                     Text("O filtro de orçamento está segurando o resultado. Com até R$90 aparecem 14 salões")
                         .font(.subheadline)
                         .foregroundStyle(Color.ink60)
                         .multilineTextAlignment(.center)
-
+                    
                     DSButton(title: "Aumentar para R$90", style: .secondary) {}
                 }
                 
@@ -356,13 +356,28 @@ private struct DSCardShowcase: View {
                         .font(.headline)
                         .foregroundStyle(Color.ink)
                         .multilineTextAlignment(.center)
-
+                    
                     Text("Seu agendamento continua marcado. A lista atualiza quando a conexão voltar")
                         .font(.subheadline)
                         .foregroundStyle(Color.ink60)
                         .multilineTextAlignment(.center)
-
+                    
                     DSButton(title: "Tentar novamente", style: .secondary, tone: .neutral) {}
+                }
+            }
+            VariantRow(label: "Estado vazio (conteúdo centralizado e com imagem)") {
+                DSCard(systemIconName: "magnifyingglass") { // Suporta iOS antigo e resolve o erro
+                    Text("Nenhum salão até R$60")
+                        .font(.headline)
+                        .foregroundStyle(Color.ink)
+                        .multilineTextAlignment(.center)
+
+                    Text("O filtro de orçamento está segurando o resultado. Com até R$90 aparecem 14 salões")
+                        .font(.subheadline)
+                        .foregroundStyle(Color.ink60)
+                        .multilineTextAlignment(.center)
+
+                    DSButton(title: "Aumentar para R$90", style: .secondary) {}
                 }
             }
         }
