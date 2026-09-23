@@ -48,7 +48,9 @@ private struct CatalogDemoRootView: View {
         CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase())),
         CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase())),
         CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase())),
-        CatalogDemoItem(id: "profileCard", title: "DSProfileCard", summary: "show image, name and email", content: AnyView(DSProfileCardShowcase()))
+        CatalogDemoItem(id: "profileCard", title: "DSProfileCard", summary: "show image, name and email", content: AnyView(DSProfileCardShowcase())),
+        CatalogDemoItem(id: "menuList", title: "DSMenuList", summary: "grouped profile navigation table rows", content: AnyView(DSMenuListShowcase())
+        )
     ]
 
     var body: some View {
@@ -1251,6 +1253,51 @@ private struct DSProfileCardShowcase: View {
             }
         }
         .padding()
+        .background(Color(.systemGray6))
+    }
+}
+private struct DSMenuListShowcase: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 24) {
+                DSMenuList(sectionTitle: "Sua conta") {
+                    DSMenuRow(
+                        icon: Image(systemName: "person.crop.circle.fill"),
+                        title: "Dados pessoais"
+                    ) {
+                        print("Abrir dados pessoais")
+                    }
+                    
+                    DSMenuRow(
+                        icon: Image(systemName: "mappin.circle.fill"),
+                        title: "Endereços salvos",
+                        badgeText: "2"
+                    ) {
+                        print("Abrir endereços")
+                    }
+                }
+                
+                DSMenuList(sectionTitle: "Sobre") {
+                    DSMenuRow(
+                        icon: Image(systemName: "doc.text.fill"),
+                        title: "Termos de uso"
+                    )
+                    
+                    DSMenuRow(
+                        icon: Image(systemName: "lock.shield.fill"),
+                        title: "Política de privacidade"
+                    )
+                    
+                    DSMenuRow(
+                        icon: Image(systemName: "info.circle.fill"),
+                        title: "Versão",
+                        badgeText: "1.0.0",
+                        showChevron: false
+                    )
+                }
+            }
+            .padding()
+        }
         .background(Color(.systemGray6))
     }
 }
