@@ -3,8 +3,8 @@ import SwiftUI
 /// A grid-based time slot selection component for the Fast Nails Design System.
 public struct DSTimeSlotPicker: View {
     private let sectionTitle: String
-    private let slots: [DSTimeSlotPickerItem] // 🛠️ Corrigido o tipo do modelo aqui
-    let onSlotSelected: (DSTimeSlotPickerItem) -> Void // 🛠️ Corrigido o tipo do modelo aqui
+    private let slots: [DSTimeSlotPickerItem]
+    let onSlotSelected: (DSTimeSlotPickerItem) -> Void
     
     // Defines a clean 3-column grid layout where columns scale equally
     private let columns = [
@@ -20,8 +20,8 @@ public struct DSTimeSlotPicker: View {
     ///   - onSlotSelected: Closure executed when an available time slot is tapped.
     public init(
         sectionTitle: String,
-        slots: [DSTimeSlotPickerItem], // 🛠️ Corrigido o tipo do modelo aqui
-        onSlotSelected: @escaping (DSTimeSlotPickerItem) -> Void // 🛠️ Corrigido o tipo do modelo aqui
+        slots: [DSTimeSlotPickerItem],
+        onSlotSelected: @escaping (DSTimeSlotPickerItem) -> Void
     ) {
         self.sectionTitle = sectionTitle
         self.slots = slots
@@ -45,7 +45,6 @@ public struct DSTimeSlotPicker: View {
                         }
                     } label: {
                         Text(slot.time)
-                            // 🛠️ Sintaxe limpa corrigida aqui
                             .font(slot.isSelected ? DSFont.descriptionBold : DSFont.description)
                             .foregroundColor(textColor(for: slot))
                             .frame(maxWidth: .infinity)
@@ -59,7 +58,7 @@ public struct DSTimeSlotPicker: View {
                     .disabled(!slot.isAvailable)
                 }
             }
-            .buttonStyle(.plain) // 💡 Aplicado no Grid unificado
+            .buttonStyle(.plain)
         }
         .padding(20)
         .background(Color.paper)
@@ -72,23 +71,23 @@ public struct DSTimeSlotPicker: View {
     
     // MARK: - UI Helper Style Mappings
     
-    private func textColor(for slot: DSTimeSlotPickerItem) -> Color { // 🛠️ Corrigido o tipo do modelo aqui
+    private func textColor(for slot: DSTimeSlotPickerItem) -> Color {
         if !slot.isAvailable {
-            return .line // Faded out text color for disabled slots
+            return .line
         } else if slot.isSelected {
-            return .paper // Crisp text color over deep background
+            return .paper
         } else {
-            return .ink // Standard text color
+            return .ink
         }
     }
     
-    private func backgroundColor(for slot: DSTimeSlotPickerItem) -> Color { // 🛠️ Corrigido o tipo do modelo aqui
+    private func backgroundColor(for slot: DSTimeSlotPickerItem) -> Color { // 🛠️
         if !slot.isAvailable {
-            return .paper2 // Matches the grayish-pink tint background for unavailable items
+            return .paper2
         } else if slot.isSelected {
-            return .ink // Filled selection color matching prior picker behavior
+            return .ink
         } else {
-            return .paper // Standard flat background resting inside the card
+            return .paper
         }
     }
     
@@ -97,19 +96,16 @@ public struct DSTimeSlotPicker: View {
     @ViewBuilder
     private func borderView(for slot: DSTimeSlotPickerItem) -> some View {
         if slot.isAvailable && !slot.isSelected {
-            // Outlined gray border for untouched available slots
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.line, lineWidth: 1)
-        } else if !slot.isAvailable {
-            // Strikethrough line overlay to match the image requirement for locked hours
-            LineStrikethrough()
+        } else if !slot.isAvailable {            LineStrikethrough()
                 .stroke(Color.line, lineWidth: 1)
                 .padding(.horizontal, 16)
         } else {
             EmptyView()
         }
     }
-} // ⚠️ Aqui fecha a struct DSTimeSlotPicker
+}
 
 // MARK: - Helper Shapes
 
