@@ -41,20 +41,20 @@ public struct DSMenuRow: View {
                 
                 Text(title)
                     .font(.body)
-                    .foregroundColor(.ink)
+                    .foregroundColor(DSColor.ink)
                 
                 Spacer()
                 
                 if let badgeText {
                     Text(badgeText)
                         .font(.subheadline)
-                        .foregroundColor(.ink60)
+                        .foregroundColor(DSColor.ink60)
                 }
                 
                 if showChevron {
                     Image(systemName: "chevron.right")
                         .font(DSFont.fieldLabel)
-                        .foregroundColor(.ink60.opacity(0.7))
+                        .foregroundColor(DSColor.ink60.opacity(0.7))
                 }
             }
             .padding(.vertical, 14)

@@ -53,7 +53,7 @@ public struct DSNoticeCard: View {
             Text(title)
                 .font(.headline)
                 .fontWeight(.bold)
-                .foregroundColor(.ink)
+                .foregroundColor(DSColor.ink)
             
             VStack(alignment: .leading, spacing: spacing) {
                 ForEach(items) { item in
@@ -65,7 +65,7 @@ public struct DSNoticeCard: View {
                         
                         Text(item.title)
                             .font(.subheadline)
-                            .foregroundColor(.ink60)
+                            .foregroundColor(DSColor.ink60)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                 }
@@ -73,10 +73,10 @@ public struct DSNoticeCard: View {
         }
         .padding(padding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(shape)
         .overlay(
-            shape.strokeBorder(Color.line, lineWidth: 1)
+            shape.strokeBorder(DSColor.line, lineWidth: 1)
         )
     }
 }

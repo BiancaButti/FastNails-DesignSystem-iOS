@@ -7,10 +7,10 @@ struct DSTabBarStyleTests {
     @Test("Default style uses the Fast Nails tokens")
     func defaultTokens() {
         let style = DSTabBarStyle.default
-        #expect(style.selectedColor == .brand)
-        #expect(style.unselectedColor == .contentTertiary)
-        #expect(style.background == .surface)
-        #expect(style.dividerColor == .divider)
+        #expect(style.selectedColor == DSColor.legacyBrand)
+        #expect(style.unselectedColor == DSColor.legacyContentTertiary)
+        #expect(style.background == DSColor.surface)
+        #expect(style.dividerColor == DSColor.divider)
     }
 
     @Test("Custom values override only what is passed")
@@ -18,9 +18,9 @@ struct DSTabBarStyleTests {
         let style = DSTabBarStyle(selectedColor: .indigo)
         #expect(style.selectedColor == .indigo)
         // Untouched tokens keep their defaults.
-        #expect(style.unselectedColor == .contentTertiary)
-        #expect(style.background == .surface)
-        #expect(style.dividerColor == .divider)
+        #expect(style.unselectedColor == DSColor.legacyContentTertiary)
+        #expect(style.background == DSColor.surface)
+        #expect(style.dividerColor == DSColor.divider)
     }
 
     @Test("Divider can be removed with nil")

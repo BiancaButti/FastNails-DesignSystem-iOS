@@ -41,12 +41,12 @@ public struct DSTimeline: View {
                     VStack(alignment: .leading, spacing: DSSpacing.xs) {
                         Text(step.title)
                             .font(step.state == .pending ? DSFont.fieldLabel : DSFont.descriptionBold)
-                            .foregroundStyle(step.state == .pending ? Color.text : Color.ink)
+                            .foregroundStyle(step.state == .pending ? DSColor.text : DSColor.ink)
                         
                         if let subtitle = step.subtitle {
                             Text(subtitle)
                                 .font(DSFont.caption)
-                                .foregroundStyle(Color.ink60)
+                                .foregroundStyle(DSColor.ink60)
                                 .transition(.opacity.combined(with: .move(edge: .top)))
                         }
                     }
@@ -56,11 +56,11 @@ public struct DSTimeline: View {
             }
         }
         .padding(DSSpacing.xl)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
-                .stroke(Color.line, lineWidth: DSTimelineMetrics.borderWidth)
+                .stroke(DSColor.line, lineWidth: DSTimelineMetrics.borderWidth)
         )
         // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
@@ -79,28 +79,28 @@ private extension DSTimeline {
         switch state {
         case .pending:
             Circle()
-                .fill(Color.line)
+                .fill(DSColor.line)
                 .frame(width: DSTimelineMetrics.pendingDot, height: DSTimelineMetrics.pendingDot)
 
         case .current:
             ZStack {
                 // Expanding continuous background shadow pulse
                 Circle()
-                    .fill(Color.enamel.opacity(DSTimelineMetrics.haloFillOpacity))
+                    .fill(DSColor.enamel.opacity(DSTimelineMetrics.haloFillOpacity))
                     .frame(width: DSTimelineMetrics.currentHalo, height: DSTimelineMetrics.currentHalo)
                     .scaleEffect(isPulsing ? DSTimelineMetrics.pulseScaleMax : DSTimelineMetrics.pulseScaleMin)
                     .opacity(isPulsing ? DSTimelineMetrics.pulseOpacityMin : DSTimelineMetrics.pulseOpacityMax)
 
                 // Solid center anchor dot
                 Circle()
-                    .fill(Color.enamel)
+                    .fill(DSColor.enamel)
                     .frame(width: DSTimelineMetrics.currentDot, height: DSTimelineMetrics.currentDot)
             }
             .transition(.scale.combined(with: .opacity))
 
         case .completed:
             Circle()
-                .fill(Color.confirmed)
+                .fill(DSColor.confirmed)
                 .frame(width: DSTimelineMetrics.completedDot, height: DSTimelineMetrics.completedDot)
                 .transition(.scale)
         }
@@ -114,11 +114,11 @@ private extension DSTimeline {
         
         ZStack(alignment: .top) {
             Rectangle()
-                .fill(Color.line)
+                .fill(DSColor.line)
                 .frame(width: DSTimelineMetrics.trackWidth)
 
             Rectangle()
-                .fill(Color.confirmed)
+                .fill(DSColor.confirmed)
                 .frame(width: DSTimelineMetrics.trackWidth)
                 .scaleEffect(y: isFilled ? 1.0 : 0.0, anchor: .top)
                 .animation(.easeInOut(duration: DSTimelineMetrics.trackFill), value: isFilled)

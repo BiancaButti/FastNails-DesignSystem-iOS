@@ -86,24 +86,24 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             }
             .frame(maxWidth: .infinity)
             .frame(height: mediaHeight)
-            .background(Color.surface)
+            .background(DSColor.surface)
             .clipped()
 
             // Text Body
             VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(title)
                     .font(DSFont.descriptionBold)
-                    .foregroundStyle(Color.ink)
+                    .foregroundStyle(DSColor.ink)
                     .lineLimit(1)
 
                 Text(subtitle)
                     .font(DSFont.fieldLabel)
-                    .foregroundStyle(Color.salonCardPrice)
+                    .foregroundStyle(DSColor.salonCardPrice)
 
                 if let textPrice {
                     Text(textPrice)
                         .font(DSFont.caption)
-                        .foregroundStyle(Color.ink60)
+                        .foregroundStyle(DSColor.ink60)
                 }
 
                 tagsContent
@@ -111,12 +111,12 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             }
             .padding(DSSpacing.md)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.paper)
+            .background(DSColor.paper)
         }
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
-                .stroke(Color.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: 1)
         )
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)

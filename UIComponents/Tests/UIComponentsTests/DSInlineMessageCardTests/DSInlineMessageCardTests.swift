@@ -53,11 +53,11 @@ final class DSInlineMessageCardTests: XCTestCase {
         let errorStyle = DSInlineMessageStyle.error
         
         // Then & Expected token verifications
-        XCTAssertEqual(infoStyle.backgroundColor, Color.paper, "Info background must map to Color.paper")
-        XCTAssertEqual(infoStyle.borderColor, Color.line, "Info border must map to Color.line")
-        XCTAssertEqual(infoStyle.actionColor, Color.enamel, "Info action must map to Color.enamel")
+        XCTAssertEqual(infoStyle.backgroundColor, DSColor.paper, "Info background must map to DSColor.paper")
+        XCTAssertEqual(infoStyle.borderColor, DSColor.line, "Info border must map to DSColor.line")
+        XCTAssertEqual(infoStyle.actionColor, DSColor.enamel, "Info action must map to DSColor.enamel")
         
-        XCTAssertEqual(warningStyle.actionColor, Color.amber, "Warning action must map to Color.amber")
-        XCTAssertEqual(errorStyle.actionColor, Color.terracota, "Error action must map to Color.terracota")
+        XCTAssertEqual(warningStyle.actionColor, DSColor.amber, "Warning action must map to DSColor.amber")
+        XCTAssertEqual(errorStyle.actionColor, DSColor.terracotta, "Error action must map to DSColor.terracotta")
     }
 }

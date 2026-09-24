@@ -51,30 +51,30 @@ struct DSStatusCardPaletteTests {
     @Test("Standard emphasis uses the dark inverse palette when expanded")
     func standardExpandedIsInverse() {
         let palette = DSStatusCardPalette.resolve(.expanded, emphasis: .standard)
-        #expect(palette.background == Color.ink)
+        #expect(palette.background == DSColor.ink)
     }
 
     @Test("Standard emphasis uses the light subtle palette when compact")
     func standardCompactIsSubtle() {
         let palette = DSStatusCardPalette.resolve(.compact, emphasis: .standard)
-        #expect(palette.background == Color.paper2)
+        #expect(palette.background == DSColor.paper2)
     }
 
     @Test("Positive emphasis is green regardless of variant")
     func positiveIsGreen() {
-        #expect(DSStatusCardPalette.resolve(.expanded, emphasis: .positive).background == Color.confirmed)
-        #expect(DSStatusCardPalette.resolve(.compact, emphasis: .positive).background == Color.confirmed)
+        #expect(DSStatusCardPalette.resolve(.expanded, emphasis: .positive).background == DSColor.confirmed)
+        #expect(DSStatusCardPalette.resolve(.compact, emphasis: .positive).background == DSColor.confirmed)
     }
 
     @Test("Critical emphasis is terracotta regardless of variant")
     func criticalIsTerracotta() {
-        #expect(DSStatusCardPalette.resolve(.expanded, emphasis: .critical).background == Color.terracota)
-        #expect(DSStatusCardPalette.resolve(.compact, emphasis: .critical).background == Color.terracota)
+        #expect(DSStatusCardPalette.resolve(.expanded, emphasis: .critical).background == DSColor.terracotta)
+        #expect(DSStatusCardPalette.resolve(.compact, emphasis: .critical).background == DSColor.terracotta)
     }
 
     @Test("Muted emphasis reuses the light subtle palette")
     func mutedIsSubtle() {
         let muted = DSStatusCardPalette.resolve(.expanded, emphasis: .muted)
-        #expect(muted.background == Color.paper2)
+        #expect(muted.background == DSColor.paper2)
     }
 }

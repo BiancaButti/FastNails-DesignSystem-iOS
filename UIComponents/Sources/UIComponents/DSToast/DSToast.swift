@@ -23,7 +23,7 @@ public struct DSToast: View {
     ///   - dotColor: The tracking indicator dot color (default `Color.confirmed`).
     public init(
         message: String,
-        dotColor: Color = .confirmed
+        dotColor: Color = DSColor.confirmed
     ) {
         self.message = message
         self.dotColor = dotColor
@@ -44,7 +44,7 @@ public struct DSToast: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
-        .background(Color.ink)
+        .background(DSColor.ink)
         .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
         .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
     }

@@ -42,12 +42,12 @@ public struct DSLinkNote: View {
                 Text(link.title)
                     .font(DSFont.sectionHeader)
                     .underline()
-                    .foregroundStyle(Color.enamel)
+                    .foregroundStyle(DSColor.enamel)
             }
             .buttonStyle(.plain)
             .padding(DSSpacing.controlPadding)
             .background(
-                Color.surface,
+                DSColor.surface,
                 in: RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)
             )
  
@@ -55,7 +55,7 @@ public struct DSLinkNote: View {
             Text(Self.attributed(format: format, links: links))
                 .font(DSFont.inputSupport)
                 .foregroundStyle(.primary)
-                .tint(.link)
+                .tint(DSColor.link)
                 .multilineTextAlignment(.center)
                 .environment(\.openURL, OpenURLAction { url in
                     guard url.scheme == Self.scheme,
@@ -67,7 +67,7 @@ public struct DSLinkNote: View {
                 })
                 .padding(DSSpacing.controlPadding)
                 .background(
-                    Color.surface,
+                    DSColor.surface,
                     in: RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)
                 )
         }
@@ -125,7 +125,7 @@ public struct DSLinkNote: View {
                 var linkSnippet = AttributedString(links[index].title)
                 linkSnippet.link = URL(string: "\(scheme)://\(index)")
                 linkSnippet.swiftUI.underlineStyle = .single
-                linkSnippet.swiftUI.foregroundColor = .link
+                linkSnippet.swiftUI.foregroundColor = DSColor.link
                 result += linkSnippet
             } else {
                 // Safe Fallback: prints the raw match format placeholder if the programmer forgot a link mapping

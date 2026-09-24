@@ -51,7 +51,7 @@ public struct DSInlineMessageCard<IconContent: View>: View {
 
                 Text(description)
                     .font(DSFont.inputSupport)
-                    .foregroundStyle(Color.ink60)
+                    .foregroundStyle(DSColor.ink60)
                     .lineSpacing(DSSpacing.xs)
                     .fixedSize(horizontal: false, vertical: true)
 

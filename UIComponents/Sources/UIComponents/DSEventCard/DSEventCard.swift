@@ -85,16 +85,16 @@ public struct DSEventCard: View {
                     VStack(spacing: DSSpacing.xs) {
                         Text(month.uppercased())
                             .font(DSFont.technicalTag)
-                            .foregroundStyle(Color.ink60)
+                            .foregroundStyle(DSColor.ink60)
                         Text(day)
                             .font(DSFont.title)
-                            .foregroundStyle(Color.ink)
+                            .foregroundStyle(DSColor.ink)
                     }
                     .frame(width: 48, height: 48)
-                    .background(hasHighlightBorder ? Color.eventHighlightSurface : Color.paper)
+                    .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
                     .overlay(
                         RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous)
-                            .stroke(hasHighlightBorder ? Color.eventHighlightBorder : Color.line, lineWidth: 1)
+                            .stroke(hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line, lineWidth: 1)
                     )
                     
                     // Schedule Details and Pricing Area
@@ -105,10 +105,10 @@ public struct DSEventCard: View {
                             Group {
                                 Text("\(startTime) às \(endTime) ")
                                     .font(DSFont.descriptionBold)
-                                    .foregroundColor(Color.ink) +
+                                    .foregroundColor(DSColor.ink) +
                                 Text(title)
                                     .font(DSFont.fieldLabel)
-                                    .foregroundColor(Color.ink60)
+                                    .foregroundColor(DSColor.ink60)
                             }
                             .multilineTextAlignment(.leading)
 
@@ -117,13 +117,13 @@ public struct DSEventCard: View {
                             // Pricing Data
                             Text(price)
                                 .font(DSFont.numericValue)
-                                .foregroundStyle(Color.salonCardPrice)
+                                .foregroundStyle(DSColor.salonCardPrice)
                         }
 
                         // Metadata string description
                         Text(serviceDetails)
                             .font(DSFont.inputSupport)
-                            .foregroundStyle(Color.ink60)
+                            .foregroundStyle(DSColor.ink60)
                             .multilineTextAlignment(.leading)
                     }
                 }
@@ -142,23 +142,22 @@ public struct DSEventCard: View {
                     // Action navigation indicator
                     Image(systemName: "chevron.right")
                         .font(.system(size: 12, weight: .semibold))
-                        .foregroundStyle(Color.ink60)
+                        .foregroundStyle(DSColor.ink60)
                 }
                 .padding(.horizontal, DSSpacing.lg)
                 .padding(.vertical, DSSpacing.md)
             }
-            .background(hasHighlightBorder ? Color.eventHighlightSurface : Color.paper)
+            .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
             .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
                     .stroke(
-                        hasHighlightBorder ? Color.eventHighlightBorder : Color.line,
+                        hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line,
                         lineWidth: 1
                     )
             )
         }
         .buttonStyle(PlainButtonStyle())
-        // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
     }
 }
