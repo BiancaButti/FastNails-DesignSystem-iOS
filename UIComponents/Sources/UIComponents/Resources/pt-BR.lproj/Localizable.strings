@@ -1,31 +1,11 @@
 /* DSButton */
 "buttonLoadingAccessibility" = "Carregando";
 
-/* DSOrDivider */
-"dividerOr" = "ou";
-
-/* DSCategoriesSection */
-"categoriesSectionTitle" = "Categorias";
-
-/* DSPriceRangeSheet */
-"priceSheetTitle" = "Faixa de preço";
-"priceSheetMin" = "Preço mínimo";
-"priceSheetMax" = "Preço máximo";
-"priceSheetApply" = "Aplicar";
-"priceSheetApplyHint" = "Aplica o filtro de preço e fecha o painel";
-
-/* DSSearchEmptyStateView */
-"searchEmptyTitle" = "Nenhum resultado encontrado";
-"searchEmptySubtitle" = "Tente ajustar os filtros ou buscar por outro termo.";
-
 /* DSResultSection */
 "resultsCount" = "%d resultados encontrados"; /* fallback — plural rules defined in Localizable.stringsdict */
 "resultsLoadingAccessibility" = "Carregando resultados";
 "resultsEmptyTitle" = "Nenhum resultado";
 "resultsEmptyMessage" = "Tente outros filtros ou uma busca diferente.";
-
-/* DSSearchFieldView */
-"searchFieldPlaceholder" = "Pesquisar";
 
 /* DSHeaderView */
 "headerLocationLabel" = "Sua localização";
@@ -41,13 +21,6 @@
 "resendCooldownAccessibility" = "Aguarde %lld segundos para reenviar";
 "resendLoading" = "Reenviando";
 
-/* DSPasswordStrength */
-"passwordStrengthWeak" = "Fraca";
-"passwordStrengthMedium" = "Média";
-"passwordStrengthStrong" = "Forte";
-"passwordStrengthLabel" = "Força da senha:";
-"passwordStrengthAccessibility" = "Força da senha: %@";
-
 /* DSFormTextField / DSFormSecureField */
 "accessibilityButtonTouchTwice" = "Toque duas vezes para editar";
 "commonPasswordHide" = "Ocultar senha";
@@ -56,9 +29,6 @@
 /* DSStatusBadgeView */
 "homeBadgeOpenNow" = "Aberto agora";
 "homeBadgeClosed" = "Fechado";
-
-/* DSRatingView */
-"manicuristProfileRatingAccessibility" = "Avaliação: %@ de 5 estrelas";
 
 /* DSLoadingView */
 "loadingDefault" = "Carregando...";
