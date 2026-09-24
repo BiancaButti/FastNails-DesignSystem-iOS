@@ -51,7 +51,6 @@ public struct DSStatusBadge: View {
         .padding(.vertical, DSSpacing.sm)
         .background(background)
         .clipShape(Capsule())
-        // One element, not a dot plus a label.
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(title)
     }

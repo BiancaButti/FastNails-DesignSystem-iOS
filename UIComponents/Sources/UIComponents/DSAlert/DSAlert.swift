@@ -47,13 +47,12 @@ public struct DSAlert: View {
         VStack(spacing: 0) {
             VStack(spacing: 12) {
                 Text(title)
-                    .font(.headline)
-                    .fontWeight(.bold)
+                    .font(DSFont.sectionHeader)
                     .foregroundColor(.ink)
                     .multilineTextAlignment(.center)
                 
                 Text(message)
-                    .font(.subheadline)
+                    .font(DSFont.fieldLabel)
                     .foregroundColor(.ink60)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
@@ -69,8 +68,7 @@ public struct DSAlert: View {
             HStack(spacing: 0) {
                 Button(action: primaryAction) {
                     Text(primaryButtonTitle)
-                        .font(.body)
-                        .fontWeight(.bold)
+                        .font(DSFont.descriptionBold)
                         .foregroundColor(.ink)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
@@ -82,7 +80,7 @@ public struct DSAlert: View {
                 Button(action: secondaryAction) {
                     Text(secondaryButtonTitle)
                         .font(.body)
-                        .fontWeight(isSecondaryDestructive ? .regular : .bold)
+                        .font(isSecondaryDestructive ? DSFont.description : DSFont.descriptionBold)
                         .foregroundColor(isSecondaryDestructive ? .alert : .enamel)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }

@@ -72,7 +72,7 @@ public struct DSTextField: View {
 
     private var labelView: some View {
         Text(label)
-            .font(DSFont.etiqueta)
+            .font(DSFont.technicalTag)
             .textCase(.uppercase)
             .tracking(1.2)
             .foregroundStyle(theme.secondaryColor)

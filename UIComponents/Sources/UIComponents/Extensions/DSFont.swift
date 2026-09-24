@@ -4,24 +4,23 @@ import SwiftUI
 import UIKit
 #endif
 
-// MARK: - Famílias
+// MARK: - Families
 
-/// As três famílias do Fast Nails.
+/// The three font families for Fast Nails.
 ///
-/// **Enquanto os arquivos não estiverem no pacote, cada uma cai numa fonte
-/// do sistema equivalente.** O código que chama não muda quando elas chegarem
-/// — só o `estaInstalada` passa a responder `true`.
+/// **As long as the font files are not present in the package, each family falls back to an equivalent system font.**
+/// Client code will not change when they arrive — only `isInstalled` will start returning `true`.
 public enum DSFontFamily {
 
-    /// Títulos e o nome da marca.
+    /// Titles and brand name.
     case display
-    /// Corpo de texto, rótulos, botões.
+    /// Body text, labels, buttons.
     case body
-    /// Números, códigos, rótulos técnicos em caixa alta.
+    /// Numbers, codes, technical uppercase labels.
     case mono
 
-    /// Nome da fonte, quando ela existir no pacote.
-    var nome: String {
+    /// Font name when it exists in the bundle.
+    var name: String {
         switch self {
         case .display: "BricolageGrotesque-Bold"
         case .body: "Karla-Regular"
@@ -29,8 +28,8 @@ public enum DSFontFamily {
         }
     }
 
-    /// Desenho equivalente do sistema, usado enquanto a fonte não chega.
-    var equivalenteDoSistema: Font.Design {
+    /// System design fallback used until the custom font arrives.
+    var systemFallback: Font.Design {
         switch self {
         case .display: .default
         case .body: .default
@@ -38,116 +37,143 @@ public enum DSFontFamily {
         }
     }
 
-    var estaInstalada: Bool {
+    var isInstalled: Bool {
         #if canImport(UIKit)
-        UIFont(name: nome, size: 12) != nil
+        UIFont(name: name, size: 12) != nil
         #else
         false
         #endif
     }
 }
 
-// MARK: - Escala
+// MARK: - Scale
 
-/// Tipografia do Fast Nails.
+/// Typography for Fast Nails based on a strict Base-4 Type Scale (8, 12, 16, 20, 24, 28, 32).
 ///
-/// Todas as fontes são **relativas a um estilo de texto**, então acompanham
-/// o Tamanho Dinâmico. Tamanho fixo não escala, e Tamanho Dinâmico é critério
-/// de aceite de toda tela do projeto.
+/// All fonts are **relative to a text style**, meaning they support Dynamic Type.
+/// Use these static properties to ensure UI consistency across the app.
 public enum DSFont {
 
-    /// Monta a fonte, com recuo para o sistema quando a família não está instalada.
-    static func fonte(
-        _ familia: DSFontFamily,
-        tamanho: CGFloat,
-        relativaA estilo: Font.TextStyle,
-        peso: Font.Weight
+    /// Internal builder that falls back to the system font if the custom family is not installed.
+    private static func font(
+        _ family: DSFontFamily,
+        size: CGFloat,
+        relativeTo textStyle: Font.TextStyle,
+        weight: Font.Weight
     ) -> Font {
-        if familia.estaInstalada {
-            return .custom(familia.nome, size: tamanho, relativeTo: estilo).weight(peso)
+        if family.isInstalled {
+            return .custom(family.name, size: size, relativeTo: textStyle).weight(weight)
         }
-        return .system(estilo, design: familia.equivalenteDoSistema).weight(peso)
+        return .system(textStyle, design: family.systemFallback).weight(weight)
     }
 
-    // MARK: Display
+    // MARK: - Large Display & Titles (Display)
+    
+    /// Hero headers, large metrics or promotional splash titles. 32pt.
+    public static let heroTitle = font(.display, size: 32, relativeTo: .largeTitle, weight: .bold)
+    
+    /// Main screen titles and brand highlights. 28pt.
+    public static let bigTitle = font(.display, size: 28, relativeTo: .title, weight: .bold)
 
-    /// Título de tela. 28pt.
-    public static let tituloGrande = fonte(.display, tamanho: 28, relativaA: .title, peso: .bold)
+    /// Section titles, block headers, or card headlines. 20pt.
+    public static let title = font(.display, size: 20, relativeTo: .title3, weight: .bold)
 
-    /// Título de bloco e nome do app na splash. 21pt.
-    public static let titulo = fonte(.display, tamanho: 21, relativaA: .title3, peso: .bold)
+    /// Secondary subsection headers. 16pt.
+    public static let sectionHeader = font(.display, size: 16, relativeTo: .headline, weight: .semibold)
 
-    /// Cabeçalho de seção. 17pt.
-    public static let secao = fonte(.display, tamanho: 17, relativaA: .headline, peso: .semibold)
+    // MARK: - Descriptions & Body (Body)
 
-    // MARK: Corpo
+    /// Standard description text, paragraphs, and list items. 16pt.
+    public static let description = font(.body, size: 16, relativeTo: .body, weight: .regular)
 
-    /// Texto padrão. 16pt.
-    public static let corpo = fonte(.body, tamanho: 16, relativaA: .body, peso: .regular)
+    /// Bold emphasis for body text or important descriptions. 16pt.
+    public static let descriptionBold = font(.body, size: 16, relativeTo: .body, weight: .semibold)
 
-    /// Texto padrão em destaque.
-    public static let corpoForte = fonte(.body, tamanho: 16, relativaA: .body, peso: .semibold)
+    /// Secondary metadata, detailed captions, or smaller description text. 12pt.
+    public static let caption = font(.body, size: 12, relativeTo: .caption, weight: .regular)
+    
+    /// Small caption header with semibold weight. 12pt.
+    public static let captionSemibold = font(.display, size: 12, relativeTo: .caption, weight: .semibold)
 
-    /// Rótulo de campo e texto secundário. 14pt.
-    public static let rotulo = fonte(.body, tamanho: 14, relativaA: .subheadline, peso: .medium)
+    // MARK: - Forms & Inputs (Body)
 
-    /// Explicação abaixo de campo, mensagem de erro. 13pt.
-    public static let apoio = fonte(.body, tamanho: 13, relativaA: .footnote, peso: .regular)
+    /// Text field and input labels. 12pt.
+    public static let fieldLabel = font(.body, size: 12, relativeTo: .subheadline, weight: .medium)
 
-    /// Texto de apoio em destaque. 13pt.
-    public static let apoioForte = fonte(.body, tamanho: 13, relativaA: .footnote, peso: .semibold)
+    /// Supporting text below inputs or error messages. 12pt.
+    public static let inputSupport = font(.body, size: 12, relativeTo: .footnote, weight: .regular)
 
-    /// Metadado, legenda. 12pt.
-    public static let legenda = fonte(.body, tamanho: 12, relativaA: .caption, peso: .regular)
+    /// Highlighted supporting text for inputs. 12pt.
+    public static let inputSupportBold = font(.body, size: 12, relativeTo: .footnote, weight: .semibold)
 
-    /// Botão principal. 16pt.
-    public static let botao = fonte(.body, tamanho: 16, relativaA: .body, peso: .semibold)
+    // MARK: - Controls & Navigation
 
-    // MARK: Utilitário
+    /// Primary and secondary action buttons text. 16pt.
+    public static let button = font(.body, size: 16, relativeTo: .body, weight: .semibold)
+    
+    /// Tab bar label text. 16pt.
+    public static let tabLabel = font(.display, size: 16, relativeTo: .caption2, weight: .medium)
 
-    /// Preço, horário, contagem. 14pt.
-    public static let numero = fonte(.mono, tamanho: 14, relativaA: .subheadline, peso: .bold)
+    // MARK: - Technical & Utilities (Mono)
 
-    /// Rótulo em caixa alta com espaçamento — "ONDE", "QUANDO". 10pt.
+    /// OTP or verification code digits. 24pt.
+    public static let codeDigit = font(.mono, size: 24, relativeTo: .title2, weight: .bold)
+
+    /// Prices, times, numeric countdowns, or currency values. 16pt.
+    public static let numericValue = font(.mono, size: 16, relativeTo: .body, weight: .bold)
+
+    /// Status badges or indicators inside tags. 12pt.
+    public static let badge = font(.mono, size: 12, relativeTo: .caption2, weight: .semibold)
+    
+    /// Uppercase technical metadata tags. 8pt.
     ///
-    /// Aplique `.tracking(1.2)` e `.textCase(.uppercase)` no uso.
-    public static let etiqueta = fonte(.mono, tamanho: 10, relativaA: .caption2, peso: .regular)
+    /// *Note: Remember to manually chain `.tracking(1.2)` and `.textCase(.uppercase)` on the Text view when using this.*
+    public static let technicalTag = font(.mono, size: 8, relativeTo: .caption2, weight: .regular)
+    
+    // MARK: - Dynamic & Components
+    
+    /// A dynamic bold font calculated from a base size component.
+    ///
+    /// It automatically forces the resulting size to align with the **strict Base-4 scale**.
+    /// - Parameter size: The reference size variable.
+    /// - Returns: A bold font aligned to the nearest multiple of 4.
+    public static func dynamicBold(scaledFrom size: CGFloat) -> Font {
+        let rawSize = size * 0.38
+        // Força o arredondamento matemático para o múltiplo de 4 mais próximo (mínimo de 8pt)
+        let strictSize = max(8, CGFloat(Int((rawSize + 2) / 4) * 4))
+        
+        // Utiliza a sua família de títulos (.display) para manter o peso forte
+        return font(.display, size: strictSize, relativeTo: .body, weight: .bold)
+    }
 
-    /// Etiqueta de status dentro de cartão. 10pt.
-    public static let selo = fonte(.mono, tamanho: 10, relativaA: .caption2, peso: .semibold)
+    // MARK: - Dynamic & Components
     
-    /// Dígito de código de verificação. 22pt.
-    public static let digito = fonte(.mono, tamanho: 22, relativaA: .title2, peso: .bold)
-    
-    public static let tabLabel = fonte(.display, tamanho: 16, relativaA: .caption2, peso: .medium)
+    /// A dynamic regular font calculated from a base size component (e.g., for proportional label scales).
+    ///
+    /// It automatically forces the resulting size to align with the **strict Base-4 scale**.
+    /// - Parameter size: The reference size variable.
+    /// - Returns: A regular font aligned to the nearest multiple of 4.
+    public static func dynamicRegular(scaledFrom size: CGFloat) -> Font {
+        let rawSize = size * 0.4
+        // Força o arredondamento matemático para o múltiplo de 4 mais próximo (mínimo de 8pt)
+        let strictSize = max(8, CGFloat(Int((rawSize + 2) / 4) * 4))
+        
+        // Utiliza a sua família padrão de corpo (.body) com peso regular
+        return font(.body, size: strictSize, relativeTo: .body, weight: .regular)
+    }
+
 }
 
-// MARK: - Registro das fontes
-//
-// Quando os arquivos entrarem no pacote:
-//
-// 1. Coloque os .ttf em Sources/UIComponents/Resources/Fonts/
-// 2. Declare no Package.swift:
-//
-//        .target(
-//            name: "UIComponents",
-//            resources: [.process("Resources/Fonts")]
-//        )
-//
-// 3. Registre no início do app:
-//
-//        DSFont.registrar()
-//
-// O `estaInstalada` passa a responder true e nenhum uso precisa mudar.
+// MARK: - Font Registration
 
 public extension DSFont {
 
-    /// Registra as fontes que vierem no pacote. Chame uma vez, no início do app.
-    static func registrar() {
+    /// Registers the fonts bundled in the package. Call this once at app startup.
+    static func register() {
         #if canImport(UIKit)
-        for familia in [DSFontFamily.display, .body, .mono] {
+        for family in [DSFontFamily.display, .body, .mono] {
             guard
-                let url = Bundle.module.url(forResource: familia.nome, withExtension: "ttf")
+                let url = Bundle.module.url(forResource: family.name, withExtension: "ttf")
             else { continue }
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         }

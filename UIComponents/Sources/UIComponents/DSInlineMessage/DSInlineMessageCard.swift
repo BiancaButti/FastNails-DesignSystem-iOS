@@ -39,18 +39,18 @@ public struct DSInlineMessageCard<IconContent: View>: View {
     public var body: some View {
         HStack(alignment: .top, spacing: DSSpacing.md) {
             iconContent
-                .font(.system(size: 20))
+                .font(DSFont.title)
                 .foregroundStyle(style.titleColor)
                 .frame(width: 24, alignment: .top)
 
             VStack(alignment: .leading, spacing: DSSpacing.sm) {
                 Text(title)
-                    .font(DSFont.corpoForte)
+                    .font(DSFont.descriptionBold)
                     .foregroundStyle(style.titleColor)
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text(description)
-                    .font(DSFont.apoio)
+                    .font(DSFont.inputSupport)
                     .foregroundStyle(Color.ink60)
                     .lineSpacing(DSSpacing.xs)
                     .fixedSize(horizontal: false, vertical: true)
@@ -58,7 +58,7 @@ public struct DSInlineMessageCard<IconContent: View>: View {
                 if let actionTitle {
                     Button(action: { action?() }) {
                         Text(actionTitle)
-                            .font(DSFont.rotulo)
+                            .font(DSFont.fieldLabel)
                             .underline()
                             .foregroundStyle(style.actionColor)
                     }
@@ -75,7 +75,6 @@ public struct DSInlineMessageCard<IconContent: View>: View {
             RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)
                 .stroke(style.borderColor, lineWidth: 1)
         )
-        // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)
     }

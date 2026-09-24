@@ -53,7 +53,7 @@ public struct DSDayPicker: View {
         VStack(alignment: .leading, spacing: 16) {
             // Main component title
             Text(title)
-                .font(.system(size: 18, weight: .bold))
+                .font(DSFont.sectionHeader)
                 .foregroundColor(.ink)
                 
             // Scrollable or rigid horizontal row for days
@@ -66,15 +66,15 @@ public struct DSDayPicker: View {
                     } label: {
                         VStack(spacing: 8) {
                             Text(day.weekday.uppercased())
-                                .font(.system(size: 11, weight: .medium))
+                                .font(DSFont.fieldLabel)
                                 .foregroundColor(day.isSelected ? .blush : .ink60)
                             
                             Text(day.dayNumber)
-                                .font(.system(size: 20, weight: .bold))
+                                .font(DSFont.title)
                                 .foregroundColor(day.isSelected ? .paper : .ink)
                             
                             Text(day.subtitle)
-                                .font(.system(size: 12, weight: .medium))
+                                .font(DSFont.fieldLabel)
                                 .foregroundColor(subtitleColor(for: day))
                         }
                         .frame(maxWidth: .infinity)

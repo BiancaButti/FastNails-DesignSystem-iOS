@@ -40,7 +40,7 @@ public struct DSLinkNote: View {
         case .link(let link):
             Button { open(link) } label: {
                 Text(link.title)
-                    .font(.subheadline.weight(.semibold))
+                    .font(DSFont.sectionHeader)
                     .underline()
                     .foregroundStyle(Color.enamel)
             }
@@ -53,7 +53,7 @@ public struct DSLinkNote: View {
  
         case .text(let format, let links):
             Text(Self.attributed(format: format, links: links))
-                .font(.footnote)
+                .font(DSFont.inputSupport)
                 .foregroundStyle(.primary)
                 .tint(.link)
                 .multilineTextAlignment(.center)

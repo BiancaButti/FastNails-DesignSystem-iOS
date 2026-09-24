@@ -133,7 +133,7 @@ public struct DSSalonCard<Thumbnail: View>: View {
     private var identity: some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(name)
-                .font(.headline)
+                .font(DSFont.sectionHeader)
                 .foregroundStyle(theme.titleColor)
             if let subtitle {
                 Text(subtitle)
@@ -146,7 +146,7 @@ public struct DSSalonCard<Thumbnail: View>: View {
 
     private var priceLabel: some View {
         Text(priceText)
-            .font(.headline)
+            .font(DSFont.sectionHeader)
             .foregroundStyle(palette.price)
             .layoutPriority(1)
     }

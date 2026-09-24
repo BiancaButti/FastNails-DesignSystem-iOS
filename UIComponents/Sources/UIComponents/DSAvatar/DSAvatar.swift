@@ -56,7 +56,7 @@ public struct DSAvatar: View {
                         .fill(Color.ink)
                     
                     Text(initial)
-                        .font(.system(size: size * 0.38, weight: .bold, design: .rounded))
+                        .font(DSFont.dynamicBold(scaledFrom: size))
                         .foregroundColor(.blush)
                 }
                 .frame(width: innerCircleSize, height: innerCircleSize)

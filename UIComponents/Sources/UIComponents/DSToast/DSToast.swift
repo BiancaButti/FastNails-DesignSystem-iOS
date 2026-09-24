@@ -36,7 +36,7 @@ public struct DSToast: View {
                 .frame(width: 8, height: 8)
             
             Text(message)
-                .font(.subheadline)
+                .font(DSFont.fieldLabel)
                 .foregroundColor(.white)
                 .lineLimit(2)
             

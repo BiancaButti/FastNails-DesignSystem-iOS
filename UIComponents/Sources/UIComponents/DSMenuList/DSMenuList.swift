@@ -17,7 +17,7 @@ public struct DSMenuList<Content: View>: View {
         VStack(alignment: .leading, spacing: 8) {
             if let sectionTitle {
                 Text(sectionTitle.uppercased())
-                    .font(.system(size: 10, weight: .bold, design: .monospaced))
+                    .font(DSFont.badge)
                     .foregroundColor(.ink60)
                     .tracking(1.5)
                     .padding(.leading, 4)

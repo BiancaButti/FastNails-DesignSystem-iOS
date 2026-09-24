@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 public enum DSTimelineStepState: Equatable {
     case pending

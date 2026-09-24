@@ -84,10 +84,10 @@ public struct DSEventCard: View {
                     // Calendar Block (Month & Day)
                     VStack(spacing: DSSpacing.xs) {
                         Text(month.uppercased())
-                            .font(DSFont.etiqueta)
+                            .font(DSFont.technicalTag)
                             .foregroundStyle(Color.ink60)
                         Text(day)
-                            .font(DSFont.titulo)
+                            .font(DSFont.title)
                             .foregroundStyle(Color.ink)
                     }
                     .frame(width: 48, height: 48)
@@ -104,10 +104,10 @@ public struct DSEventCard: View {
                             // Time Framework and Location Title
                             Group {
                                 Text("\(startTime) às \(endTime) ")
-                                    .font(DSFont.corpoForte)
+                                    .font(DSFont.descriptionBold)
                                     .foregroundColor(Color.ink) +
                                 Text(title)
-                                    .font(DSFont.rotulo)
+                                    .font(DSFont.fieldLabel)
                                     .foregroundColor(Color.ink60)
                             }
                             .multilineTextAlignment(.leading)
@@ -116,13 +116,13 @@ public struct DSEventCard: View {
 
                             // Pricing Data
                             Text(price)
-                                .font(DSFont.numero)
+                                .font(DSFont.numericValue)
                                 .foregroundStyle(Color.salonCardPrice)
                         }
 
                         // Metadata string description
                         Text(serviceDetails)
-                            .font(DSFont.apoio)
+                            .font(DSFont.inputSupport)
                             .foregroundStyle(Color.ink60)
                             .multilineTextAlignment(.leading)
                     }

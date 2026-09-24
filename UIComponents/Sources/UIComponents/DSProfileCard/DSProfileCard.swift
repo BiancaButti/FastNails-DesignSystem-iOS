@@ -59,13 +59,12 @@ public struct DSProfileCard: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
-                    .font(.headline)
-                    .fontWeight(.bold)
+                    .font(DSFont.sectionHeader)
                     .foregroundColor(.ink)
                 
                 if let description {
                     Text(description)
-                        .font(.subheadline)
+                        .font(DSFont.fieldLabel)
                         .foregroundColor(.ink60)
                 }
             }

@@ -44,8 +44,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                     }
                 }) {
                     content(option)
-                        .font(.subheadline)
-                        .fontWeight(isSelected ? .semibold : .regular)
+                        .font(isSelected ? DSFont.descriptionBold : DSFont.description)
                         .foregroundColor(isSelected ? .ink : .ink60)
                         .padding(.vertical, 10)
                         .frame(maxWidth: .infinity)

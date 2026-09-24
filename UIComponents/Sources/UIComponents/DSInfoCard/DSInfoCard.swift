@@ -80,7 +80,7 @@ public struct DSInfoCard<Content: View>: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title.uppercased())
-                .font(.system(size: 10, weight: .bold, design: .monospaced))
+                .font(DSFont.badge)
                 .foregroundColor(.ink60)
                 .tracking(1.5)
             
@@ -92,7 +92,6 @@ public struct DSInfoCard<Content: View>: View {
             .background(background ?? Color.paper)
             .clipShape(shape)
             .overlay(
-                // Alterado de Color.eventHighlightBorder para Color.line (Cinza claro)
                 shape.strokeBorder(borderColor ?? Color.line, lineWidth: borderWidth)
             )
         }

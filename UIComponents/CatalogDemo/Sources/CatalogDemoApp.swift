@@ -870,7 +870,7 @@ private struct DSDayPickerShowcase: View {
 }
 
 private struct DSTimeSlotPickerShowcase: View {
-    @State private var afternoonSlots: [DSTimeSlotPicker.TimeSlotItem] = [
+    @State private var afternoonSlots: [DSTimeSlotPickerItem] = [
         .init(time: "13:00", isAvailable: false),
         .init(time: "14:00", isAvailable: false),
         .init(time: "15:00", isAvailable: false),

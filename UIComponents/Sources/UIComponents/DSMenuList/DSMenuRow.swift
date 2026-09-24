@@ -53,7 +53,7 @@ public struct DSMenuRow: View {
                 
                 if showChevron {
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .medium))
+                        .font(DSFont.fieldLabel)
                         .foregroundColor(.ink60.opacity(0.7))
                 }
             }

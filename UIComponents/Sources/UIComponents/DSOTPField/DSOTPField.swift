@@ -189,7 +189,7 @@ public struct DSOTPField: View {
                 DSOTPFieldBlinkingCaret(color: theme.brandColor, height: boxHeight * 0.45)
             } else {
                 Text(character)
-                    .font(DSFont.digito)
+                    .font(DSFont.codeDigit)
                     .foregroundStyle(feedbackColor ?? theme.titleColor)
             }
         }

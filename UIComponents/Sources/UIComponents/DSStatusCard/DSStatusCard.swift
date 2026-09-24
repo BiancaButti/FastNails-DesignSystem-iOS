@@ -94,12 +94,12 @@ public struct DSStatusCard<Actions: View>: View {
                 .foregroundStyle(palette.secondary.opacity(0.7))
 
             Text(title)
-                .font(DSFont.titulo)
+                .font(DSFont.title)
                 .foregroundStyle(palette.secondary)
 
             ForEach(Array(details.enumerated()), id: \.offset) { _, line in
                 Text(line)
-                    .font(DSFont.apoio)
+                    .font(DSFont.inputSupport)
                     .foregroundStyle(palette.secondary)
             }
 

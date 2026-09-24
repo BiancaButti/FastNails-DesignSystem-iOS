@@ -24,7 +24,7 @@ struct DSCardButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(DSFont.apoioForte)
+            .font(DSFont.inputSupportBold)
             .foregroundStyle(foreground)
             .multilineTextAlignment(.center)
             .padding(.vertical, DSSpacing.sm)

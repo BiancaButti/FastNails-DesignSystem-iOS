@@ -76,7 +76,7 @@ public struct DSSelectableOptionList: View {
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
-                .font(DSFont.etiqueta)
+                .font(DSFont.technicalTag)
                 .textCase(.uppercase)
                 .tracking(1.2)
                 .foregroundStyle(Color.ink60)

@@ -8,8 +8,8 @@ final class DSTimeSlotPickerTests: XCTestCase {
         // Given
         let expectedTitle = "TARDE"
         let mockedSlots = [
-            DSTimeSlotPicker.TimeSlotItem(time: "13:00", isAvailable: false),
-            DSTimeSlotPicker.TimeSlotItem(time: "16:00", isSelected: true)
+            DSTimeSlotPickerItem(time: "13:00", isAvailable: false),
+            DSTimeSlotPickerItem(time: "16:00", isSelected: true)
         ]
         
         // When
@@ -22,7 +22,7 @@ final class DSTimeSlotPickerTests: XCTestCase {
     func test_timeSlotAction_triggersSelectionCallback() {
         // Given
         let expectedTitle = "MANHÃ"
-        let targetSlot = DSTimeSlotPicker.TimeSlotItem(time: "09:00", isAvailable: true)
+        let targetSlot = DSTimeSlotPickerItem(time: "09:00", isAvailable: true)
         let expectation = self.expectation(description: "Slot selection block must execute")
         
         let sut = DSTimeSlotPicker(sectionTitle: expectedTitle, slots: [targetSlot]) { selectedSlot in

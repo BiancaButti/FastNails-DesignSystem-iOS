@@ -18,7 +18,7 @@ struct DSSalonCardAccessibilityTag: View {
     var body: some View {
         HStack(spacing: 10) {
             Image(systemName: feature.systemImage)
-                .font(.caption.weight(.semibold))
+                .font(DSFont.captionSemibold)
                 .foregroundStyle(.white)
                 .frame(width: 22, height: 22)
                 .background(
@@ -26,7 +26,7 @@ struct DSSalonCardAccessibilityTag: View {
                         .fill(palette.featureIconBackground)
                 )
             Text(feature.title)
-                .font(.subheadline)
+                .font(DSFont.fieldLabel)
                 .foregroundStyle(palette.featureForeground)
             Spacer(minLength: 0)
         }

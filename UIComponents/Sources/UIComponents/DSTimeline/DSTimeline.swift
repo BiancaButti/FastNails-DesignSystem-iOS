@@ -40,12 +40,12 @@ public struct DSTimeline: View {
                     // Context Content Column
                     VStack(alignment: .leading, spacing: DSSpacing.xs) {
                         Text(step.title)
-                            .font(step.state == .pending ? DSFont.rotulo : DSFont.corpoForte)
+                            .font(step.state == .pending ? DSFont.fieldLabel : DSFont.descriptionBold)
                             .foregroundStyle(step.state == .pending ? Color.text : Color.ink)
                         
                         if let subtitle = step.subtitle {
                             Text(subtitle)
-                                .font(DSFont.legenda)
+                                .font(DSFont.caption)
                                 .foregroundStyle(Color.ink60)
                                 .transition(.opacity.combined(with: .move(edge: .top)))
                         }

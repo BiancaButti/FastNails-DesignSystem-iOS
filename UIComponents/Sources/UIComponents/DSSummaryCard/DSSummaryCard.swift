@@ -69,19 +69,19 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
                 .padding(.bottom, DSSpacing.md)
 
             detailsContent
-                .font(DSFont.rotulo)
+                .font(DSFont.fieldLabel)
                 .foregroundStyle(Color.ink60)
                 .padding(.bottom, DSSpacing.md)
 
             HStack(alignment: .bottom) {
                 Text(totalLabel)
-                    .font(DSFont.rotulo)
+                    .font(DSFont.fieldLabel)
                     .foregroundStyle(Color.ink60)
 
                 Spacer()
 
                 Text(totalPrice)
-                    .font(DSFont.corpoForte)
+                    .font(DSFont.descriptionBold)
                     .foregroundStyle(Color.salonCardPrice)
             }
         }
