@@ -120,7 +120,7 @@ public struct DSFilterChipsSection: View {
         VStack(alignment: .leading, spacing: DSSpacing.md) {
 
             Text(title)
-                .font(DSFont.etiqueta)
+                .font(DSFont.technicalTag)
                 .textCase(.uppercase)
                 .tracking(1.2)
 
@@ -139,7 +139,7 @@ public struct DSFilterChipsSection: View {
 
             if let description {
                 Text(description)
-                    .font(.footnote)
+                    .font(DSFont.inputSupport)
                     .foregroundStyle(Color.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

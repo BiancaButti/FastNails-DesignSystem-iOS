@@ -59,7 +59,7 @@ public struct DSNoticeCard: View {
                 ForEach(items) { item in
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: item.systemIconName)
-                            .font(.system(size: 14, weight: .medium))
+                            .font(DSFont.fieldLabel)
                             .foregroundColor(item.iconColor)
                             .frame(width: 18, height: 18, alignment: .center)
                         

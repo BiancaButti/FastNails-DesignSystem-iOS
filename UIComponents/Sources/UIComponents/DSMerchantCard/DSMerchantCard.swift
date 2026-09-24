@@ -92,17 +92,17 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             // Text Body
             VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(title)
-                    .font(DSFont.corpoForte)
+                    .font(DSFont.descriptionBold)
                     .foregroundStyle(Color.ink)
                     .lineLimit(1)
 
                 Text(subtitle)
-                    .font(DSFont.rotulo)
+                    .font(DSFont.fieldLabel)
                     .foregroundStyle(Color.salonCardPrice)
 
                 if let textPrice {
                     Text(textPrice)
-                        .font(DSFont.legenda)
+                        .font(DSFont.caption)
                         .foregroundStyle(Color.ink60)
                 }
 
@@ -118,7 +118,6 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
                 .stroke(Color.line, lineWidth: 1)
         )
-        // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)
     }

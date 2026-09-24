@@ -22,7 +22,7 @@ public struct DSSalonCardThumbnail: View {
             .frame(width: size, height: size)
             .overlay(
                 Image(systemName: systemImage)
-                    .font(.system(size: size * 0.4))
+                    .font(DSFont.dynamicRegular(scaledFrom: size))
                     .foregroundStyle(palette.thumbnailForeground)
             )
             .accessibilityHidden(true)

@@ -108,8 +108,8 @@ public struct DSCard<Content: View>: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 56) // Altura controlada para evitar quebrar o layout
-                    .frame(maxWidth: .infinity, alignment: .center) // Sempre centralizado horizontalmente
+                    .frame(height: 56)
+                    .frame(maxWidth: .infinity, alignment: .center) 
             }
             
             content()

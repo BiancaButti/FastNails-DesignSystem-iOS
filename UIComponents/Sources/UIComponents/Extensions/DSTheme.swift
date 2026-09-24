@@ -69,15 +69,15 @@ public struct DSTheme: Equatable {
         titleColor: Color = .ink,
         secondaryColor: Color = .ink60,
         borderColor: Color = .line,
-        titleFont: Font = DSFont.titulo,
-        sectionFont: Font = DSFont.secao,
-        bodyFont: Font = DSFont.corpo,
-        labelFont: Font = DSFont.rotulo,
-        feedbackFont: Font = DSFont.apoio,
-        buttonFont: Font = DSFont.botao,
-        captionFont: Font = DSFont.legenda,
-        badgeFont: Font = DSFont.selo,
-        numberFont: Font = DSFont.numero
+        titleFont: Font = DSFont.title,
+        sectionFont: Font = DSFont.sectionHeader,
+        bodyFont: Font = DSFont.description,
+        labelFont: Font = DSFont.fieldLabel,
+        feedbackFont: Font = DSFont.inputSupport,
+        buttonFont: Font = DSFont.button,
+        captionFont: Font = DSFont.caption,
+        badgeFont: Font = DSFont.badge,
+        numberFont: Font = DSFont.numericValue
     ) {
         self.brandColor = brandColor
         self.errorColor = errorColor

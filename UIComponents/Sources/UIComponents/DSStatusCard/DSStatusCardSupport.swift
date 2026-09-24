@@ -27,7 +27,7 @@ struct DSStatusCardEyebrow: View {
 
     var body: some View {
         Text(text)
-            .font(DSFont.etiqueta)
+            .font(DSFont.technicalTag)
             .tracking(1.2)
             .textCase(.uppercase)
     }

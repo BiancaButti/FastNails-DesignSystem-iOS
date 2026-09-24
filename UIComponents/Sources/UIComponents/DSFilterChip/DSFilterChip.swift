@@ -90,7 +90,7 @@ public struct DSFilterChipView: View {
                 }
 
                 Text(label)
-                    .font(DSFont.etiqueta)
+                    .font(DSFont.technicalTag)
                     .tracking(1.2)
             }
             .font(theme.feedbackFont)

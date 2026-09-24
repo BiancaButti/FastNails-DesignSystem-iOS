@@ -60,7 +60,7 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
     private var badgeView: some View {
         if let text = DSTabBarBadge.displayText(badge) {
             Text(text)
-                .font(.caption2.weight(.bold))
+                .font(DSFont.captionSemibold)
                 .monospacedDigit()
                 .foregroundStyle(.white)
                 .padding(.horizontal, DSSpacing.xs)

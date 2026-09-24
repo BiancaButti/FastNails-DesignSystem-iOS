@@ -110,7 +110,7 @@ struct DSSelectableCheckboxCard: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(option.title)
-                        .font(theme.buttonFont)
+                        .font(DSFont.caption)
                         .minimumScaleFactor(0.8)
 
                     Text(option.description)

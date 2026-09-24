@@ -33,7 +33,7 @@ public struct DSPriceReceiptCard: View {
         VStack(alignment: .leading, spacing: 12) {
             // Section header label
             Text(sectionTitle.uppercased())
-                .font(.system(size: 11, weight: .semibold))
+                .font(DSFont.captionSemibold)
                 .foregroundColor(.ink60)
                 .padding(.leading, 8)
             
@@ -55,6 +55,7 @@ public struct DSPriceReceiptCard: View {
                     }
                 }
                 .padding(.bottom, 16)
+
                 
                 // Central Divider Line
                 Divider()
@@ -64,11 +65,11 @@ public struct DSPriceReceiptCard: View {
                 // Final Total Row
                 HStack {
                     Text(totalTitle)
-                        .font(.system(size: 16, weight: .bold))
+                        .font(DSFont.descriptionBold)
                         .foregroundColor(.ink)
                     Spacer()
                     Text(totalValue)
-                        .font(.system(size: 16, weight: .bold))
+                        .font(DSFont.descriptionBold)
                         .foregroundColor(totalColor)
                 }
             }
