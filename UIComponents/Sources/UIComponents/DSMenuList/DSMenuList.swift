@@ -18,7 +18,7 @@ public struct DSMenuList<Content: View>: View {
             if let sectionTitle {
                 Text(sectionTitle.uppercased())
                     .font(DSFont.badge)
-                    .foregroundColor(.ink60)
+                    .foregroundColor(DSColor.ink60)
                     .tracking(1.5)
                     .padding(.leading, 4)
             }
@@ -28,11 +28,11 @@ public struct DSMenuList<Content: View>: View {
                     content()
                 }
             }
-            .background(Color.paper)
+            .background(DSColor.paper)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .strokeBorder(Color.line, lineWidth: 1)
+                    .strokeBorder(DSColor.line, lineWidth: 1)
             )
         }
     }
@@ -49,7 +49,7 @@ private struct MenuSeparatorInsertionLayout: _VariadicView.MultiViewRoot {
                 child
                 
                 if child.id != children.last?.id {
-                    Color.line
+                    DSColor.line
                         .frame(height: 1)
                         .padding(.horizontal, 16)
                 }

@@ -57,42 +57,41 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
             HStack(alignment: .center, spacing: DSSpacing.md) {
                 iconContent
                     .frame(width: 44, height: 44)
-                    .background(Color.surface)
+                    .background(DSColor.surface)
                     .clipShape(RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous))
 
                 headerContent
             }
             .padding(.bottom, DSSpacing.lg)
 
-            Color.line
+            DSColor.line
                 .frame(height: 1)
                 .padding(.bottom, DSSpacing.md)
 
             detailsContent
                 .font(DSFont.fieldLabel)
-                .foregroundStyle(Color.ink60)
+                .foregroundStyle(DSColor.ink60)
                 .padding(.bottom, DSSpacing.md)
 
             HStack(alignment: .bottom) {
                 Text(totalLabel)
                     .font(DSFont.fieldLabel)
-                    .foregroundStyle(Color.ink60)
+                    .foregroundStyle(DSColor.ink60)
 
                 Spacer()
 
                 Text(totalPrice)
                     .font(DSFont.descriptionBold)
-                    .foregroundStyle(Color.salonCardPrice)
+                    .foregroundStyle(DSColor.salonCardPrice)
             }
         }
         .padding(DSSpacing.lg)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
-                .stroke(Color.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: 1)
         )
-        // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)
     }

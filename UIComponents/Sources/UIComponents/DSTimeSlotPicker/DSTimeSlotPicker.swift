@@ -33,7 +33,7 @@ public struct DSTimeSlotPicker: View {
             // Section categorization title (e.g., TARDE)
             Text(sectionTitle.uppercased())
                 .font(DSFont.captionSemibold)
-                .foregroundColor(.ink60)
+                .foregroundColor(DSColor.ink60)
                 .padding(.leading, 4)
             
             // Time Slots Adaptive Grid
@@ -61,11 +61,11 @@ public struct DSTimeSlotPicker: View {
             .buttonStyle(.plain)
         }
         .padding(20)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
-                .stroke(Color.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: 1)
         )
     }
     
@@ -73,21 +73,21 @@ public struct DSTimeSlotPicker: View {
     
     private func textColor(for slot: DSTimeSlotPickerItem) -> Color {
         if !slot.isAvailable {
-            return .line
+            return DSColor.line
         } else if slot.isSelected {
-            return .paper
+            return DSColor.paper
         } else {
-            return .ink
+            return DSColor.ink
         }
     }
     
     private func backgroundColor(for slot: DSTimeSlotPickerItem) -> Color { // 🛠️
         if !slot.isAvailable {
-            return .paper2
+            return DSColor.paper2
         } else if slot.isSelected {
-            return .ink
+            return DSColor.ink
         } else {
-            return .paper
+            return DSColor.paper
         }
     }
     
@@ -97,9 +97,10 @@ public struct DSTimeSlotPicker: View {
     private func borderView(for slot: DSTimeSlotPickerItem) -> some View {
         if slot.isAvailable && !slot.isSelected {
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color.line, lineWidth: 1)
-        } else if !slot.isAvailable {            LineStrikethrough()
-                .stroke(Color.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: 1)
+        } else if !slot.isAvailable {
+            LineStrikethrough()
+                .stroke(DSColor.line, lineWidth: 1)
                 .padding(.horizontal, 16)
         } else {
             EmptyView()

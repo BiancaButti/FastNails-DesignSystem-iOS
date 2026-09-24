@@ -20,27 +20,27 @@ struct DSSelectableOptionCardPalette {
     /// Not selected. The box border uses Controle (3.7:1) because it is the
     /// only signal that there is something actionable; Linha (1.5:1) won't do here.
     static let idle = DSSelectableOptionCardPalette(
-        surface: .paper,
-        border: .line,
+        surface: DSColor.paper,
+        border: DSColor.line,
         borderWidth: 1,
-        title: .ink,      // 18.5:1
-        subtitle: .ink, // 5.8:1
-        box: .paper,
-        boxBorder: .control,
-        check: .clear
+        title: DSColor.ink,
+        subtitle: DSColor.ink,
+        box: DSColor.paper,
+        boxBorder: DSColor.control,
+        check: DSColor.clear
     )
 
     /// Selected. The background is Esmalte at 6%, already flattened — the text
     /// stays dark and keeps the same contrast as the normal state.
     static let selected = DSSelectableOptionCardPalette(
-        surface: .softEnamel,
-        border: .enamel,
+        surface: DSColor.softEnamel,
+        border: DSColor.enamel,
         borderWidth: 1.5,
-        title: .ink,
-        subtitle: .ink60,
-        box: .enamel,
-        boxBorder: .enamel,
-        check: .paper // 5.5:1 over Esmalte
+        title: DSColor.ink,
+        subtitle: DSColor.ink60,
+        box: DSColor.enamel,
+        boxBorder: DSColor.enamel,
+        check: DSColor.paper
     )
 
     /// Solid-fill variant, in case the Design System wants that weight.
@@ -48,13 +48,13 @@ struct DSSelectableOptionCardPalette {
     /// and fails AA for small text. Hierarchy here comes from size and weight,
     /// not color.
     static let selectedSolid = DSSelectableOptionCardPalette(
-        surface: .enamel,
-        border: .enamel,
+        surface: DSColor.enamel,
+        border: DSColor.enamel,
         borderWidth: 1.5,
-        title: .paper,
-        subtitle: .paper,
-        box: .paper,
-        boxBorder: .paper,
-        check: .enamel
+        title: DSColor.paper,
+        subtitle: DSColor.paper,
+        box: DSColor.paper,
+        boxBorder: DSColor.paper,
+        check: DSColor.enamel
     )
 }

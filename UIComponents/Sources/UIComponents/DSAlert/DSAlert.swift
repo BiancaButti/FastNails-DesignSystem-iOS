@@ -48,12 +48,12 @@ public struct DSAlert: View {
             VStack(spacing: 12) {
                 Text(title)
                     .font(DSFont.sectionHeader)
-                    .foregroundColor(.ink)
+                    .foregroundColor(DSColor.ink)
                     .multilineTextAlignment(.center)
                 
                 Text(message)
                     .font(DSFont.fieldLabel)
-                    .foregroundColor(.ink60)
+                    .foregroundColor(DSColor.ink60)
                     .multilineTextAlignment(.center)
                     .lineSpacing(4)
                     .fixedSize(horizontal: false, vertical: true)
@@ -62,26 +62,26 @@ public struct DSAlert: View {
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
             
-            Color.line
+            DSColor.line
                 .frame(height: 1)
             
             HStack(spacing: 0) {
                 Button(action: primaryAction) {
                     Text(primaryButtonTitle)
                         .font(DSFont.descriptionBold)
-                        .foregroundColor(.ink)
+                        .foregroundColor(DSColor.ink)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .buttonStyle(.plain)
                 
-                Color.line
+                DSColor.line
                     .frame(width: 1)
                 
                 Button(action: secondaryAction) {
                     Text(secondaryButtonTitle)
                         .font(.body)
                         .font(isSecondaryDestructive ? DSFont.description : DSFont.descriptionBold)
-                        .foregroundColor(isSecondaryDestructive ? .alert : .enamel)
+                        .foregroundColor(isSecondaryDestructive ? DSColor.alert : DSColor.enamel)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .buttonStyle(.plain)
@@ -89,8 +89,9 @@ public struct DSAlert: View {
             .frame(height: 52)
         }
         .frame(width: 290)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
-        .shadow(color: .black.opacity(0.15), radius: 16, x: 0, y: 8)
+        .shadow(color: DSColor.ink.opacity(0.15),
+                radius: 16, x: 0, y: 8)
     }
 }

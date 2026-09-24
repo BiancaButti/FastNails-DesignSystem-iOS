@@ -16,7 +16,7 @@ final class DSToastModifierTests: XCTestCase {
         let sut = DSToastModifier(
             isPresented: customBinding,
             message: "Test Message",
-            dotColor: .confirmed,
+            dotColor: DSColor.confirmed,
             duration: 0.0,
             delayTask: { block in
                 // Forçamos a execução imediata e síncrona do fechamento do toast

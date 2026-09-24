@@ -54,7 +54,7 @@ public struct DSDayPicker: View {
             // Main component title
             Text(title)
                 .font(DSFont.sectionHeader)
-                .foregroundColor(.ink)
+                .foregroundColor(DSColor.ink)
                 
             // Scrollable or rigid horizontal row for days
             HStack(spacing: 12) {
@@ -67,11 +67,11 @@ public struct DSDayPicker: View {
                         VStack(spacing: 8) {
                             Text(day.weekday.uppercased())
                                 .font(DSFont.fieldLabel)
-                                .foregroundColor(day.isSelected ? .blush : .ink60)
+                                .foregroundColor(day.isSelected ? DSColor.blush : DSColor.ink60)
                             
                             Text(day.dayNumber)
                                 .font(DSFont.title)
-                                .foregroundColor(day.isSelected ? .paper : .ink)
+                                .foregroundColor(day.isSelected ? DSColor.paper : DSColor.ink)
                             
                             Text(day.subtitle)
                                 .font(DSFont.fieldLabel)
@@ -79,11 +79,11 @@ public struct DSDayPicker: View {
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
-                        .background(day.isSelected ? Color.ink : Color.paper)
+                        .background(day.isSelected ? DSColor.ink : DSColor.paper)
                         .cornerRadius(16)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
-                                .stroke(day.isSelected ? Color.clear : Color.line, lineWidth: 1)
+                                .stroke(day.isSelected ? DSColor.clear : DSColor.line, lineWidth: 1)
                         )
                     }
                     .buttonStyle(.plain)
@@ -92,18 +92,18 @@ public struct DSDayPicker: View {
             }
         }
         .padding(20)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .cornerRadius(20)
     }
     
     /// Helper to map subtitles to the appropriate token color based on internal state.
     private func subtitleColor(for day: DayItem) -> Color {
         if day.isSelected {
-            return .blush
+            return DSColor.blush
         } else if day.isFull {
-            return .ink60
+            return DSColor.ink60
         } else {
-            return .confirmed // Matches the teal/green indicator color for available spots
+            return DSColor.confirmed 
         }
     }
 }

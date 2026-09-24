@@ -14,13 +14,13 @@ public struct DSPriceReceiptCard: View {
     ///   - items: A list of tuples containing the service title and its pre-formatted price string.
     ///   - totalTitle: The text display for the final line (Default: "Total").
     ///   - totalValue: The pre-formatted total value string passed by the host app.
-    ///   - totalColor: The design system token color for the final price value (Default: `.enamel`).
+    ///   - totalColor: The design system token color for the final price value (Default: `DSColor.enamel`).
     public init(
         sectionTitle: String,
         items: [(title: String, price: String)],
         totalTitle: String,
         totalValue: String,
-        totalColor: Color = .enamel
+        totalColor: Color = DSColor.enamel
     ) {
         self.sectionTitle = sectionTitle
         self.items = items
@@ -34,39 +34,37 @@ public struct DSPriceReceiptCard: View {
             // Section header label
             Text(sectionTitle.uppercased())
                 .font(DSFont.captionSemibold)
-                .foregroundColor(.ink60)
+                .foregroundColor(DSColor.ink60)
                 .padding(.leading, 8)
             
             // Inner Card Structure
             VStack(spacing: 0) {
                 // Dynamic Items List
                 VStack(spacing: 16) {
-                    ForEach(0..<items.count, id: \.self) { index in
-                        let item = items[index]
+                    ForEach(items, id: \.title) { item in
                         HStack {
                             Text(item.title)
-                                .font(.system(size: 14))
-                                .foregroundColor(.text)
+                                .font(DSFont.description)
+                                .foregroundColor(DSColor.text)
                             Spacer()
                             Text(item.price)
-                                .font(.system(size: 14))
-                                .foregroundColor(.ink60)
+                                .font(DSFont.description)
+                                .foregroundColor(DSColor.ink60)
                         }
                     }
                 }
                 .padding(.bottom, 16)
 
-                
                 // Central Divider Line
                 Divider()
-                    .background(Color.divider)
+                    .background(DSColor.divider)
                     .padding(.bottom, 16)
                 
                 // Final Total Row
                 HStack {
                     Text(totalTitle)
                         .font(DSFont.descriptionBold)
-                        .foregroundColor(.ink)
+                        .foregroundColor(DSColor.ink) 
                     Spacer()
                     Text(totalValue)
                         .font(DSFont.descriptionBold)
@@ -74,11 +72,11 @@ public struct DSPriceReceiptCard: View {
                 }
             }
             .padding(20)
-            .background(Color.paper)
+            .background(DSColor.paper)
             .cornerRadius(16)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(Color.line, lineWidth: 1)
+                    .stroke(DSColor.line, lineWidth: 1)
             )
         }
     }

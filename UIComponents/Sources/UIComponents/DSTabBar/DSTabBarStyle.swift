@@ -32,10 +32,10 @@ public struct DSTabBarStyle {
     ///   - background: Fill behind the bar. Defaults to `.surface`.
     ///   - dividerColor: Top hairline color, or `nil` to hide it. Defaults to `.divider`.
     public init(
-        selectedColor: Color = .brand,
-        unselectedColor: Color = .contentTertiary,
-        background: Color = .surface,
-        dividerColor: Color? = .divider
+        selectedColor: Color = DSColor.legacyBrand,
+        unselectedColor: Color = DSColor.legacyContentTertiary,
+        background: Color = DSColor.surface,
+        dividerColor: Color? = DSColor.divider
     ) {
         self.selectedColor = selectedColor
         self.unselectedColor = unselectedColor

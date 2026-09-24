@@ -79,7 +79,7 @@ public struct DSSelectableOptionList: View {
                 .font(DSFont.technicalTag)
                 .textCase(.uppercase)
                 .tracking(1.2)
-                .foregroundStyle(Color.ink60)
+                .foregroundStyle(DSColor.ink60)
                 .accessibilityAddTraits(.isHeader)
 
             ForEach(options) { option in

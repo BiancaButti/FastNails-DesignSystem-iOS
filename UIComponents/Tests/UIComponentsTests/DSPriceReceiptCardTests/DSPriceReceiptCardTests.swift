@@ -34,7 +34,7 @@ final class DSPriceReceiptCardTests: XCTestCase {
         ]
         let expectedTotalValue = "R$ 100"
         let expectedTotalTitle = "Total Final"
-        let expectedColor = Color.brand
+        let expectedColor = DSColor.legacyBrand
         
         // When
         let sut = DSPriceReceiptCard(

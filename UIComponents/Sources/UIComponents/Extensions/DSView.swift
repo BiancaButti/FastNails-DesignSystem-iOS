@@ -23,7 +23,7 @@ public extension View {
     func dsToast(
         isPresented: Binding<Bool>,
         message: String,
-        dotColor: Color = .confirmed,
+        dotColor: Color = DSColor.confirmed,
         duration: TimeInterval = 3.0
     ) -> some View {
         self.modifier(

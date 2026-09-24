@@ -81,7 +81,7 @@ public struct DSInfoCard<Content: View>: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title.uppercased())
                 .font(DSFont.badge)
-                .foregroundColor(.ink60)
+                .foregroundColor(DSColor.ink60)
                 .tracking(1.5)
             
             VStack(alignment: alignment, spacing: spacing) {
@@ -89,10 +89,10 @@ public struct DSInfoCard<Content: View>: View {
             }
             .padding(padding)
             .frame(maxWidth: .infinity, alignment: Alignment(horizontal: alignment, vertical: .center))
-            .background(background ?? Color.paper)
+            .background(background ?? DSColor.paper)
             .clipShape(shape)
             .overlay(
-                shape.strokeBorder(borderColor ?? Color.line, lineWidth: borderWidth)
+                shape.strokeBorder(borderColor ?? DSColor.line, lineWidth: borderWidth)
             )
         }
     }

@@ -222,7 +222,7 @@ private struct DSStatusBadgeShowcase: View {
             DSStatusBadge(title: "Cancelado pelo salão", status: .cancelled(by: .salon))
         }
         .padding(DSSpacing.lg)
-        .background(Color.paper)
+        .background(DSColor.paper)
     }
 }
 
@@ -276,7 +276,7 @@ private struct DSSelectableOptionShowcase: View {
         )
         .padding(8)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.paper)
+        .background(DSColor.paper)
     }
 }
  
@@ -333,11 +333,11 @@ private struct DSSalonCardShowcase: View {
             }
 
             Text("Último toque: \(tapped)")
-                .font(.footnote)
-                .foregroundStyle(.secondary)
+                .font(DSFont.inputSupport)
+                .foregroundColor(DSColor.ink60)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.paper)
+        .background(DSColor.paper)
     }
 }
 
@@ -348,26 +348,26 @@ private struct DSCardShowcase: View {
                 DSCard {
                     Text("Nenhum salão até R$60")
                         .font(.headline)
-                        .foregroundStyle(Color.ink)
+                        .foregroundStyle(DSColor.ink)
                         .multilineTextAlignment(.center)
                     
                     Text("O filtro de orçamento está segurando o resultado. Com até R$90 aparecem 14 salões")
                         .font(.subheadline)
-                        .foregroundStyle(Color.ink60)
+                        .foregroundStyle(DSColor.ink60)
                         .multilineTextAlignment(.center)
                     
                     DSButton(title: "Aumentar para R$90", style: .secondary) {}
                 }
                 
-                DSCard(borderColor: Color.line) {
+                DSCard(borderColor: DSColor.line) {
                     Text("Sem internet")
                         .font(.headline)
-                        .foregroundStyle(Color.ink)
+                        .foregroundStyle(DSColor.ink)
                         .multilineTextAlignment(.center)
                     
                     Text("Seu agendamento continua marcado. A lista atualiza quando a conexão voltar")
                         .font(.subheadline)
-                        .foregroundStyle(Color.ink60)
+                        .foregroundStyle(DSColor.ink60)
                         .multilineTextAlignment(.center)
                     
                     DSButton(title: "Tentar novamente", style: .secondary, tone: .neutral) {}
@@ -377,12 +377,12 @@ private struct DSCardShowcase: View {
                 DSCard(systemIconName: "magnifyingglass") { // Suporta iOS antigo e resolve o erro
                     Text("Nenhum salão até R$60")
                         .font(.headline)
-                        .foregroundStyle(Color.ink)
+                        .foregroundStyle(DSColor.ink)
                         .multilineTextAlignment(.center)
 
                     Text("O filtro de orçamento está segurando o resultado. Com até R$90 aparecem 14 salões")
                         .font(.subheadline)
-                        .foregroundStyle(Color.ink60)
+                        .foregroundStyle(DSColor.ink60)
                         .multilineTextAlignment(.center)
 
                     DSButton(title: "Aumentar para R$90", style: .secondary) {}
@@ -390,7 +390,7 @@ private struct DSCardShowcase: View {
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.paper)
+        .background(DSColor.paper)
     }
 }
 
@@ -580,7 +580,7 @@ private struct DSMerchantCardShowcase: View {
                     textPrice: "800 m"
                 ) {
                     ZStack {
-                        Color.teal.opacity(0.15)
+                        DSColor.confirmed.opacity(0.15)
                         Image(systemName: "sparkles")
                             .font(.system(size: 40))
                             .foregroundColor(.teal)
@@ -600,21 +600,21 @@ private struct DSMerchantCardShowcase: View {
                     isCarousel: true
                 ) {
                     ZStack {
-                        Color.purple.opacity(0.15)
+                        DSColor.ink.opacity(0.15)
                         Image(systemName: "scissors")
                             .font(.system(size: 40))
                             .foregroundColor(.purple)
                     }
                     
                     ZStack {
-                        Color.blue.opacity(0.15)
+                        DSColor.infoHighlight.opacity(0.15)
                         Image(systemName: "comb")
                             .font(.system(size: 40))
                             .foregroundColor(.blue)
                     }
                     
                     ZStack {
-                        Color.orange.opacity(0.15)
+                        DSColor.warningHighlight.opacity(0.15)
                         Image(systemName: "face.smiling")
                             .font(.system(size: 40))
                             .foregroundColor(.orange)
@@ -726,15 +726,15 @@ private struct DSSummaryCardShowcase: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Ela vai até você")
                                 .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.ink)
+                                .foregroundColor(DSColor.ink)
                             
                             Text("R. Aurora, 120 · apto 42")
                                 .font(.system(size: 12))
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                             
                             Text("Freguesia do Ó")
                                 .font(.system(size: 12))
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                         }
                     } detailsContent: {
                         VStack(spacing: 10) {
@@ -755,11 +755,11 @@ private struct DSSummaryCardShowcase: View {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Studio Ana Lima")
                                 .font(.system(size: 15, weight: .bold))
-                                .foregroundColor(.ink)
+                                .foregroundColor(DSColor.ink)
                             
                             Text("R. Aurora, 120 · Freguesia do Ó")
                                 .font(.system(size: 12))
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                         }
                     } detailsContent: {
                         VStack(spacing: 10) {
@@ -770,7 +770,7 @@ private struct DSSummaryCardShowcase: View {
                 }
             }.padding()
         }
-        .background(Color.surface)
+        .background(DSColor.surface)
     }
     
     /// Helper privado para criar as linhas de detalhes perfeitamente alinhadas nas pontas
@@ -778,13 +778,13 @@ private struct DSSummaryCardShowcase: View {
     private func detailRow(label: String, value: String) -> some View {
         HStack(alignment: .top) {
             Text(label)
-                .foregroundColor(.ink60)
+                .foregroundColor(DSColor.ink60)
                 .frame(width: 65, alignment: .leading)
             
             Spacer()
             
             Text(value)
-                .foregroundColor(.ink)
+                .foregroundColor(DSColor.ink)
                 .fontWeight(.medium)
                 .multilineTextAlignment(.trailing)
         }
@@ -806,7 +806,7 @@ private struct DSPriceReceiptCardShowcase: View {
                         ],
                         totalTitle: "Total",
                         totalValue: "R$ 35",
-                        totalColor: .brand
+                        totalColor: DSColor.legacyBrand
                     )
                 }
                 VariantRow(label: "Múltiplos itens comprados") {
@@ -818,7 +818,7 @@ private struct DSPriceReceiptCardShowcase: View {
                         ],
                         totalTitle: "Total",
                         totalValue: "R$ 100",
-                        totalColor: .brand
+                        totalColor: DSColor.legacyBrand
                     )
                 }
             }.padding()
@@ -837,7 +837,7 @@ private struct DSDayPickerShowcase: View {
     
     var body: some View {
         ZStack {
-            Color.surface.edgesIgnoringSafeArea(.all)
+            DSColor.surface.edgesIgnoringSafeArea(.all)
             
             VStack {
                 VariantRow(label: "Dias com e sem vagas") {
@@ -881,7 +881,7 @@ private struct DSTimeSlotPickerShowcase: View {
     
     var body: some View {
         ZStack {
-            Color.surface.edgesIgnoringSafeArea(.all)
+            DSColor.surface.edgesIgnoringSafeArea(.all)
             
             VStack {
                 VariantRow(label: "Horários disponíveis e indisponíveis") {
@@ -936,7 +936,7 @@ private struct DSTimelineShowcase: View {
 
     var body: some View {
         ZStack {
-            Color.surface.edgesIgnoringSafeArea(.all)
+            DSColor.surface.edgesIgnoringSafeArea(.all)
 
             VStack(spacing: DSSpacing.lg) {
                 DSTimeline(steps: steps)
@@ -1011,26 +1011,26 @@ private struct DSInfoCardShowcase: View {
                         VStack(spacing: 2) {
                             Text("SET")
                                 .font(.system(size: 10, weight: .bold))
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                             Text("02")
                                 .font(.system(size: 18, weight: .bold))
-                                .foregroundColor(.ink)
+                                .foregroundColor(DSColor.ink)
                         }
                         .frame(width: 48, height: 48)
-                        .background(Color.paper)
+                        .background(DSColor.paper)
                         .cornerRadius(12)
                         .overlay(
                             RoundedRectangle(cornerRadius: 12)
-                                .stroke(Color.line, lineWidth: 1)
+                                .stroke(DSColor.line, lineWidth: 1)
                         )
                         
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Hoje, terça-feira")
                                 .font(.headline)
-                                .foregroundColor(.ink)
+                                .foregroundColor(DSColor.ink)
                             Text("16:00 às 16:30 · 30 min")
                                 .font(.subheadline)
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                         }
                     }
                 }
@@ -1041,21 +1041,21 @@ private struct DSInfoCardShowcase: View {
                     HStack(spacing: 16) {
                         ZStack {
                             Image(systemName: "chair.lounge.fill")
-                                .foregroundColor(.terracota)
+                                .foregroundColor(DSColor.terracotta)
                                 .font(.system(size: 20))
                         }
                         .frame(width: 48, height: 48)
-                        .background(Color.paper2)
+                        .background(DSColor.paper2)
                         .cornerRadius(12)
                         
                         // Textos de Informação
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Espaço Camila")
                                 .font(.headline)
-                                .foregroundColor(.ink)
+                                .foregroundColor(DSColor.ink)
                             Text("Casa Verde · 800 m de você")
                                 .font(.subheadline)
-                                .foregroundColor(.ink60)
+                                .foregroundColor(DSColor.ink60)
                         }
                     }
                 }
@@ -1069,24 +1069,24 @@ private struct DSInfoCardShowcase: View {
                             // Miniatura do Salão / Prédio
                             ZStack {
                                 Image(systemName: "building.2.fill") // SF Symbol correspondente à imagem
-                                    .foregroundColor(.ink60)
+                                    .foregroundColor(DSColor.ink60)
                                     .font(.system(size: 20))
                             }
                             .frame(width: 48, height: 48)
-                            .background(Color.paper2)
+                            .background(DSColor.paper2)
                             .cornerRadius(12)
                             
                             // Textos de Informação
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Studio Ana Lima")
                                     .font(.headline)
-                                    .foregroundColor(.ink)
+                                    .foregroundColor(DSColor.ink)
                                 Text("R. Aurora, 120 · Freguesia do Ó")
                                     .font(.subheadline)
-                                    .foregroundColor(.ink60)
+                                    .foregroundColor(DSColor.ink60)
                                 Text("300 m de você")
                                     .font(.subheadline)
-                                    .foregroundColor(.ink60)
+                                    .foregroundColor(DSColor.ink60)
                             }
                         }
                         
@@ -1097,7 +1097,7 @@ private struct DSInfoCardShowcase: View {
                             Text("Como chegar")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
-                                .foregroundColor(.link)
+                                .foregroundColor(DSColor.link)
                                 .underline()
                         }
                         .padding(.top, 4)
@@ -1158,7 +1158,7 @@ private struct DSToastShowcase: View {
             VariantRow(label: "Toast - Atenção / Alerta genérico") {
                 DSToast(
                     message: "Não foi possível sincronizar a agenda.",
-                    dotColor: .amber
+                    dotColor: DSColor.amber
                 )
             }
         }
@@ -1170,7 +1170,7 @@ private struct DSToastShowcase: View {
                     }
                 }
                 .buttonStyle(.borderedProminent)
-                .tint(.enamel)
+                .tint(DSColor.enamel)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .dsToast(
@@ -1193,12 +1193,12 @@ private struct DSNoticeCardShowcase: View {
         ),
         DSNoticeItem(
             systemIconName: "clock.fill",
-            iconColor: .contentTertiary, // Cinza médio institucional
+            iconColor: DSColor.legacyContentTertiary, // Cinza médio institucional
             title: "Cancelamento gratuito até 14:00 de hoje."
         ),
         DSNoticeItem(
             systemIconName: "hourglass",
-            iconColor: .ink60, // Cinza-asfalto
+            iconColor: DSColor.ink60, // Cinza-asfalto
             title: "Atrasos acima de 15 min podem perder a vaga."
         )
     ]
@@ -1313,7 +1313,7 @@ private struct DSAlertShowcase: View {
                 }
             }
             .buttonStyle(.borderedProminent)
-            .tint(.enamel)
+            .tint(DSColor.enamel)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemGray6))

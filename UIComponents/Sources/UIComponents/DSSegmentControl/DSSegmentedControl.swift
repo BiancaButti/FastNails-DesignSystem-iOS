@@ -45,14 +45,14 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                 }) {
                     content(option)
                         .font(isSelected ? DSFont.descriptionBold : DSFont.description)
-                        .foregroundColor(isSelected ? .ink : .ink60)
+                        .foregroundColor(isSelected ? DSColor.ink : DSColor.ink60)
                         .padding(.vertical, 10)
                         .frame(maxWidth: .infinity)
                         .background(
                             Group {
                                 if isSelected {
                                     RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                        .fill(Color.paper)
+                                        .fill(DSColor.paper)
                                         .shadow(color: .black.opacity(0.04), radius: 2, y: 1)
                                 }
                             }
@@ -62,7 +62,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
             }
         }
         .padding(4)
-        .background(Color.paper2)
+        .background(DSColor.paper2)
         .cornerRadius(14)
     }
 }

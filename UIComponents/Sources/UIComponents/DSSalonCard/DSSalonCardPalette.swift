@@ -14,13 +14,13 @@ public struct DSSalonCardPalette {
     public var featureForeground: Color
 
     public init(
-        border: Color = .salonCardBorder,
-        price: Color = .salonCardPrice,
-        thumbnailBackground: Color = .salonCardThumbnailBackground,
-        thumbnailForeground: Color = .salonCardThumbnailForeground,
-        featureBackground: Color = .salonCardFeatureBackground,
-        featureIconBackground: Color = .salonCardFeatureIconBackground,
-        featureForeground: Color = .salonCardFeatureForeground
+        border: Color = DSColor.salonCardBorder,
+        price: Color = DSColor.salonCardPrice,
+        thumbnailBackground: Color = DSColor.salonCardThumbnailBackground,
+        thumbnailForeground: Color = DSColor.salonCardThumbnailForeground,
+        featureBackground: Color = DSColor.salonCardFeatureBackground,
+        featureIconBackground: Color = DSColor.salonCardFeatureIconBackground,
+        featureForeground: Color = DSColor.salonCardFeatureForeground
     ) {
         self.border = border
         self.price = price

@@ -11,7 +11,7 @@ struct DSAlertModifier: ViewModifier {
             content
             
             if isPresented {
-                Color.black.opacity(0.4)
+                DSColor.ink.opacity(0.4)
                     .ignoresSafeArea()
                     .transition(.opacity)
                     .onTapGesture {

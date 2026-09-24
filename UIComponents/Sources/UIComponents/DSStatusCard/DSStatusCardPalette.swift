@@ -44,33 +44,33 @@ public struct DSStatusCardPalette {
 
     /// Dark, brand-colored card — the default expanded appearance.
     static let inverse = Self(
-        background: .ink,
-        secondary: .blush,
-        actionBackground: .blush.opacity(0.15),
-        actionForeground: .blush
+        background: DSColor.ink,
+        secondary: DSColor.blush,
+        actionBackground: DSColor.blush.opacity(0.15),
+        actionForeground: DSColor.blush
     )
 
     /// Error / cancellation.
     static let critical = Self(
-        background: .terracota,
-        secondary: .blush,
-        actionBackground: .paper.opacity(0.15),
-        actionForeground: .blush
+        background: DSColor.terracotta,
+        secondary: DSColor.blush,
+        actionBackground: DSColor.paper.opacity(0.15),
+        actionForeground: DSColor.blush
     )
 
     /// Light card highlighting a positive status.
     static let positive = Self(
-        background: .confirmed,
-        secondary: .blush,
-        actionBackground: .paper.opacity(0.15),
-        actionForeground: .blush
+        background: DSColor.confirmed,
+        secondary: DSColor.blush,
+        actionBackground: DSColor.paper.opacity(0.15),
+        actionForeground: DSColor.blush
     )
 
     /// Neutral light card.
     static let subtle = Self(
-        background: .paper2,
-        secondary: .ink60,
-        actionBackground: .enamel,
-        actionForeground: .paper
+        background: DSColor.paper2,
+        secondary: DSColor.ink60,
+        actionBackground: DSColor.enamel,
+        actionForeground: DSColor.paper
     )
 }

@@ -53,17 +53,17 @@ public struct DSAvatar: View {
             } else {
                 ZStack {
                     Circle()
-                        .fill(Color.ink)
+                        .fill(DSColor.ink)
                     
                     Text(initial)
                         .font(DSFont.dynamicBold(scaledFrom: size))
-                        .foregroundColor(.blush)
+                        .foregroundColor(DSColor.blush)
                 }
                 .frame(width: innerCircleSize, height: innerCircleSize)
             }
         }
         .frame(width: size, height: size)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(RoundedRectangle(cornerRadius: size * 0.25, style: .continuous))
     }
 }

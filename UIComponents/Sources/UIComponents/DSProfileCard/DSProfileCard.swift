@@ -60,12 +60,12 @@ public struct DSProfileCard: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text(name)
                     .font(DSFont.sectionHeader)
-                    .foregroundColor(.ink)
+                    .foregroundColor(DSColor.ink)
                 
                 if let description {
                     Text(description)
                         .font(DSFont.fieldLabel)
-                        .foregroundColor(.ink60)
+                        .foregroundColor(DSColor.ink60)
                 }
             }
             
@@ -73,10 +73,10 @@ public struct DSProfileCard: View {
         }
         .padding(padding)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.paper)
+        .background(DSColor.paper)
         .clipShape(shape)
         .overlay(
-            shape.strokeBorder(Color.line, lineWidth: 1)
+            shape.strokeBorder(DSColor.line, lineWidth: 1)
         )
     }
 }

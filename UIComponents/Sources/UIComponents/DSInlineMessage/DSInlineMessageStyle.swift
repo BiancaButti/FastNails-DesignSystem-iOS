@@ -9,42 +9,42 @@ public enum DSInlineMessageStyle {
     var backgroundColor: Color {
         switch self {
         case .info:
-            return Color.paper
+            return DSColor.paper
         case .warning:
-            return Color.amber.opacity(0.06)
+            return DSColor.amber.opacity(0.06)
         case .error:
-            return Color.alert.opacity(0.06)
+            return DSColor.alert.opacity(0.06)
         }
     }
     
     var borderColor: Color {
         switch self {
         case .info:
-            return Color.line
+            return DSColor.line
         case .warning:
-            return Color.amber.opacity(0.2)
+            return DSColor.amber.opacity(0.2)
         case .error:
-            return Color.alert.opacity(0.2)
+            return DSColor.alert.opacity(0.2)
         }
     }
     
     var actionColor: Color {
         switch self {
         case .info:
-            return Color.enamel
+            return DSColor.enamel
         case .warning:
-            return Color.amber
+            return DSColor.amber
         case .error:
-            return Color.terracota
+            return DSColor.terracotta
         }
     }
     
     var titleColor: Color {
         switch self {
         case .info, .warning:
-            return Color.ink
+            return DSColor.ink
         case .error:
-            return Color.terracota
+            return DSColor.terracotta
         }
     }
 }
