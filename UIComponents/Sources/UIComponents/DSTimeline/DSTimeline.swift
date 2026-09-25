@@ -20,14 +20,10 @@ public struct DSTimeline: View {
                     // Vertical Indicator Column (Node + Track Line)
                     VStack(spacing: .zero) {
                         nodeView(for: step.state)
-                        // A constant slot keeps every state's dot centered on
-                        // the same point, so changing state never shifts the
-                        // node or the track line.
+                        // A constante slot mantém o centro estável evitando jittering nas quinas
                             .frame(width: DSTimelineMetrics.nodeSlot,
                                    height: DSTimelineMetrics.nodeSlot)
-                            .animation(.spring(response: DSTimelineMetrics.nodeSpringResponse,
-                                               dampingFraction: DSTimelineMetrics.nodeSpringDamping),
-                                       value: step.state)
+                            // Removido o modificador interno antigo de animação daqui
                         
                         if !isLast {
                             trackLineView(
@@ -51,8 +47,10 @@ public struct DSTimeline: View {
                         }
                     }
                     .padding(.bottom, isLast ? .zero : DSPadding.regular)
-                    .animation(.easeInOut(duration: DSTimelineMetrics.contentFade), value: step.state)
                 }
+                // Centralizado o gatilho de animação de estado no bloco de linha completo
+                .animation(.spring(response: DSTimelineMetrics.nodeSpringResponse,
+                                   dampingFraction: DSTimelineMetrics.nodeSpringDamping), value: step.state)
             }
         }
         .padding(DSPadding.large)
@@ -67,47 +65,52 @@ public struct DSTimeline: View {
                 style: .continuous)
                 .stroke(DSColor.line, lineWidth: DSTimelineMetrics.borderWidth)
         )
-        // Single-appearance lock: the design system is light-only.
         .environment(\.colorScheme, .light)
-        // Starts the looping layout clock as soon as the view is mounted
         .onAppear {
-            withAnimation(.easeInOut(duration: DSTimelineMetrics.pulseDuration).repeatForever(autoreverses: true)) {
+            // O uso de linear com repetição infinita evita soluços de parada
+            withAnimation(.linear(duration: DSTimelineMetrics.pulseDuration).repeatForever(autoreverses: true)) {
                 isPulsing = true
             }
         }
     }
 }
+
 private extension DSTimeline {
+    
     // MARK: - Animated Node Element Mapping
+    
+    /// Renders a single identity container structure.
+    /// Properties mutate smoothly instead of recreating views via switch.
     @ViewBuilder
     private func nodeView(for state: DSTimelineStepState) -> some View {
+        ZStack {
+            // 1. Halo de pulso (Apenas visível se for .current)
+            Circle()
+                .fill(DSColor.enamel.opacity(DSTimelineMetrics.haloFillOpacity))
+                .frame(width: DSTimelineMetrics.currentHalo, height: DSTimelineMetrics.currentHalo)
+                .scaleEffect(state == .current && isPulsing ? DSTimelineMetrics.pulseScaleMax : DSTimelineMetrics.pulseScaleMin)
+                .opacity(state == .current && isPulsing ? DSTimelineMetrics.pulseOpacityMin : (state == .current ? DSTimelineMetrics.pulseOpacityMax : 0))
+            
+            // 2. Bolinha Central Estável (Muda de cor e tamanho suavemente)
+            Circle()
+                .fill(nodeColor(for: state))
+                .frame(width: nodeSize(for: state), height: nodeSize(for: state))
+        }
+    }
+    
+    private func nodeColor(for state: DSTimelineStepState) -> Color {
         switch state {
-        case .pending:
-            Circle()
-                .fill(DSColor.line)
-                .frame(width: DSTimelineMetrics.pendingDot, height: DSTimelineMetrics.pendingDot)
-
-        case .current:
-            ZStack {
-                // Expanding continuous background shadow pulse
-                Circle()
-                    .fill(DSColor.enamel.opacity(DSTimelineMetrics.haloFillOpacity))
-                    .frame(width: DSTimelineMetrics.currentHalo, height: DSTimelineMetrics.currentHalo)
-                    .scaleEffect(isPulsing ? DSTimelineMetrics.pulseScaleMax : DSTimelineMetrics.pulseScaleMin)
-                    .opacity(isPulsing ? DSTimelineMetrics.pulseOpacityMin : DSTimelineMetrics.pulseOpacityMax)
-
-                // Solid center anchor dot
-                Circle()
-                    .fill(DSColor.enamel)
-                    .frame(width: DSTimelineMetrics.currentDot, height: DSTimelineMetrics.currentDot)
-            }
-            .transition(.scale.combined(with: .opacity))
-
-        case .completed:
-            Circle()
-                .fill(DSColor.confirmed)
-                .frame(width: DSTimelineMetrics.completedDot, height: DSTimelineMetrics.completedDot)
-                .transition(.scale)
+        case .pending: return DSColor.line
+        case .current: return DSColor.enamel
+        case .completed: return DSColor.confirmed
+        }
+    }
+    
+    private func nodeSize(for state: DSTimelineStepState) -> CGFloat {
+        switch state {
+        case .pending: return DSTimelineMetrics.pendingDot
+        case .current: return DSTimelineMetrics.currentDot
+        case .completed: return DSTimelineMetrics.completedDot
         }
     }
     
@@ -126,7 +129,6 @@ private extension DSTimeline {
                 .fill(DSColor.confirmed)
                 .frame(width: DSTimelineMetrics.trackWidth)
                 .scaleEffect(y: isFilled ? 1.0 : 0.0, anchor: .top)
-                .animation(.easeInOut(duration: DSTimelineMetrics.trackFill), value: isFilled)
         }
         .frame(maxHeight: .infinity)
     }
