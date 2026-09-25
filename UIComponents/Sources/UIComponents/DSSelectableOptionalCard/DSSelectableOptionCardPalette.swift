@@ -22,7 +22,7 @@ struct DSSelectableOptionCardPalette {
     static let idle = DSSelectableOptionCardPalette(
         surface: DSColor.paper,
         border: DSColor.line,
-        borderWidth: 1,
+        borderWidth: DSBorder.thin,
         title: DSColor.ink,
         subtitle: DSColor.ink,
         box: DSColor.paper,
@@ -35,7 +35,7 @@ struct DSSelectableOptionCardPalette {
     static let selected = DSSelectableOptionCardPalette(
         surface: DSColor.softEnamel,
         border: DSColor.enamel,
-        borderWidth: 1.5,
+        borderWidth: DSBorder.thin,
         title: DSColor.ink,
         subtitle: DSColor.ink60,
         box: DSColor.enamel,
@@ -50,7 +50,7 @@ struct DSSelectableOptionCardPalette {
     static let selectedSolid = DSSelectableOptionCardPalette(
         surface: DSColor.enamel,
         border: DSColor.enamel,
-        borderWidth: 1.5,
+        borderWidth: DSBorder.thin,
         title: DSColor.paper,
         subtitle: DSColor.paper,
         box: DSColor.paper,

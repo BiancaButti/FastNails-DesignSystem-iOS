@@ -42,9 +42,9 @@ public struct DSTabBar<Tab: DSTabItem>: View {
  
     public var body: some View {
         content
-            .padding(.horizontal, DSSpacing.md)
-            .padding(.top, DSSpacing.xs)
-            .padding(.bottom, DSSpacing.xs)
+            .padding(.horizontal, DSPadding.medium)
+            .padding(.top, DSPadding.xsmall)
+            .padding(.bottom, DSPadding.xsmall)
             .background {
                 style.background.ignoresSafeArea(edges: .bottom)
             }
@@ -52,7 +52,7 @@ public struct DSTabBar<Tab: DSTabItem>: View {
                 if let divider = style.dividerColor {
                     Rectangle()
                         .fill(divider)
-                        .frame(height: 1 / displayScale)
+                        .frame(height: DSLayoutIndex.base / displayScale)
                 }
             }
     }
@@ -60,7 +60,7 @@ public struct DSTabBar<Tab: DSTabItem>: View {
     /// The row of tab buttons, adding `.selection` sensory feedback on iOS 17+.
     @ViewBuilder
     private var content: some View {
-        let bar = HStack(spacing: 0) {
+        let bar = HStack(spacing: .zero) {
             ForEach(tabs) { tab in
                 DSTabBarButton(
                     tab: tab,

@@ -78,11 +78,6 @@ public struct SelectableOption: Identifiable, Hashable {
 struct DSSelectableCheckboxCard: View {
     @Environment(\.dsTheme)
     private var theme
-    /// The size of the checkbox indicator, following Dynamic Type along with
-    /// the text.
-    @ScaledMetric(relativeTo: .body)
-    private var boxSize: CGFloat = 22
-
     /// Whether the system's Reduce Motion setting is enabled, used to skip the
     /// selection animation.
     @Environment(\.accessibilityReduceMotion)
@@ -90,38 +85,34 @@ struct DSSelectableCheckboxCard: View {
 
     /// The option rendered by the card.
     let option: SelectableOption
-
     /// Whether the card is currently selected.
     let isSelected: Bool
-
     /// The action performed when the card is tapped.
     let onToggle: () -> Void
-
-    private let boxRadius: CGFloat = 4
 
     private var palette: DSSelectableOptionCardPalette { isSelected ? .selected : .idle }
 
     var body: some View {
         Button(action: onToggle) {
-            HStack(alignment: .top, spacing: 8) {
+            HStack(alignment: .top, spacing: DSSpacing.sm) {
                 checkbox
-                    .padding(.top, 1)
+                    .padding(.top, DSPadding.xsmall)
 
-                VStack(alignment: .leading, spacing: 8) {
+                VStack(alignment: .leading, spacing: DSSpacing.sm) {
                     Text(option.title)
                         .font(DSFont.caption)
                         .minimumScaleFactor(0.8)
 
                     Text(option.description)
-                        .font(.system(size: 12, weight: .regular))
+                        .font(DSFont.inputSupport)
                         .foregroundStyle(palette.subtitle)
                 }
 
-                Spacer(minLength: 0)
+                Spacer(minLength: .zero)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 12)
+            .padding(.vertical, DSPadding.medium)
+            .padding(.horizontal, DSPadding.medium)
             .background(palette.surface)
             .clipShape(
                 RoundedRectangle(
@@ -131,7 +122,8 @@ struct DSSelectableCheckboxCard: View {
                 RoundedRectangle(
                     cornerRadius: DSRadius.control,
                     style: .continuous)
-                    .strokeBorder(palette.border, lineWidth: palette.borderWidth)
+                    .strokeBorder(palette.border,
+                                  lineWidth: palette.borderWidth)
             )
             .contentShape(
                 RoundedRectangle(
@@ -153,16 +145,21 @@ struct DSSelectableCheckboxCard: View {
                 RoundedRectangle(
                     cornerRadius: DSRadius.xsmall,
                     style: .continuous)
-                    .strokeBorder(palette.boxBorder, lineWidth: 2)
+                .strokeBorder(palette.boxBorder,
+                              lineWidth: DSBorder.thin)
             )
             .overlay {
                 if isSelected {
                     Image(systemName: "checkmark")
-                        .font(.system(size: boxSize * 0.52, weight: .bold))
+                        .font(
+                            .system(
+                                size: DSSize.mediumLarge * 0.52,
+                                weight: .bold))
                         .foregroundStyle(palette.check)
                 }
             }
-            .frame(width: boxSize, height: boxSize)
+            .frame(width: DSSize.mediumLarge,
+                   height: DSSize.mediumLarge)
             .accessibilityHidden(true)
     }
 }

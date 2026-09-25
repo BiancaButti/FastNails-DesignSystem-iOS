@@ -16,11 +16,12 @@ struct DSSalonCardAccessibilityTag: View {
     let palette: DSSalonCardPalette
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: DSSpacing.md) {
             Image(systemName: feature.systemImage)
                 .font(DSFont.captionSemibold)
                 .foregroundStyle(.white)
-                .frame(width: 22, height: 22)
+                .frame(width: DSSize.large,
+                       height: DSSize.large)
                 .background(
                     RoundedRectangle(
                         cornerRadius: DSRadius.xsmall,
@@ -30,10 +31,10 @@ struct DSSalonCardAccessibilityTag: View {
             Text(feature.title)
                 .font(DSFont.fieldLabel)
                 .foregroundStyle(palette.featureForeground)
-            Spacer(minLength: 0)
+            Spacer(minLength: .zero)
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 10)
+        .padding(.vertical, DSPadding.small)
+        .padding(.horizontal, DSPadding.medium)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Capsule().fill(palette.featureBackground))
         .accessibilityHidden(true)

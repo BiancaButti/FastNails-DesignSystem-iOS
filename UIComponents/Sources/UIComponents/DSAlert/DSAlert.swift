@@ -44,8 +44,8 @@ public struct DSAlert: View {
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
-            VStack(spacing: 12) {
+        VStack(spacing: .zero) {
+            VStack(spacing: DSSpacing.md) {
                 Text(title)
                     .font(DSFont.sectionHeader)
                     .foregroundColor(DSColor.ink)
@@ -55,17 +55,17 @@ public struct DSAlert: View {
                     .font(DSFont.fieldLabel)
                     .foregroundColor(DSColor.ink60)
                     .multilineTextAlignment(.center)
-                    .lineSpacing(4)
+                    .lineSpacing(DSSpacing.xs)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.top, 24)
-            .padding(.horizontal, 24)
-            .padding(.bottom, 24)
+            .padding(.top, DSPadding.large)
+            .padding(.horizontal, DSPadding.large)
+            .padding(.bottom, DSPadding.large)
             
             DSColor.line
                 .frame(height: 1)
             
-            HStack(spacing: 0) {
+            HStack(spacing: .zero) {
                 Button(action: primaryAction) {
                     Text(primaryButtonTitle)
                         .font(DSFont.descriptionBold)
@@ -86,12 +86,17 @@ public struct DSAlert: View {
                 }
                 .buttonStyle(.plain)
             }
-            .frame(height: 52)
+            .frame(height: DSSize.xhuge)
         }
-        .frame(width: 290)
+        .frame(width: DSSize.containerSmall)
         .background(DSColor.paper)
-        .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.mediumHuge,
+                style: .continuous))
         .shadow(color: DSColor.ink.opacity(0.15),
-                radius: 16, x: 0, y: 8)
+                radius: DSRadius.large,
+                x: .zero,
+                y: 8)
     }
 }

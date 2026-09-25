@@ -24,40 +24,32 @@ public struct DSProfileCard: View {
     let avatarInitial: String
     /// An optional custom image to display inside the avatar view.
     let avatarImage: Image?
-    /// Inner perimeter margins (default 16 pt).
-    let padding: CGFloat
-    /// Continuous clipping radius (default 20 pt).
-    let cornerRadius: CGFloat
 
     /// Creates a `DSProfileCard`.
     public init(
         name: String,
         description: String? = nil,
         avatarInitial: String,
-        avatarImage: Image? = nil,
-        padding: CGFloat = 16,
-        cornerRadius: CGFloat = 20
+        avatarImage: Image? = nil
     ) {
         self.name = name
         self.description = description
         self.avatarInitial = avatarInitial
         self.avatarImage = avatarImage
-        self.padding = padding
-        self.cornerRadius = cornerRadius
     }
 
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        RoundedRectangle(cornerRadius: DSRadius.xxlarge, style: .continuous)
     }
 
     public var body: some View {
-        HStack(spacing: 16) {
+        HStack(spacing: DSSpacing.lg) {
             DSAvatar(
                 initial: avatarInitial,
                 image: avatarImage,
             )
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(name)
                     .font(DSFont.sectionHeader)
                     .foregroundColor(DSColor.ink)
@@ -71,12 +63,12 @@ public struct DSProfileCard: View {
             
             Spacer()
         }
-        .padding(padding)
+        .padding(DSPadding.regular)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(DSColor.paper)
         .clipShape(shape)
         .overlay(
-            shape.strokeBorder(DSColor.line, lineWidth: 1)
+            shape.strokeBorder(DSColor.line, lineWidth: DSBorder.thin)
         )
     }
 }

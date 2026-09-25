@@ -30,25 +30,29 @@ public struct DSToast: View {
     }
 
     public var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: DSSpacing.md) {
             Circle()
                 .fill(dotColor)
-                .frame(width: 8, height: 8)
+                .frame(width: DSSize.small,
+                       height: DSSize.small)
             
             Text(message)
                 .font(DSFont.fieldLabel)
                 .foregroundColor(.white)
-                .lineLimit(2)
+                .lineLimit(DSTextLimit.description)
             
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
+        .padding(.horizontal, DSPadding.regular)
+        .padding(.vertical, DSPadding.regular)
         .background(DSColor.ink)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: DSRadius.large,
                 style: .continuous))
-        .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
+        .shadow(color: .black.opacity(0.12),
+                radius: DSRadius.small,
+                x: .zero,
+                y: 4)
     }
 }

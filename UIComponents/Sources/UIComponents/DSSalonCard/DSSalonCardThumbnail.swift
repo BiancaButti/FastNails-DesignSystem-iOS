@@ -4,16 +4,13 @@ import SwiftUI
 public struct DSSalonCardThumbnail: View {
     let systemImage: String
     let palette: DSSalonCardPalette
-    let size: CGFloat
 
     public init(
         systemImage: String = "storefront",
-        palette: DSSalonCardPalette = .default,
-        size: CGFloat = 56
+        palette: DSSalonCardPalette = .default
     ) {
         self.systemImage = systemImage
         self.palette = palette
-        self.size = size
     }
 
     public var body: some View {
@@ -21,10 +18,11 @@ public struct DSSalonCardThumbnail: View {
             cornerRadius: DSRadius.control,
             style: .continuous)
             .fill(palette.thumbnailBackground)
-            .frame(width: size, height: size)
+            .frame(width: DSSize.jumbo,
+                   height: DSSize.jumbo)
             .overlay(
                 Image(systemName: systemImage)
-                    .font(DSFont.dynamicRegular(scaledFrom: size))
+                    .font(DSFont.dynamicRegular(scaledFrom: DSSize.jumbo))
                     .foregroundStyle(palette.thumbnailForeground)
             )
             .accessibilityHidden(true)

@@ -27,18 +27,10 @@ public struct DSInfoCard<Content: View>: View {
     let title: String
     /// Horizontal alignment of the inner content elements.
     let alignment: HorizontalAlignment
-    /// Vertical spacing between the items inside the card.
-    let spacing: CGFloat
-    /// Inner spacing between the content and the card's container edge.
-    let padding: CGFloat
-    /// Corner radius of the container's rectangle.
-    let cornerRadius: CGFloat
     /// Background color. When `nil`, defaults to the theme's `paper` token (#FFFFFF).
     let background: Color?
     /// Border stroke color. When `nil`, defaults to the theme's `line` token (#D9D0D3).
     let borderColor: Color?
-    /// Border line width drawn inside the shape radius.
-    let borderWidth: CGFloat
 
     /// Creates a `DSInfoCard`.
     /// - Parameters:
@@ -54,40 +46,32 @@ public struct DSInfoCard<Content: View>: View {
     public init(
         title: String,
         alignment: HorizontalAlignment = .leading,
-        spacing: CGFloat = 8,
-        padding: CGFloat = 16,
-        cornerRadius: CGFloat = 16,
         background: Color? = nil,
         borderColor: Color? = nil,
-        borderWidth: CGFloat = 1,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.title = title
         self.alignment = alignment
-        self.spacing = spacing
-        self.padding = padding
-        self.cornerRadius = cornerRadius
         self.background = background
         self.borderColor = borderColor
-        self.borderWidth = borderWidth
         self.content = content
     }
 
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: DSSpacing.sm) {
             Text(title.uppercased())
                 .font(DSFont.badge)
                 .foregroundColor(DSColor.ink60)
-                .tracking(1.5)
+                .tracking(DSTracking.upperTag)
             
-            VStack(alignment: alignment, spacing: spacing) {
+            VStack(alignment: alignment, spacing: DSSpacing.sm) {
                 content()
             }
-            .padding(padding)
+            .padding(DSPadding.regular)
             .frame(maxWidth: .infinity,
                    alignment: Alignment(
                     horizontal: alignment,
@@ -95,7 +79,7 @@ public struct DSInfoCard<Content: View>: View {
             .background(background ?? DSColor.paper)
             .clipShape(shape)
             .overlay(
-                shape.strokeBorder(borderColor ?? DSColor.line, lineWidth: borderWidth)
+                shape.strokeBorder(borderColor ?? DSColor.line, lineWidth: DSBorder.thin)
             )
         }
     }

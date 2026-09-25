@@ -91,15 +91,15 @@ public struct DSFilterChipView: View {
 
                 Text(label)
                     .font(DSFont.technicalTag)
-                    .tracking(1.2)
+                    .tracking(DSTracking.upperTag)
             }
             .font(theme.feedbackFont)
             .fontWeight(isActive ? .semibold : .regular)
             .foregroundStyle(
                 isActive ? .white : Color.primary
             )
-            .padding(.horizontal, DSSpacing.md)
-            .padding(.vertical, DSSpacing.sm)
+            .padding(.horizontal, DSPadding.medium)
+            .padding(.vertical, DSPadding.small)
             .background(
                 isActive
                     ? theme.brandColor

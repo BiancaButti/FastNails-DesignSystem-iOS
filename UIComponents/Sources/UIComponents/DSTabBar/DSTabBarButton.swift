@@ -7,6 +7,9 @@ import SwiftUI
 /// tracks Dynamic Type via `@ScaledMetric`, and the whole button keeps a
 /// 44 pt minimum tap target.
 struct DSTabBarButton<Tab: DSTabItem>: View {
+    private let minimumTextScale: CGFloat = 0.8
+    private let badgeOffsetX: CGFloat = 10
+    private let badgeOffsetY: CGFloat = -6
 
     /// The tab this button represents.
     let tab: Tab
@@ -23,7 +26,8 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
     /// Invoked when the button is tapped.
     let action: () -> Void
  
-    @ScaledMetric(relativeTo: .caption2) private var iconSize: CGFloat = 20
+    @ScaledMetric(relativeTo: .caption2)
+    private var iconSize: CGFloat = DSSize.mediumCompact
  
     var body: some View {
         Button(action: action) {
@@ -32,16 +36,17 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
                     .overlay(alignment: .topTrailing) { badgeView }
                 Text(tab.title)
                     .font(DSFont.tabLabel)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
+                    .lineLimit(DSTextLimit.title)
+                    .minimumScaleFactor(minimumTextScale)
             }
             .foregroundStyle(isSelected ? style.selectedColor : style.unselectedColor)
-            .frame(maxWidth: .infinity, minHeight: 44)
-            .contentShape(Rectangle())
+            .frame(maxWidth: .infinity,
+                   minHeight: DSSize.touchTarget)
         }
         .buttonStyle(.plain)
-        .animation(.easeOut(duration: 0.15), value: isSelected)
-        // Acessibilidade
+        .animation(.easeOut(
+            duration: DSAnimation.fastDuration),
+                   value: isSelected)
         .accessibilityLabel(Text(tab.title))
         .accessibilityValue(badgeAccessibilityValue)
         .accessibilityAddTraits(isSelected ? .isSelected : [])
@@ -63,10 +68,12 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
                 .font(DSFont.captionSemibold)
                 .monospacedDigit()
                 .foregroundStyle(.white)
-                .padding(.horizontal, DSSpacing.xs)
-                .frame(minWidth: 16, minHeight: 16)
+                .padding(.horizontal, DSPadding.xsmall)
+                .frame(minWidth: DSSize.medium,
+                       minHeight: DSSize.medium)
                 .background(Capsule().fill(style.selectedColor))
-                .offset(x: 10, y: -6)
+                .offset(x: badgeOffsetX,
+                        y: badgeOffsetY)
                 .accessibilityHidden(true)
         }
     }
@@ -90,6 +97,9 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
 /// Badge helpers shared by the tab bar, kept separate so the count logic can be
 /// unit tested without rendering a view.
 enum DSTabBarBadge {
+    
+    // Constante privada para a regra de limite de contagem de badge
+    private static let maxVisibleCount: Int = 99
 
     /// The localized VoiceOver value for a badge count, or `nil` when there is
     /// nothing to announce.
@@ -110,6 +120,6 @@ enum DSTabBarBadge {
     /// being hidden.
     static func displayText(_ count: Int?) -> String? {
         guard let count, count > 0 else { return nil }
-        return count > 99 ? "99+" : "\(count)"
+        return count > DSTabBarBadge.maxVisibleCount ? "\(DSTabBarBadge.maxVisibleCount)+" : "\(count)"
     }
 }

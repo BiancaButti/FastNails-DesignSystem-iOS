@@ -31,9 +31,10 @@ struct DSOTPFieldBlinkingCaret: View {
 
     var body: some View {
         Rectangle()
-            .frame(width: 2, height: height)
+            .frame(width: DSSize.xsmall,
+                   height: height)
             .foregroundStyle(color)
-            .opacity(visible ? 1 : 0)
+            .opacity(visible ? 1 : .zero)
             .task {
                 // With reduce motion on, the caret stays put.
                 guard !reduceMotion else { return }

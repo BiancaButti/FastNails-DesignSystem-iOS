@@ -11,35 +11,23 @@ public struct DSCard<Content: View>: View {
     private let image: Image?
     
     let alignment: HorizontalAlignment
-    let spacing: CGFloat
-    let padding: CGFloat
-    let cornerRadius: CGFloat
     let background: Color?
     let borderColor: Color?
-    let borderWidth: CGFloat
     let elevation: DSCardElevation
 
     /// Inicializador padrão (Designers/Devs passam a View Image montada)
     public init(
         image: Image? = nil,
         alignment: HorizontalAlignment = .center,
-        spacing: CGFloat = DSSpacing.lg,
-        padding: CGFloat = 20,
-        cornerRadius: CGFloat = 24,
         background: Color? = nil,
         borderColor: Color? = nil,
-        borderWidth: CGFloat = 1,
         elevation: DSCardElevation = .raised,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.image = image
         self.alignment = alignment
-        self.spacing = spacing
-        self.padding = padding
-        self.cornerRadius = cornerRadius
         self.background = background
         self.borderColor = borderColor
-        self.borderWidth = borderWidth
         self.elevation = elevation
         self.content = content
     }
@@ -48,24 +36,15 @@ public struct DSCard<Content: View>: View {
     public init(
         assetName: String,
         alignment: HorizontalAlignment = .center,
-        spacing: CGFloat = DSSpacing.lg,
-        padding: CGFloat = 20,
-        cornerRadius: CGFloat = 24,
         background: Color? = nil,
         borderColor: Color? = nil,
-        borderWidth: CGFloat = 1,
         elevation: DSCardElevation = .raised,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.init(
             image: Image(assetName),
             alignment: alignment,
-            spacing: spacing,
-            padding: padding,
-            cornerRadius: cornerRadius,
-            background: background,
             borderColor: borderColor,
-            borderWidth: borderWidth,
             elevation: elevation,
             content: content
         )
@@ -75,46 +54,38 @@ public struct DSCard<Content: View>: View {
     public init(
         systemIconName: String,
         alignment: HorizontalAlignment = .center,
-        spacing: CGFloat = DSSpacing.lg,
-        padding: CGFloat = 20,
-        cornerRadius: CGFloat = 24,
         background: Color? = nil,
         borderColor: Color? = nil,
-        borderWidth: CGFloat = 1,
         elevation: DSCardElevation = .raised,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.init(
             image: Image(systemName: systemIconName),
             alignment: alignment,
-            spacing: spacing,
-            padding: padding,
-            cornerRadius: cornerRadius,
             background: background,
             borderColor: borderColor,
-            borderWidth: borderWidth,
             elevation: elevation,
             content: content
         )
     }
 
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        RoundedRectangle(cornerRadius: DSRadius.mediumHuge, style: .continuous)
     }
 
     public var body: some View {
-        VStack(alignment: alignment, spacing: spacing) {
+        VStack(alignment: alignment, spacing: DSSpacing.lg) {
             if let image {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(height: 56)
-                    .frame(maxWidth: .infinity, alignment: .center) 
+                    .frame(height: DSSize.jumbo)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
             
             content()
         }
-        .padding(padding)
+        .padding(DSPadding.mediumLarge)
         .frame(maxWidth: .infinity,
                alignment: Alignment(horizontal: alignment, vertical: .center))
         .background(background ?? theme.surfaceColor)
@@ -122,7 +93,8 @@ public struct DSCard<Content: View>: View {
         .overlay(
             Group {
                 if let borderColor {
-                    shape.strokeBorder(borderColor, lineWidth: borderWidth)
+                    shape.strokeBorder(borderColor,
+                                       lineWidth: DSBorder.thin)
                 }
             }
         )

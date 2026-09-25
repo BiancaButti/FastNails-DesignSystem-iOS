@@ -77,7 +77,7 @@ public struct DSEventCard: View {
         Button(action: {
             onTap?()
         }) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: .zero) {
                 // MARK: Main Content Section
                 HStack(alignment: .top, spacing: DSSpacing.lg) {
 
@@ -90,7 +90,8 @@ public struct DSEventCard: View {
                             .font(DSFont.title)
                             .foregroundStyle(DSColor.ink)
                     }
-                    .frame(width: 48, height: 48)
+                    .frame(width: DSSize.huge,
+                           height: DSSize.huge)
                     .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
                     .overlay(
                         RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous)
@@ -127,10 +128,10 @@ public struct DSEventCard: View {
                             .multilineTextAlignment(.leading)
                     }
                 }
-                .padding([.top, .horizontal], DSSpacing.lg)
+                .padding([.top, .horizontal], DSPadding.regular)
 
                 Divider()
-                    .padding(.top, DSSpacing.lg)
+                    .padding(.top, DSPadding.regular)
                 
                 // MARK: Footer Section
                 HStack {
@@ -141,16 +142,21 @@ public struct DSEventCard: View {
                     
                     // Action navigation indicator
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
+                        .font(DSFont.captionSemibold)
                         .foregroundStyle(DSColor.ink60)
                 }
-                .padding(.horizontal, DSSpacing.lg)
-                .padding(.vertical, DSSpacing.md)
+                .padding(.horizontal, DSPadding.regular)
+                .padding(.vertical, DSPadding.medium)
             }
             .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
-            .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.large,
+                    style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.large,
+                    style: .continuous)
                     .stroke(
                         hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line,
                         lineWidth: 1

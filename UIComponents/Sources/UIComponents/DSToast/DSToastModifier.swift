@@ -21,14 +21,16 @@ struct DSToastModifier: ViewModifier {
                 VStack {
                     Spacer()
                     DSToast(message: message, dotColor: dotColor)
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 24)
+                        .padding(.horizontal, DSPadding.regular)
+                        .padding(.bottom, DSPadding.large)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
-                .zIndex(1)
+                .zIndex(DSLayoutIndex.base)
                 .onAppear {
                     delayTask {
-                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                        withAnimation(
+                            .spring(response: DSAnimation.response,
+                                    dampingFraction: DSAnimation.dampingFraction)) {
                             isPresented = false
                         }
                     }

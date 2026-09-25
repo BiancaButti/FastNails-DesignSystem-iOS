@@ -34,19 +34,21 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
     }
 
     public var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: .zero) {
             ForEach(options, id: \.self) { option in
                 let isSelected = selection == option
                 
                 Button(action: {
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
+                    withAnimation(
+                        .spring(response: DSAnimation.snappyResponse,
+                                dampingFraction: DSAnimation.snappyDamping)) {
                         selection = option
                     }
                 }) {
                     content(option)
                         .font(isSelected ? DSFont.descriptionBold : DSFont.description)
                         .foregroundColor(isSelected ? DSColor.ink : DSColor.ink60)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, DSPadding.medium)
                         .frame(maxWidth: .infinity)
                         .background(
                             Group {
@@ -55,7 +57,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                                         cornerRadius: DSRadius.control,
                                         style: .continuous)
                                         .fill(DSColor.paper)
-                                        .shadow(color: .black.opacity(0.04), radius: 2, y: 1)
+                                        .shadow(color: .black.opacity(0.04), radius: DSRadius.xsmall, y: 1)
                                 }
                             }
                         )
@@ -63,7 +65,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                 .buttonStyle(.plain)
             }
         }
-        .padding(4)
+        .padding(DSPadding.xsmall)
         .background(DSColor.paper2)
         .cornerRadius(DSRadius.control)
     }

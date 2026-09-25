@@ -14,16 +14,16 @@ public struct DSMenuList<Content: View>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: DSSpacing.sm) {
             if let sectionTitle {
                 Text(sectionTitle.uppercased())
                     .font(DSFont.badge)
                     .foregroundColor(DSColor.ink60)
-                    .tracking(1.5)
-                    .padding(.leading, 4)
+                    .tracking(DSTracking.upperTag)
+                    .padding(.leading, DSPadding.xsmall)
             }
             
-            VStack(spacing: 0) {
+            VStack(spacing: .zero) {
                 _VariadicView.Tree(MenuSeparatorInsertionLayout()) {
                     content()
                 }
@@ -49,14 +49,14 @@ public struct DSMenuList<Content: View>: View {
 private struct MenuSeparatorInsertionLayout: _VariadicView.MultiViewRoot {
     @ViewBuilder
     func body(children: _VariadicView.Children) -> some View {
-        VStack(spacing: 0) {
+        VStack(spacing: .zero) {
             ForEach(children) { child in
                 child
                 
                 if child.id != children.last?.id {
                     DSColor.line
                         .frame(height: 1)
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, DSPadding.regular)
                 }
             }
         }

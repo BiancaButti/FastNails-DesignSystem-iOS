@@ -44,9 +44,6 @@ public struct DSOTPField: View {
     @State private var completion = DSOTPFieldCompletionTracker()
     
     @FocusState private var isFocused: Bool
-    
-    /// Boxes scale with Dynamic Type instead of being pinned to 48pt.
-    @ScaledMetric(relativeTo: .title2) private var boxHeight: CGFloat = 52
 
     /// Label shown above the boxes.
     let label: String
@@ -128,7 +125,7 @@ public struct DSOTPField: View {
                     .keyboardType(.numberPad)
                     .textContentType(.oneTimeCode)
                     .focused($isFocused)
-                    .frame(height: boxHeight)
+                    .frame(height: DSSize.xhuge)
                     .foregroundStyle(.clear)
                     .tint(.clear)
                     .accessibilityLabel(label)
@@ -186,7 +183,9 @@ public struct DSOTPField: View {
                 }
 
             if character.isEmpty && isCurrent {
-                DSOTPFieldBlinkingCaret(color: theme.brandColor, height: boxHeight * 0.45)
+                DSOTPFieldBlinkingCaret(
+                    color: theme.brandColor,
+                    height: DSSize.xhuge * 0.45)
             } else {
                 Text(character)
                     .font(DSFont.codeDigit)
@@ -194,7 +193,7 @@ public struct DSOTPField: View {
             }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: boxHeight)
+        .frame(height: DSSize.xhuge)
         .animation(.easeInOut(duration: 0.15), value: isCurrent)
     }
 }

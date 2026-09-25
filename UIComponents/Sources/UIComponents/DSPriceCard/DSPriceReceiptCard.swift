@@ -35,7 +35,7 @@ public struct DSPriceReceiptCard: View {
             Text(sectionTitle.uppercased())
                 .font(DSFont.captionSemibold)
                 .foregroundColor(DSColor.ink60)
-                .padding(.leading, 8)
+                .padding(.leading, DSPadding.small)
             
             // Inner Card Structure
             VStack(spacing: 0) {
@@ -53,12 +53,12 @@ public struct DSPriceReceiptCard: View {
                         }
                     }
                 }
-                .padding(.bottom, 16)
+                .padding(.bottom, DSPadding.regular)
 
                 // Central Divider Line
                 Divider()
                     .background(DSColor.divider)
-                    .padding(.bottom, 16)
+                    .padding(.bottom, DSPadding.regular)
                 
                 // Final Total Row
                 HStack {
@@ -71,7 +71,7 @@ public struct DSPriceReceiptCard: View {
                         .foregroundColor(totalColor)
                 }
             }
-            .padding(20)
+            .padding(DSPadding.mediumLarge)
             .background(DSColor.paper)
             .cornerRadius(DSRadius.large)
             .overlay(

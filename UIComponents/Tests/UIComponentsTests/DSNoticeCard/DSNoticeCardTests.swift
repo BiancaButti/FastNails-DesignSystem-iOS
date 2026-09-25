@@ -12,17 +12,11 @@ final class DSNoticeCardTests: XCTestCase {
         
         let sut = DSNoticeCard(
             title: "Atenção",
-            items: items,
-            cornerRadius: 18,
-            padding: 12,
-            spacing: 10
+            items: items
         )
         
         XCTAssertEqual(sut.title, "Atenção")
         XCTAssertEqual(sut.items.count, 2)
         XCTAssertEqual(sut.items.first?.systemIconName, "star")
-        XCTAssertEqual(sut.cornerRadius, 18)
-        XCTAssertEqual(sut.padding, 12)
-        XCTAssertEqual(sut.spacing, 10)
     }
 }

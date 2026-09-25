@@ -33,11 +33,12 @@ public struct DSMenuRow: View {
 
     public var body: some View {
         Button(action: action) {
-            HStack(spacing: 12) {
+            HStack(spacing: DSSpacing.md) {
                 icon
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 22, height: 22)
+                    .frame(width: DSSize.large,
+                           height: DSSize.large)
                 
                 Text(title)
                     .font(.body)
@@ -57,8 +58,8 @@ public struct DSMenuRow: View {
                         .foregroundColor(DSColor.ink60.opacity(0.7))
                 }
             }
-            .padding(.vertical, 14)
-            .padding(.horizontal, 16)
+            .padding(.vertical, DSPadding.regular)
+            .padding(.horizontal, DSPadding.regular)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

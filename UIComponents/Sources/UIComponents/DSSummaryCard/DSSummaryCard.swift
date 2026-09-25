@@ -53,10 +53,10 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack(alignment: .center, spacing: DSSpacing.md) {
+        VStack(alignment: .leading, spacing: .zero) {
+            HStack(alignment: .center, spacing: DSPadding.medium) {
                 iconContent
-                    .frame(width: 44, height: 44)
+                    .frame(width: DSSize.huge, height: DSSize.huge)
                     .background(DSColor.surface)
                     .clipShape(
                         RoundedRectangle(
@@ -64,16 +64,16 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
                             style: .continuous))
                 headerContent
             }
-            .padding(.bottom, DSSpacing.lg)
+            .padding(.bottom, DSPadding.regular)
 
             DSColor.line
                 .frame(height: 1)
-                .padding(.bottom, DSSpacing.md)
+                .padding(.bottom, DSPadding.medium)
 
             detailsContent
                 .font(DSFont.fieldLabel)
                 .foregroundStyle(DSColor.ink60)
-                .padding(.bottom, DSSpacing.md)
+                .padding(.bottom, DSPadding.medium)
 
             HStack(alignment: .bottom) {
                 Text(totalLabel)
@@ -87,7 +87,7 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
                     .foregroundStyle(DSColor.salonCardPrice)
             }
         }
-        .padding(DSSpacing.lg)
+        .padding(DSPadding.medium)
         .background(DSColor.paper)
         .clipShape(
             RoundedRectangle(
@@ -97,7 +97,7 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
             RoundedRectangle(
                 cornerRadius: DSRadius.large,
                 style: .continuous)
-                .stroke(DSColor.line, lineWidth: 1)
+            .stroke(DSColor.line, lineWidth: DSBorder.thin)
         )
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)

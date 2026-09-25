@@ -122,7 +122,7 @@ public struct DSFilterChipsSection: View {
             Text(title)
                 .font(DSFont.technicalTag)
                 .textCase(.uppercase)
-                .tracking(1.2)
+                .tracking(DSTracking.upperTag)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DSSpacing.sm) {
@@ -146,7 +146,7 @@ public struct DSFilterChipsSection: View {
         }
         .padding(DSSpacing.lg)
         .overlay {
-            RoundedRectangle(cornerRadius: 0)
+            RoundedRectangle(cornerRadius: .zero)
                 .stroke(
                     Color.secondary.opacity(0.25),
                     lineWidth: 1

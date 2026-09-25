@@ -96,10 +96,6 @@ public struct DSSalonCard<Thumbnail: View>: View {
 
     private var card: some View {
         DSCard(
-            alignment: .leading,
-            spacing: 12,
-            padding: 16,
-            cornerRadius: DSRadius.xxlarge,
             borderColor: palette.border,
             elevation: .subtle
         ) {
@@ -113,25 +109,25 @@ public struct DSSalonCard<Thumbnail: View>: View {
     @ViewBuilder
     private var header: some View {
         if dynamicTypeSize.isAccessibilitySize {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(alignment: .top, spacing: 12) {
+            VStack(alignment: .leading, spacing: DSSpacing.md) {
+                HStack(alignment: .top, spacing: DSSpacing.md) {
                     thumbnail()
                     identity
                 }
                 priceLabel
             }
         } else {
-            HStack(alignment: .top, spacing: 12) {
+            HStack(alignment: .top, spacing: DSSpacing.md) {
                 thumbnail()
                 identity
-                Spacer(minLength: 8)
+                Spacer(minLength: DSSpacing.sm)
                 priceLabel
             }
         }
     }
 
     private var identity: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: DSSpacing.xs) {
             Text(name)
                 .font(DSFont.sectionHeader)
                 .foregroundStyle(theme.titleColor)

@@ -41,14 +41,15 @@ public struct DSStatusBadge: View {
         HStack(spacing: DSSpacing.xs) {
             Circle()
                 .fill(foreground)
-                .frame(width: 6, height: 6)
+                .frame(width: DSSize.small,
+                       height: DSSize.small)
 
             Text(title)
         }
         .font(theme.badgeFont)
         .foregroundStyle(foreground)
-        .padding(.horizontal, DSSpacing.md)
-        .padding(.vertical, DSSpacing.sm)
+        .padding(.horizontal, DSPadding.medium)
+        .padding(.vertical, DSPadding.small)
         .background(background)
         .clipShape(Capsule())
         .accessibilityElement(children: .ignore)
