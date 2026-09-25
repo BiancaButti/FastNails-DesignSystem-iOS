@@ -80,7 +80,7 @@ public struct DSDayPicker: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 16)
                         .background(day.isSelected ? DSColor.ink : DSColor.paper)
-                        .cornerRadius(16)
+                        .cornerRadius(DSRadius.large)
                         .overlay(
                             RoundedRectangle(cornerRadius: 16)
                                 .stroke(day.isSelected ? DSColor.clear : DSColor.line, lineWidth: 1)
@@ -93,7 +93,7 @@ public struct DSDayPicker: View {
         }
         .padding(20)
         .background(DSColor.paper)
-        .cornerRadius(20)
+        .cornerRadius(DSRadius.xxlarge)
     }
     
     /// Helper to map subtitles to the appropriate token color based on internal state.

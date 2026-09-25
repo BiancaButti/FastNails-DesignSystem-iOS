@@ -57,9 +57,14 @@ public struct DSTimeline: View {
         }
         .padding(DSSpacing.xl)
         .background(DSColor.paper)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous)
                 .stroke(DSColor.line, lineWidth: DSTimelineMetrics.borderWidth)
         )
         // Single-appearance lock: the design system is light-only.

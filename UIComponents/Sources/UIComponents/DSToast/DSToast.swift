@@ -45,7 +45,10 @@ public struct DSToast: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
         .background(DSColor.ink)
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous))
         .shadow(color: .black.opacity(0.12), radius: 8, x: 0, y: 4)
     }
 }

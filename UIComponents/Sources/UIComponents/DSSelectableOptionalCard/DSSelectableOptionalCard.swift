@@ -97,7 +97,6 @@ struct DSSelectableCheckboxCard: View {
     /// The action performed when the card is tapped.
     let onToggle: () -> Void
 
-    private let cardRadius: CGFloat = 12
     private let boxRadius: CGFloat = 4
 
     private var palette: DSSelectableOptionCardPalette { isSelected ? .selected : .idle }
@@ -124,12 +123,20 @@ struct DSSelectableCheckboxCard: View {
             .padding(.vertical, 12)
             .padding(.horizontal, 12)
             .background(palette.surface)
-            .clipShape(RoundedRectangle(cornerRadius: cardRadius, style: .continuous))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.control,
+                    style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: cardRadius, style: .continuous)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.control,
+                    style: .continuous)
                     .strokeBorder(palette.border, lineWidth: palette.borderWidth)
             )
-            .contentShape(RoundedRectangle(cornerRadius: cardRadius, style: .continuous))
+            .contentShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.control,
+                    style: .continuous))
         }
         .buttonStyle(.plain)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.15), value: isSelected)
@@ -138,10 +145,14 @@ struct DSSelectableCheckboxCard: View {
     }
 
     private var checkbox: some View {
-        RoundedRectangle(cornerRadius: boxRadius, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: DSRadius.xsmall,
+            style: .continuous)
             .fill(palette.box)
             .overlay(
-                RoundedRectangle(cornerRadius: boxRadius, style: .continuous)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.xsmall,
+                    style: .continuous)
                     .strokeBorder(palette.boxBorder, lineWidth: 2)
             )
             .overlay {

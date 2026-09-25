@@ -113,9 +113,14 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(DSColor.paper)
         }
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous)
                 .stroke(DSColor.line, lineWidth: 1)
         )
         .environment(\.colorScheme, .light)

@@ -50,7 +50,7 @@ public struct DSTimeSlotPicker: View {
                             .frame(maxWidth: .infinity)
                             .frame(height: 46)
                             .background(backgroundColor(for: slot))
-                            .cornerRadius(12)
+                            .cornerRadius(DSRadius.control)
                             .overlay(
                                 borderView(for: slot)
                             )
@@ -62,9 +62,9 @@ public struct DSTimeSlotPicker: View {
         }
         .padding(20)
         .background(DSColor.paper)
-        .cornerRadius(16)
+        .cornerRadius(DSRadius.large)
         .overlay(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: DSRadius.large)
                 .stroke(DSColor.line, lineWidth: 1)
         )
     }
@@ -96,7 +96,7 @@ public struct DSTimeSlotPicker: View {
     @ViewBuilder
     private func borderView(for slot: DSTimeSlotPickerItem) -> some View {
         if slot.isAvailable && !slot.isSelected {
-            RoundedRectangle(cornerRadius: 12)
+            RoundedRectangle(cornerRadius: DSRadius.control)
                 .stroke(DSColor.line, lineWidth: 1)
         } else if !slot.isAvailable {
             LineStrikethrough()

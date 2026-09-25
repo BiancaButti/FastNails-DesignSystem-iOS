@@ -52,7 +52,8 @@ public struct DSTextField: View {
             .padding(.horizontal, DSSpacing.lg)
             .padding(.vertical, DSSpacing.md)
             .background(
-                RoundedRectangle(cornerRadius: DSRadius.control)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.control)
                     .stroke(
                         borderColor,
                         lineWidth: borderWidth

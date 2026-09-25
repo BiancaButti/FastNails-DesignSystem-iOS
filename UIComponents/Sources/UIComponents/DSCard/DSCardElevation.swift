@@ -12,8 +12,8 @@ public enum DSCardElevation {
     var radius: CGFloat {
         switch self {
         case .none: return 0
-        case .subtle: return 8
-        case .raised: return 18
+        case .subtle: return DSRadius.control
+        case .raised: return DSRadius.large
         }
     }
 

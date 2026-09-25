@@ -51,7 +51,9 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                         .background(
                             Group {
                                 if isSelected {
-                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                    RoundedRectangle(
+                                        cornerRadius: DSRadius.control,
+                                        style: .continuous)
                                         .fill(DSColor.paper)
                                         .shadow(color: .black.opacity(0.04), radius: 2, y: 1)
                                 }
@@ -63,7 +65,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
         }
         .padding(4)
         .background(DSColor.paper2)
-        .cornerRadius(14)
+        .cornerRadius(DSRadius.control)
     }
 }
 
