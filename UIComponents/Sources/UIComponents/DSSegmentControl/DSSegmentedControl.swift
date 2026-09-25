@@ -46,7 +46,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                     content(option)
                         .font(isSelected ? DSFont.descriptionBold : DSFont.description)
                         .foregroundColor(isSelected ? DSColor.ink : DSColor.ink60)
-                        .padding(.vertical, 10)
+                        .padding(.vertical, DSPadding.medium)
                         .frame(maxWidth: .infinity)
                         .background(
                             Group {
@@ -63,7 +63,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                 .buttonStyle(.plain)
             }
         }
-        .padding(4)
+        .padding(DSPadding.xsmall)
         .background(DSColor.paper2)
         .cornerRadius(DSRadius.control)
     }

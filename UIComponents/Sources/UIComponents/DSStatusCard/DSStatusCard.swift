@@ -89,7 +89,7 @@ public struct DSStatusCard<Actions: View>: View {
     public var body: some View {
         let palette = DSStatusCardPalette.resolve(variant, emphasis: resolvedEmphasis)
 
-        VStack(alignment: .leading, spacing: DSSpacing.sm) {
+        VStack(alignment: .leading, spacing: DSPadding.small) {
             DSStatusCardEyebrow(eyebrow)
                 .foregroundStyle(palette.secondary.opacity(0.7))
 
@@ -109,7 +109,7 @@ public struct DSStatusCard<Actions: View>: View {
                                  DSStatusBadgeOnCardAppearance(
                                     foreground: palette.secondary,
                                     background: palette.secondary.opacity(0.18)))
-                    .padding(.top, DSSpacing.xs)
+                    .padding(.top, DSPadding.xsmall)
             }
 
             // Actions only render when there are some (see `hasActions`), so a
@@ -123,15 +123,15 @@ public struct DSStatusCard<Actions: View>: View {
             // from the palette.
             if hasActions {
                 ViewThatFits {
-                    HStack(spacing: DSSpacing.xs) { actions }
-                    VStack(spacing: DSSpacing.xs) { actions }
+                    HStack(spacing: DSPadding.xsmall) { actions }
+                    VStack(spacing: DSPadding.xsmall) { actions }
                 }
                 .buttonStyle(.dsStatusCard(background: palette.actionBackground,
                                            foreground: palette.actionForeground))
-                .padding(.top, DSSpacing.sm)
+                .padding(.top, DSPadding.small)
             }
         }
-        .padding(variant == .expanded ? DSSpacing.md : DSSpacing.sm)
+        .padding(variant == .expanded ? DSPadding.medium : DSPadding.small)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.background,
                     in: .rect(cornerRadius: DSRadius.large, style: .continuous))

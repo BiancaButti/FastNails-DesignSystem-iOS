@@ -47,8 +47,8 @@ public struct DSStatusBadge: View {
         }
         .font(theme.badgeFont)
         .foregroundStyle(foreground)
-        .padding(.horizontal, DSSpacing.md)
-        .padding(.vertical, DSSpacing.sm)
+        .padding(.horizontal, DSPadding.medium)
+        .padding(.vertical, DSPadding.small)
         .background(background)
         .clipShape(Capsule())
         .accessibilityElement(children: .ignore)

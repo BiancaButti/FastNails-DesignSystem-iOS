@@ -57,8 +57,8 @@ public struct DSMenuRow: View {
                         .foregroundColor(DSColor.ink60.opacity(0.7))
                 }
             }
-            .padding(.vertical, 14)
-            .padding(.horizontal, 16)
+            .padding(.vertical, DSPadding.regular)
+            .padding(.horizontal, DSPadding.regular)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)

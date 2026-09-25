@@ -63,7 +63,7 @@ struct DSTabBarButton<Tab: DSTabItem>: View {
                 .font(DSFont.captionSemibold)
                 .monospacedDigit()
                 .foregroundStyle(.white)
-                .padding(.horizontal, DSSpacing.xs)
+                .padding(.horizontal, DSPadding.xsmall)
                 .frame(minWidth: 16, minHeight: 16)
                 .background(Capsule().fill(style.selectedColor))
                 .offset(x: 10, y: -6)

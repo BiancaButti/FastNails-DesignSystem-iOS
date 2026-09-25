@@ -21,8 +21,8 @@ struct DSToastModifier: ViewModifier {
                 VStack {
                     Spacer()
                     DSToast(message: message, dotColor: dotColor)
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 24)
+                        .padding(.horizontal, DSPadding.regular)
+                        .padding(.bottom, DSPadding.large)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
                 .zIndex(1)

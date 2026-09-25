@@ -42,9 +42,9 @@ public struct DSTabBar<Tab: DSTabItem>: View {
  
     public var body: some View {
         content
-            .padding(.horizontal, DSSpacing.md)
-            .padding(.top, DSSpacing.xs)
-            .padding(.bottom, DSSpacing.xs)
+            .padding(.horizontal, DSPadding.medium)
+            .padding(.top, DSPadding.xsmall)
+            .padding(.bottom, DSPadding.xsmall)
             .background {
                 style.background.ignoresSafeArea(edges: .bottom)
             }

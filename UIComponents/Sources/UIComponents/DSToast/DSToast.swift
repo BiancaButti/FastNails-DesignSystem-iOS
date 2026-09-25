@@ -42,8 +42,8 @@ public struct DSToast: View {
             
             Spacer()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
+        .padding(.horizontal, DSPadding.regular)
+        .padding(.vertical, DSPadding.regular)
         .background(DSColor.ink)
         .clipShape(
             RoundedRectangle(

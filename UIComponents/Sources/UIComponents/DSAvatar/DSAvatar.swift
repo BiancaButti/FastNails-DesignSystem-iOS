@@ -64,6 +64,9 @@ public struct DSAvatar: View {
         }
         .frame(width: size, height: size)
         .background(DSColor.paper)
-        .clipShape(RoundedRectangle(cornerRadius: size * 0.25, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.huge * 0.25,
+                style: .continuous))
     }
 }

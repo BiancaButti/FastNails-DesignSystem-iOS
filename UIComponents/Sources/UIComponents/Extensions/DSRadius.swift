@@ -23,4 +23,10 @@ public enum DSRadius {
     
     /// 20 pt — xxlarge. Large containers, bottom sheets, or main screens.
     public static let xxlarge: CGFloat = 20
+    
+    /// 24 pt — large. Generous padding used for bottom elements, section gaps, or modal footers.
+    public static let mediumHuge: CGFloat = 24
+    
+    /// 48 pt — huge. Massive padding for illustration layouts, welcome screens, or hero areas.
+    public static let huge: CGFloat = 48
 }

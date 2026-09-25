@@ -84,10 +84,10 @@ public struct DSInfoCard<Content: View>: View {
                 .foregroundColor(DSColor.ink60)
                 .tracking(1.5)
             
-            VStack(alignment: alignment, spacing: spacing) {
+            VStack(alignment: alignment, spacing: DSSpacing.sm) {
                 content()
             }
-            .padding(padding)
+            .padding(DSPadding.regular)
             .frame(maxWidth: .infinity,
                    alignment: Alignment(
                     horizontal: alignment,

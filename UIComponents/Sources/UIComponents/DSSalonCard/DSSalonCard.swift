@@ -97,8 +97,8 @@ public struct DSSalonCard<Thumbnail: View>: View {
     private var card: some View {
         DSCard(
             alignment: .leading,
-            spacing: 12,
-            padding: 16,
+            spacing: DSSpacing.md,
+            padding: DSPadding.medium,
             cornerRadius: DSRadius.xxlarge,
             borderColor: palette.border,
             elevation: .subtle

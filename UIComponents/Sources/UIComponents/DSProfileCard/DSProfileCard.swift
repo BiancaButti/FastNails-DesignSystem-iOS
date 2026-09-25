@@ -57,7 +57,7 @@ public struct DSProfileCard: View {
                 image: avatarImage,
             )
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(name)
                     .font(DSFont.sectionHeader)
                     .foregroundColor(DSColor.ink)
@@ -71,7 +71,7 @@ public struct DSProfileCard: View {
             
             Spacer()
         }
-        .padding(padding)
+        .padding(DSPadding.regular)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(DSColor.paper)
         .clipShape(shape)

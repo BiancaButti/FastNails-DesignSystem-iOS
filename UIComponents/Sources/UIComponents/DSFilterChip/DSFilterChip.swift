@@ -98,8 +98,8 @@ public struct DSFilterChipView: View {
             .foregroundStyle(
                 isActive ? .white : Color.primary
             )
-            .padding(.horizontal, DSSpacing.md)
-            .padding(.vertical, DSSpacing.sm)
+            .padding(.horizontal, DSPadding.medium)
+            .padding(.vertical, DSPadding.small)
             .background(
                 isActive
                     ? theme.brandColor

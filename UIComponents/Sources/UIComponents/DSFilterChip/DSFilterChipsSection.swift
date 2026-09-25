@@ -146,7 +146,7 @@ public struct DSFilterChipsSection: View {
         }
         .padding(DSSpacing.lg)
         .overlay {
-            RoundedRectangle(cornerRadius: 0)
+            RoundedRectangle(cornerRadius: .zero)
                 .stroke(
                     Color.secondary.opacity(0.25),
                     lineWidth: 1

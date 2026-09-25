@@ -49,8 +49,8 @@ public struct DSTextField: View {
                     }
                 }
             }
-            .padding(.horizontal, DSSpacing.lg)
-            .padding(.vertical, DSSpacing.md)
+            .padding(.horizontal, DSPadding.regular)
+            .padding(.vertical, DSPadding.medium)
             .background(
                 RoundedRectangle(
                     cornerRadius: DSRadius.control)

@@ -27,8 +27,8 @@ struct DSCardButtonStyle: ButtonStyle {
             .font(DSFont.inputSupportBold)
             .foregroundStyle(foreground)
             .multilineTextAlignment(.center)
-            .padding(.vertical, DSSpacing.sm)
-            .padding(.horizontal, DSSpacing.md)
+            .padding(.vertical, DSPadding.small)
+            .padding(.horizontal, DSPadding.medium)
             .frame(maxWidth: .infinity)
             .background(background,
                         in: .rect(cornerRadius: DSRadius.control,

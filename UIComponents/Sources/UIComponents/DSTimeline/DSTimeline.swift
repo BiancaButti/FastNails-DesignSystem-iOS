@@ -50,12 +50,12 @@ public struct DSTimeline: View {
                                 .transition(.opacity.combined(with: .move(edge: .top)))
                         }
                     }
-                    .padding(.bottom, isLast ? 0 : DSSpacing.lg)
+                    .padding(.bottom, isLast ? .zero : DSPadding.regular)
                     .animation(.easeInOut(duration: DSTimelineMetrics.contentFade), value: step.state)
                 }
             }
         }
-        .padding(DSSpacing.xl)
+        .padding(DSPadding.large)
         .background(DSColor.paper)
         .clipShape(
             RoundedRectangle(

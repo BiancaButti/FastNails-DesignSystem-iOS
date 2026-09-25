@@ -45,7 +45,7 @@ public struct DSLinkNote: View {
                     .foregroundStyle(DSColor.enamel)
             }
             .buttonStyle(.plain)
-            .padding(DSSpacing.controlPadding)
+            .padding(DSPadding.controlPadding)
             .background(
                 DSColor.surface,
                 in: RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)
@@ -65,7 +65,7 @@ public struct DSLinkNote: View {
                     open(links[index])
                     return .handled
                 })
-                .padding(DSSpacing.controlPadding)
+                .padding(DSPadding.controlPadding)
                 .background(
                     DSColor.surface,
                     in: RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous)

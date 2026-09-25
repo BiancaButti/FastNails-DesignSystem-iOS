@@ -77,7 +77,7 @@ public struct DSEventCard: View {
         Button(action: {
             onTap?()
         }) {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading, spacing: .zero) {
                 // MARK: Main Content Section
                 HStack(alignment: .top, spacing: DSSpacing.lg) {
 
@@ -127,10 +127,10 @@ public struct DSEventCard: View {
                             .multilineTextAlignment(.leading)
                     }
                 }
-                .padding([.top, .horizontal], DSSpacing.lg)
+                .padding([.top, .horizontal], DSPadding.regular)
 
                 Divider()
-                    .padding(.top, DSSpacing.lg)
+                    .padding(.top, DSPadding.regular)
                 
                 // MARK: Footer Section
                 HStack {
@@ -144,13 +144,18 @@ public struct DSEventCard: View {
                         .font(.system(size: 12, weight: .semibold))
                         .foregroundStyle(DSColor.ink60)
                 }
-                .padding(.horizontal, DSSpacing.lg)
-                .padding(.vertical, DSSpacing.md)
+                .padding(.horizontal, DSPadding.regular)
+                .padding(.vertical, DSPadding.medium)
             }
             .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
-            .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.large,
+                    style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.large,
+                    style: .continuous)
                     .stroke(
                         hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line,
                         lineWidth: 1

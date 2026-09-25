@@ -32,8 +32,8 @@ struct DSSalonCardAccessibilityTag: View {
                 .foregroundStyle(palette.featureForeground)
             Spacer(minLength: 0)
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 10)
+        .padding(.vertical, DSPadding.small)
+        .padding(.horizontal, DSPadding.medium)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Capsule().fill(palette.featureBackground))
         .accessibilityHidden(true)

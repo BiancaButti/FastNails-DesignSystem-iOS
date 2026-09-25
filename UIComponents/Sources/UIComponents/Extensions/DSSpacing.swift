@@ -33,12 +33,5 @@ public enum DSSpacing {
     /// 32 pt — separation between major sections.
     public static let xxl: CGFloat = 32
     
-    // MARK: - Composite Insets
     
-    /// Default padding for standard control elements (e.g., text fields or cells).
-    /// Top/Bottom: 10 pt, Leading/Trailing: 12 pt (md).
-    public static let controlPadding = EdgeInsets(top: 10,
-                                                  leading: DSSpacing.md,
-                                                  bottom: 10,
-                                                  trailing: DSSpacing.md)
 }

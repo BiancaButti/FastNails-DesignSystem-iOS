@@ -107,9 +107,9 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
                 }
 
                 tagsContent
-                    .padding(.top, DSSpacing.sm)
+                    .padding(.top, DSPadding.small)
             }
-            .padding(DSSpacing.md)
+            .padding(DSPadding.medium)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(DSColor.paper)
         }

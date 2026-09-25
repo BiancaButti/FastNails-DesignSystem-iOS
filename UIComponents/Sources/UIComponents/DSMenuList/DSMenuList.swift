@@ -20,7 +20,7 @@ public struct DSMenuList<Content: View>: View {
                     .font(DSFont.badge)
                     .foregroundColor(DSColor.ink60)
                     .tracking(1.5)
-                    .padding(.leading, 4)
+                    .padding(.leading, DSPadding.xsmall)
             }
             
             VStack(spacing: 0) {
@@ -56,7 +56,7 @@ private struct MenuSeparatorInsertionLayout: _VariadicView.MultiViewRoot {
                 if child.id != children.last?.id {
                     DSColor.line
                         .frame(height: 1)
-                        .padding(.horizontal, 16)
+                        .padding(.horizontal, DSPadding.regular)
                 }
             }
         }

@@ -114,7 +114,7 @@ public struct DSCard<Content: View>: View {
             
             content()
         }
-        .padding(padding)
+        .padding(DSPadding.mediumLarge)
         .frame(maxWidth: .infinity,
                alignment: Alignment(horizontal: alignment, vertical: .center))
         .background(background ?? theme.surfaceColor)

@@ -49,15 +49,15 @@ public struct DSNoticeCard: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
             Text(title)
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(DSColor.ink)
             
-            VStack(alignment: .leading, spacing: spacing) {
+            VStack(alignment: .leading, spacing: DSSpacing.md) {
                 ForEach(items) { item in
-                    HStack(alignment: .top, spacing: 12) {
+                    HStack(alignment: .top, spacing: DSSpacing.md) {
                         Image(systemName: item.systemIconName)
                             .font(DSFont.fieldLabel)
                             .foregroundColor(item.iconColor)
@@ -71,7 +71,7 @@ public struct DSNoticeCard: View {
                 }
             }
         }
-        .padding(padding)
+        .padding(DSPadding.regular)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(DSColor.paper)
         .clipShape(shape)

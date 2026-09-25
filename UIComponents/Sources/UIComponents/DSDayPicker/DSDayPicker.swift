@@ -50,21 +50,21 @@ public struct DSDayPicker: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
             // Main component title
             Text(title)
                 .font(DSFont.sectionHeader)
                 .foregroundColor(DSColor.ink)
                 
             // Scrollable or rigid horizontal row for days
-            HStack(spacing: 12) {
+            HStack(spacing: DSSpacing.md) {
                 ForEach(days) { day in
                     Button {
                         if !day.isFull {
                             onDaySelected(day)
                         }
                     } label: {
-                        VStack(spacing: 8) {
+                        VStack(spacing: DSSpacing.sm) {
                             Text(day.weekday.uppercased())
                                 .font(DSFont.fieldLabel)
                                 .foregroundColor(day.isSelected ? DSColor.blush : DSColor.ink60)
@@ -78,11 +78,11 @@ public struct DSDayPicker: View {
                                 .foregroundColor(subtitleColor(for: day))
                         }
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
+                        .padding(.vertical, DSPadding.regular)
                         .background(day.isSelected ? DSColor.ink : DSColor.paper)
                         .cornerRadius(DSRadius.large)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: DSRadius.large)
                                 .stroke(day.isSelected ? DSColor.clear : DSColor.line, lineWidth: 1)
                         )
                     }
@@ -91,7 +91,7 @@ public struct DSDayPicker: View {
                 }
             }
         }
-        .padding(20)
+        .padding(DSPadding.mediumLarge)
         .background(DSColor.paper)
         .cornerRadius(DSRadius.xxlarge)
     }

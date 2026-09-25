@@ -34,7 +34,7 @@ public struct DSTimeSlotPicker: View {
             Text(sectionTitle.uppercased())
                 .font(DSFont.captionSemibold)
                 .foregroundColor(DSColor.ink60)
-                .padding(.leading, 4)
+                .padding(.leading, DSPadding.xsmall)
             
             // Time Slots Adaptive Grid
             LazyVGrid(columns: columns, spacing: 12) {
@@ -60,7 +60,7 @@ public struct DSTimeSlotPicker: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(20)
+        .padding(DSPadding.mediumLarge)
         .background(DSColor.paper)
         .cornerRadius(DSRadius.large)
         .overlay(
@@ -101,7 +101,7 @@ public struct DSTimeSlotPicker: View {
         } else if !slot.isAvailable {
             LineStrikethrough()
                 .stroke(DSColor.line, lineWidth: 1)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, DSPadding.regular)
         } else {
             EmptyView()
         }

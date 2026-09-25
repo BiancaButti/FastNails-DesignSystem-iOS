@@ -52,7 +52,7 @@ public struct DSInlineMessageCard<IconContent: View>: View {
                 Text(description)
                     .font(DSFont.inputSupport)
                     .foregroundStyle(DSColor.ink60)
-                    .lineSpacing(DSSpacing.xs)
+                    .lineSpacing(DSPadding.xsmall)
                     .fixedSize(horizontal: false, vertical: true)
 
                 if let actionTitle {
@@ -62,12 +62,12 @@ public struct DSInlineMessageCard<IconContent: View>: View {
                             .underline()
                             .foregroundStyle(style.actionColor)
                     }
-                    .padding(.top, DSSpacing.xs)
+                    .padding(.top, DSPadding.xsmall)
                     .buttonStyle(.plain)
                 }
             }
         }
-        .padding(DSSpacing.lg)
+        .padding(DSPadding.regular)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(style.backgroundColor)
         .clipShape(RoundedRectangle(cornerRadius: DSRadius.control, style: .continuous))

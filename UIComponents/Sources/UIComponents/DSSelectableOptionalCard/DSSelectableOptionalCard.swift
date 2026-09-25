@@ -105,7 +105,7 @@ struct DSSelectableCheckboxCard: View {
         Button(action: onToggle) {
             HStack(alignment: .top, spacing: 8) {
                 checkbox
-                    .padding(.top, 1)
+                    .padding(.top, DSPadding.xsmall)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text(option.title)
@@ -120,8 +120,8 @@ struct DSSelectableCheckboxCard: View {
                 Spacer(minLength: 0)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 12)
+            .padding(.vertical, DSPadding.medium)
+            .padding(.horizontal, DSPadding.medium)
             .background(palette.surface)
             .clipShape(
                 RoundedRectangle(
