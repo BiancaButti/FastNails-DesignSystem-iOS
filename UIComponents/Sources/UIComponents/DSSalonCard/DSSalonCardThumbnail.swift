@@ -17,7 +17,9 @@ public struct DSSalonCardThumbnail: View {
     }
 
     public var body: some View {
-        RoundedRectangle(cornerRadius: 14, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: DSRadius.control,
+            style: .continuous)
             .fill(palette.thumbnailBackground)
             .frame(width: size, height: size)
             .overlay(

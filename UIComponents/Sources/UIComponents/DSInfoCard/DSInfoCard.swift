@@ -88,7 +88,10 @@ public struct DSInfoCard<Content: View>: View {
                 content()
             }
             .padding(padding)
-            .frame(maxWidth: .infinity, alignment: Alignment(horizontal: alignment, vertical: .center))
+            .frame(maxWidth: .infinity,
+                   alignment: Alignment(
+                    horizontal: alignment,
+                    vertical: .center))
             .background(background ?? DSColor.paper)
             .clipShape(shape)
             .overlay(

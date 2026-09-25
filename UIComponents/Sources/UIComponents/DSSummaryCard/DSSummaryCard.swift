@@ -58,8 +58,10 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
                 iconContent
                     .frame(width: 44, height: 44)
                     .background(DSColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous))
-
+                    .clipShape(
+                        RoundedRectangle(
+                            cornerRadius: DSRadius.small,
+                            style: .continuous))
                 headerContent
             }
             .padding(.bottom, DSSpacing.lg)
@@ -87,9 +89,14 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
         }
         .padding(DSSpacing.lg)
         .background(DSColor.paper)
-        .clipShape(RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+            RoundedRectangle(
+                cornerRadius: DSRadius.large,
+                style: .continuous)
                 .stroke(DSColor.line, lineWidth: 1)
         )
         .environment(\.colorScheme, .light)

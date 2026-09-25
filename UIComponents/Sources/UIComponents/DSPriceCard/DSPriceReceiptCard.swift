@@ -73,9 +73,9 @@ public struct DSPriceReceiptCard: View {
             }
             .padding(20)
             .background(DSColor.paper)
-            .cornerRadius(16)
+            .cornerRadius(DSRadius.large)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: DSRadius.large)
                     .stroke(DSColor.line, lineWidth: 1)
             )
         }

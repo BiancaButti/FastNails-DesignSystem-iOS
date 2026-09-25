@@ -99,7 +99,7 @@ public struct DSSalonCard<Thumbnail: View>: View {
             alignment: .leading,
             spacing: 12,
             padding: 16,
-            cornerRadius: 20,
+            cornerRadius: DSRadius.xxlarge,
             borderColor: palette.border,
             elevation: .subtle
         ) {

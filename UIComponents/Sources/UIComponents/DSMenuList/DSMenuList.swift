@@ -29,9 +29,14 @@ public struct DSMenuList<Content: View>: View {
                 }
             }
             .background(DSColor.paper)
-            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .clipShape(
+                RoundedRectangle(
+                    cornerRadius: DSRadius.xxlarge,
+                    style: .continuous))
             .overlay(
-                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                RoundedRectangle(
+                    cornerRadius: DSRadius.xxlarge,
+                    style: .continuous)
                     .strokeBorder(DSColor.line, lineWidth: 1)
             )
         }

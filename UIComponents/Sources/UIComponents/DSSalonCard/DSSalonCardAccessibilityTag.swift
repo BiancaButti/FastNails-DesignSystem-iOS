@@ -22,7 +22,9 @@ struct DSSalonCardAccessibilityTag: View {
                 .foregroundStyle(.white)
                 .frame(width: 22, height: 22)
                 .background(
-                    RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    RoundedRectangle(
+                        cornerRadius: DSRadius.xsmall,
+                        style: .continuous)
                         .fill(palette.featureIconBackground)
                 )
             Text(feature.title)
