@@ -4,6 +4,8 @@ import SwiftUI
 ///
 /// The component does not perform validation. Errors are supplied by the caller.
 public struct DSTextField: View {
+    private static let minPasswordLength: Int = 8
+    private static let idealPasswordLength: Int = 12
 
     let label: String
     let placeholder: String
@@ -75,7 +77,7 @@ public struct DSTextField: View {
         Text(label)
             .font(DSFont.technicalTag)
             .textCase(.uppercase)
-            .tracking(1.2)
+            .tracking(DSTracking.upperTag)
             .foregroundStyle(theme.secondaryColor)
             .accessibilityHidden(true)
     }
@@ -124,7 +126,8 @@ public struct DSTextField: View {
                     : "eye"
             )
             .foregroundStyle(theme.secondaryColor)
-            .frame(width: 44, height: 44)
+            .frame(width: DSSize.touchTarget,
+                   height: DSSize.touchTarget)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
@@ -154,7 +157,7 @@ public struct DSTextField: View {
 
     /// Both password rules satisfied: at least 8 characters, and 12 or more.
     static func passwordRequirementsMet(for text: String) -> Bool {
-        text.count >= 8 && text.count >= 12
+        text.count >= DSTextField.minPasswordLength && text.count >= DSTextField.idealPasswordLength
     }
 
     private var borderColor: Color {
@@ -174,6 +177,6 @@ public struct DSTextField: View {
     }
 
     private var borderWidth: CGFloat {
-        hasError || passwordRequirementsMet || isFocused ? 2 : 1
+        hasError || passwordRequirementsMet || isFocused ? DSBorder.heavy : DSBorder.thin
     }
 }

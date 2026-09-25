@@ -41,7 +41,8 @@ public struct DSStatusBadge: View {
         HStack(spacing: DSSpacing.xs) {
             Circle()
                 .fill(foreground)
-                .frame(width: 6, height: 6)
+                .frame(width: DSSize.small,
+                       height: DSSize.small)
 
             Text(title)
         }

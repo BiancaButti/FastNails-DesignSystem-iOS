@@ -53,10 +53,10 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .zero) {
             HStack(alignment: .center, spacing: DSPadding.medium) {
                 iconContent
-                    .frame(width: 44, height: 44)
+                    .frame(width: DSSize.huge, height: DSSize.huge)
                     .background(DSColor.surface)
                     .clipShape(
                         RoundedRectangle(
@@ -97,7 +97,7 @@ public struct DSSummaryCard<IconContent: View, HeaderContent: View, DetailsConte
             RoundedRectangle(
                 cornerRadius: DSRadius.large,
                 style: .continuous)
-                .stroke(DSColor.line, lineWidth: 1)
+            .stroke(DSColor.line, lineWidth: DSBorder.thin)
         )
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)

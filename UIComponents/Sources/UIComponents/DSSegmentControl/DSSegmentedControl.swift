@@ -34,12 +34,14 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
     }
 
     public var body: some View {
-        HStack(spacing: 0) {
+        HStack(spacing: .zero) {
             ForEach(options, id: \.self) { option in
                 let isSelected = selection == option
                 
                 Button(action: {
-                    withAnimation(.spring(response: 0.25, dampingFraction: 0.75)) {
+                    withAnimation(
+                        .spring(response: DSAnimation.snappyResponse,
+                                dampingFraction: DSAnimation.snappyDamping)) {
                         selection = option
                     }
                 }) {
@@ -55,7 +57,7 @@ public struct DSSegmentedControl<Selection: Hashable, Content: View>: View {
                                         cornerRadius: DSRadius.control,
                                         style: .continuous)
                                         .fill(DSColor.paper)
-                                        .shadow(color: .black.opacity(0.04), radius: 2, y: 1)
+                                        .shadow(color: .black.opacity(0.04), radius: DSRadius.xsmall, y: 1)
                                 }
                             }
                         )

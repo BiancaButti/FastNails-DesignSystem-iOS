@@ -12,7 +12,6 @@ final class DSAvatarTests: XCTestCase {
         
         XCTAssertEqual(sut.initial, "B")
         XCTAssertNil(sut.image)
-        XCTAssertEqual(sut.size, 48) // Verifies default size token is 48 pt
     }
 
     /// Tests if strings with multiple characters are safely truncated to the first letter only.
@@ -29,13 +28,6 @@ final class DSAvatarTests: XCTestCase {
         
         XCTAssertEqual(sutEmpty.initial, "?")
         XCTAssertEqual(sutVoid.initial, "?")
-    }
-
-    /// Tests if custom size parameters are retained correctly.
-    func test_init_retainsCustomSize() {
-        let sut = DSAvatar(initial: "A", size: 64)
-        
-        XCTAssertEqual(sut.size, 64)
     }
 
     // MARK: - Image State Tests

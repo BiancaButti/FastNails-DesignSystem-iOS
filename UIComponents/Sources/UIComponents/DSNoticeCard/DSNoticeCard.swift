@@ -19,9 +19,6 @@ import SwiftUI
 public struct DSNoticeCard: View {
     let title: String
     let items: [DSNoticeItem]
-    let cornerRadius: CGFloat
-    let padding: CGFloat
-    let spacing: CGFloat
     
     /// Creates a `DSNoticeCard`.
     /// - Parameters:
@@ -32,20 +29,14 @@ public struct DSNoticeCard: View {
     ///   - spacing: Row stacking item intervals (default 14 pt).
     public init(
         title: String,
-        items: [DSNoticeItem],
-        cornerRadius: CGFloat = 20,
-        padding: CGFloat = 16,
-        spacing: CGFloat = 14
+        items: [DSNoticeItem]
     ) {
         self.title = title
         self.items = items
-        self.cornerRadius = cornerRadius
-        self.padding = padding
-        self.spacing = spacing
     }
     
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
+        RoundedRectangle(cornerRadius: DSRadius.xlarge, style: .continuous)
     }
     
     public var body: some View {
@@ -61,7 +52,9 @@ public struct DSNoticeCard: View {
                         Image(systemName: item.systemIconName)
                             .font(DSFont.fieldLabel)
                             .foregroundColor(item.iconColor)
-                            .frame(width: 18, height: 18, alignment: .center)
+                            .frame(width: DSSize.medium,
+                                   height: DSSize.medium,
+                                   alignment: .center)
                         
                         Text(item.title)
                             .font(.subheadline)
@@ -76,7 +69,8 @@ public struct DSNoticeCard: View {
         .background(DSColor.paper)
         .clipShape(shape)
         .overlay(
-            shape.strokeBorder(DSColor.line, lineWidth: 1)
+            shape.strokeBorder(DSColor.line,
+                               lineWidth: DSBorder.thin)
         )
     }
 }

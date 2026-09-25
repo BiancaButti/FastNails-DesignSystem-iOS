@@ -122,7 +122,7 @@ public struct DSFilterChipsSection: View {
             Text(title)
                 .font(DSFont.technicalTag)
                 .textCase(.uppercase)
-                .tracking(1.2)
+                .tracking(DSTracking.upperTag)
 
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: DSSpacing.sm) {

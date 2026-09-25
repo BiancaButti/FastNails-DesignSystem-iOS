@@ -44,7 +44,7 @@ public struct DSAlert: View {
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: .zero) {
             VStack(spacing: DSSpacing.md) {
                 Text(title)
                     .font(DSFont.sectionHeader)
@@ -55,7 +55,7 @@ public struct DSAlert: View {
                     .font(DSFont.fieldLabel)
                     .foregroundColor(DSColor.ink60)
                     .multilineTextAlignment(.center)
-                    .lineSpacing(4)
+                    .lineSpacing(DSSpacing.xs)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(.top, DSPadding.large)
@@ -65,7 +65,7 @@ public struct DSAlert: View {
             DSColor.line
                 .frame(height: 1)
             
-            HStack(spacing: 0) {
+            HStack(spacing: .zero) {
                 Button(action: primaryAction) {
                     Text(primaryButtonTitle)
                         .font(DSFont.descriptionBold)
@@ -86,9 +86,9 @@ public struct DSAlert: View {
                 }
                 .buttonStyle(.plain)
             }
-            .frame(height: 52)
+            .frame(height: DSSize.xhuge)
         }
-        .frame(width: 290)
+        .frame(width: DSSize.containerSmall)
         .background(DSColor.paper)
         .clipShape(
             RoundedRectangle(
@@ -96,7 +96,7 @@ public struct DSAlert: View {
                 style: .continuous))
         .shadow(color: DSColor.ink.opacity(0.15),
                 radius: DSRadius.large,
-                x: 0,
+                x: .zero,
                 y: 8)
     }
 }

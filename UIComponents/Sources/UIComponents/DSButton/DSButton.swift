@@ -145,7 +145,7 @@ public struct DSButton: View {
             }
             .foregroundStyle(textColor)
             .frame(maxWidth: style == .tertiary ? nil : .infinity)
-            .frame(minHeight: 48)
+            .frame(minHeight: DSSize.huge)
             .padding(.horizontal, DSPadding.regular)
             .background(background)
             .overlay {

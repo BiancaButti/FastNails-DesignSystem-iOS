@@ -74,11 +74,11 @@ public struct DSSelectableOptionList: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: DSSpacing.md) {
             Text(title)
                 .font(DSFont.technicalTag)
                 .textCase(.uppercase)
-                .tracking(1.2)
+                .tracking(DSTracking.upperTag)
                 .foregroundStyle(DSColor.ink60)
                 .accessibilityAddTraits(.isHeader)
 

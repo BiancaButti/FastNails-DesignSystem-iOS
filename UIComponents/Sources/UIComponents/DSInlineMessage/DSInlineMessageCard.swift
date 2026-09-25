@@ -41,7 +41,7 @@ public struct DSInlineMessageCard<IconContent: View>: View {
             iconContent
                 .font(DSFont.title)
                 .foregroundStyle(style.titleColor)
-                .frame(width: 24, alignment: .top)
+                .frame(width: DSSize.large, alignment: .top)
 
             VStack(alignment: .leading, spacing: DSSpacing.sm) {
                 Text(title)

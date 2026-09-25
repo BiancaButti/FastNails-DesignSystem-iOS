@@ -12,13 +12,13 @@ public struct DSTimeline: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .zero) {
             ForEach(Array(steps.enumerated()), id: \.element.id) { index, step in
                 let isLast = index == steps.count - 1
                 
                 HStack(alignment: .top, spacing: DSSpacing.lg) {
                     // Vertical Indicator Column (Node + Track Line)
-                    VStack(spacing: 0) {
+                    VStack(spacing: .zero) {
                         nodeView(for: step.state)
                         // A constant slot keeps every state's dot centered on
                         // the same point, so changing state never shifts the

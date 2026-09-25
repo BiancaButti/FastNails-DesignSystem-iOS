@@ -90,7 +90,8 @@ public struct DSEventCard: View {
                             .font(DSFont.title)
                             .foregroundStyle(DSColor.ink)
                     }
-                    .frame(width: 48, height: 48)
+                    .frame(width: DSSize.huge,
+                           height: DSSize.huge)
                     .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
                     .overlay(
                         RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous)
@@ -141,7 +142,7 @@ public struct DSEventCard: View {
                     
                     // Action navigation indicator
                     Image(systemName: "chevron.right")
-                        .font(.system(size: 12, weight: .semibold))
+                        .font(DSFont.captionSemibold)
                         .foregroundStyle(DSColor.ink60)
                 }
                 .padding(.horizontal, DSPadding.regular)

@@ -8,9 +8,9 @@ public struct DSTimeSlotPicker: View {
     
     // Defines a clean 3-column grid layout where columns scale equally
     private let columns = [
-        GridItem(.flexible(), spacing: 12),
-        GridItem(.flexible(), spacing: 12),
-        GridItem(.flexible(), spacing: 12)
+        GridItem(.flexible(), spacing: DSSpacing.md),
+        GridItem(.flexible(), spacing: DSSpacing.md),
+        GridItem(.flexible(), spacing: DSSpacing.md)
     ]
     
     /// Public initializer structured for the SPM package.
@@ -29,7 +29,7 @@ public struct DSTimeSlotPicker: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: DSSpacing.lg) {
             // Section categorization title (e.g., TARDE)
             Text(sectionTitle.uppercased())
                 .font(DSFont.captionSemibold)
@@ -37,7 +37,7 @@ public struct DSTimeSlotPicker: View {
                 .padding(.leading, DSPadding.xsmall)
             
             // Time Slots Adaptive Grid
-            LazyVGrid(columns: columns, spacing: 12) {
+            LazyVGrid(columns: columns, spacing: DSSpacing.md) {
                 ForEach(slots) { slot in
                     Button {
                         if slot.isAvailable {
@@ -48,7 +48,7 @@ public struct DSTimeSlotPicker: View {
                             .font(slot.isSelected ? DSFont.descriptionBold : DSFont.description)
                             .foregroundColor(textColor(for: slot))
                             .frame(maxWidth: .infinity)
-                            .frame(height: 46)
+                            .frame(height: DSSize.huge)
                             .background(backgroundColor(for: slot))
                             .cornerRadius(DSRadius.control)
                             .overlay(
@@ -65,7 +65,8 @@ public struct DSTimeSlotPicker: View {
         .cornerRadius(DSRadius.large)
         .overlay(
             RoundedRectangle(cornerRadius: DSRadius.large)
-                .stroke(DSColor.line, lineWidth: 1)
+                .stroke(DSColor.line,
+                        lineWidth: DSBorder.thin)
         )
     }
     
@@ -97,10 +98,10 @@ public struct DSTimeSlotPicker: View {
     private func borderView(for slot: DSTimeSlotPickerItem) -> some View {
         if slot.isAvailable && !slot.isSelected {
             RoundedRectangle(cornerRadius: DSRadius.control)
-                .stroke(DSColor.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: DSBorder.thin)
         } else if !slot.isAvailable {
             LineStrikethrough()
-                .stroke(DSColor.line, lineWidth: 1)
+                .stroke(DSColor.line, lineWidth: DSBorder.thin)
                 .padding(.horizontal, DSPadding.regular)
         } else {
             EmptyView()

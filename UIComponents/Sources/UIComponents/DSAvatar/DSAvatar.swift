@@ -20,8 +20,6 @@ public struct DSAvatar: View {
     let initial: String
     /// An optional custom image to display instead of the text initial.
     let image: Image?
-    /// The overall size of the square container (default 48 pt).
-    let size: CGFloat
     
     /// Creates a `DSAvatar`.
     /// - Parameters:
@@ -30,18 +28,16 @@ public struct DSAvatar: View {
     ///   - size: The width and height size of the avatar view (default 48 pt).
     public init(
         initial: String,
-        image: Image? = nil,
-        size: CGFloat = 48
+        image: Image? = nil
     ) {
         let trimmed = initial.trimmingCharacters(in: .whitespacesAndNewlines)
         self.initial = trimmed.isEmpty ? "?" : String(trimmed.prefix(1)).uppercased()
         self.image = image
-        self.size = size
     }
 
     public var body: some View {
-        let innerCirclePadding = size * 0.08
-        let innerCircleSize = size - (innerCirclePadding * 2)
+        let innerCirclePadding = DSSize.huge * 0.08
+        let innerCircleSize = DSSize.huge - (innerCirclePadding * 2)
 
         ZStack {
             if let image {
@@ -56,13 +52,14 @@ public struct DSAvatar: View {
                         .fill(DSColor.ink)
                     
                     Text(initial)
-                        .font(DSFont.dynamicBold(scaledFrom: size))
+                        .font(DSFont.dynamicBold(scaledFrom: DSSize.huge))
                         .foregroundColor(DSColor.blush)
                 }
                 .frame(width: innerCircleSize, height: innerCircleSize)
             }
         }
-        .frame(width: size, height: size)
+        .frame(width: DSSize.huge,
+               height: DSSize.huge)
         .background(DSColor.paper)
         .clipShape(
             RoundedRectangle(

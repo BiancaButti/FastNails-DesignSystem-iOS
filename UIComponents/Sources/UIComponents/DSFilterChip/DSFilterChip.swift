@@ -91,7 +91,7 @@ public struct DSFilterChipView: View {
 
                 Text(label)
                     .font(DSFont.technicalTag)
-                    .tracking(1.2)
+                    .tracking(DSTracking.upperTag)
             }
             .font(theme.feedbackFont)
             .fontWeight(isActive ? .semibold : .regular)

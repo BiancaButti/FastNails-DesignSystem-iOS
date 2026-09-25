@@ -134,7 +134,8 @@ public struct DSStatusCard<Actions: View>: View {
         .padding(variant == .expanded ? DSPadding.medium : DSPadding.small)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(palette.background,
-                    in: .rect(cornerRadius: DSRadius.large, style: .continuous))
+                    in: .rect(cornerRadius: DSRadius.large,
+                              style: .continuous))
         // Single-appearance lock: the design system is light-only, so the card
         // always renders in light mode. Every color above is a fixed token, and
         // pinning the color scheme to `.light` keeps any nested control on the

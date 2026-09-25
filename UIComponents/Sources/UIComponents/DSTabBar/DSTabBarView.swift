@@ -58,7 +58,7 @@ public struct DSTabBarView<Tab: DSTabItem, Content: View>: View {
                     .toolbar(.hidden, for: .tabBar)
             }
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
+        .safeAreaInset(edge: .bottom, spacing: .zero) {
             DSTabBar(selection: $selection, badges: badges)
         }
     }

@@ -71,7 +71,7 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        VStack(alignment: .leading, spacing: .zero) {
 
             // Media Area: applies page style automatically if isCarousel is active
             Group {

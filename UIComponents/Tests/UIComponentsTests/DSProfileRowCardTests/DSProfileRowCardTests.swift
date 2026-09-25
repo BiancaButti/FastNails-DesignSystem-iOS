@@ -9,16 +9,12 @@ final class DSUserHeaderCardTests: XCTestCase {
         let sut = DSProfileCard(
             name: "Bianca",
             description: "bianca@email.com",
-            avatarInitial: "B",
-            padding: 12,
-            cornerRadius: 16
+            avatarInitial: "B"
         )
         
         XCTAssertEqual(sut.name, "Bianca")
         XCTAssertEqual(sut.description, "bianca@email.com")
         XCTAssertEqual(sut.avatarInitial, "B")
-        XCTAssertEqual(sut.padding, 12)
-        XCTAssertEqual(sut.cornerRadius, 16)
         XCTAssertNil(sut.avatarImage)
     }
 
