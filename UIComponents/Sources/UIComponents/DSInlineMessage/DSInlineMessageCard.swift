@@ -94,7 +94,8 @@ public struct DSInlineMessageCard<IconContent: View>: View {
                 if let actionTitle {
                     Button(action: {
                         action?()
-                    }) {
+                    })
+                    {
                         Text(actionTitle)
                             .font(DSFont.fieldLabel)
                             .underline()

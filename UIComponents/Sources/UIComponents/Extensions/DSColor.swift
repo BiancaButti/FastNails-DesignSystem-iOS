@@ -30,7 +30,7 @@ public extension Color {
 /// The values are the same as the **Design System** documentation page.
 /// If they diverge, the design page is the single source of truth.
 public enum DSColor {
-    
+
     // MARK: - Structure & Neutrals (Ink & Paper)
 
     /// Dark brand background. Used in Splash, icons, and booking cards.
@@ -89,7 +89,7 @@ public enum DSColor {
     public static let alert = Color(hex: 0xB3261E)
 
     // MARK: - Component Specific: Salon Card
-    
+
     /// Outer boundary line for salon items. (Very light blue-gray / ice).
     public static let salonCardBorder = Color(hex: 0xE0E3E8)
 
@@ -120,21 +120,21 @@ public enum DSColor {
     public static let eventHighlightBorder = Color(hex: 0xC5A880)
 
     // MARK: - Legacy Refactors & Curiosities
-    
+
     /// Legacy brand identifier color token mapping. (Original value ~ #B8144A).
     public static let legacyBrand = Color(hex: 0xB8144A)
-    
+
     /// Legacy tertiary content layout color mapping. (Original value ~ #B5B0B2).
     public static let legacyContentTertiary = Color(hex: 0xB5B0B2)
-    
+
     /// Earthy terracotta contrast token highlight. (Deep terracotta rust red).
     public static let terracotta = Color(hex: 0x7A1B16)
-    
+
     // MARK: - Shadows & Transparencies
 
     /// A completely transparent color token to be used instead of the native Color.clear.
     public static let clear = Color.clear
-    
+
     // MARK: - Component Highlights
 
     /// A light blue background accent layer used for info tags or features (Derived blue with 15% opacity).

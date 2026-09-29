@@ -284,7 +284,7 @@ public extension DSSalonCard where Thumbnail == DSSalonCardThumbnail {
     ///     Defaults to `"storefront"`.
     ///   - palette: The visual color palette. Defaults to `.default`.
     ///   - action: Optional closure executed when the card is tapped.
-    public init(
+    init(
         name: String,
         price: Decimal,
         distanceInMeters: Int? = nil,
