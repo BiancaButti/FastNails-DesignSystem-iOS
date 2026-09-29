@@ -1,14 +1,19 @@
-<h1 align="center">🎨 FastNails Design System</h1>
+<h1 align="center">🎨 FastNails - Design System iOS</h1>
 
 <p align="center">
   <strong>A reusable SwiftUI component library that powers the FastNails app.</strong>
 </p>
 
+
 <p align="center">
   <img src="https://img.shields.io/badge/platform-iOS%2016%2B-E8CFC3">
+  
   <img src="https://img.shields.io/badge/swift-5.7-CEA08D">
+  
   <img src="https://img.shields.io/badge/SPM-compatible-DDB8A6">
+  
   <img src="https://img.shields.io/badge/license-MIT-F3D5C0">
+  
 </p>
 
 <br/>
@@ -29,11 +34,11 @@ The package is built around three principles:
 
 ## ✨ Highlights
 
-- 🧩 **27+ ready-made components** — buttons, forms, feedback, cards, navigation, search and profile UI
+- 🧩 **29 ready-made components** — buttons, forms, feedback, cards, navigation, search and profile UI
 - 🎨 **Fully tokenized** — one `DSTheme` drives every color and font used by every component
 - ♿ **Accessible by default** — VoiceOver labels/order, Dynamic Type, and a palette with documented WCAG contrast ratios
 - 🔤 **Custom typography with automatic fallback** — three font families that gracefully fall back to system fonts until the custom `.ttf` files ship
-- 🖥️ **Live catalog app** — browse every component, its variations, and preview alternate brand colors
+- 🖥️ **Live catalog app** — browse every component and all its variations
 - 🧪 **Unit-tested** — each component has a matching test target
 
 <br/>
@@ -43,7 +48,15 @@ The package is built around three principles:
 Browse every component in the bundled catalog app — including a live theme switcher:
 
 <p align="center">
-  <img src="docs/media/catalog-demo.gif" width="300" alt="FastNails Design System catalog app running on the iOS Simulator" />
+  
+<img src="https://github.com/user-attachments/assets/851eb118-b503-4c8f-a213-ddeae47eb15b" alt="iPhone 17 - Screenshot 1" width="300" />
+
+<img src="https://github.com/user-attachments/assets/0181fad8-1c7d-459d-9974-ab4b3e6c047c" alt="iPhone 17 - Screenshot 2" width="300" />
+
+<img src="https://github.com/user-attachments/assets/1e618f81-72a6-4cf5-9eba-5cb98230e8ca" alt="iPhone 17 - Screenshot 3" width="300" />
+
+
+
 </p>
 
 <br/>
@@ -117,7 +130,7 @@ struct SignInView: View {
 
 That's it — no theme setup required. Every component already renders with the FastNails default look (`DSTheme.default`) the moment you `import UIComponents`.
 
-> 💡 **Looking for a specific component's API?** Every public component (`DSButton`, `DSCard`, `DSAlert`, `DSTabBar`…) ships a doc comment with a compilable usage example. In Xcode, ⌥-click the component name (Quick Help) to see it inline — this stays accurate as the API evolves, which a static README snippet can't guarantee for 27+ components.
+> 💡 **Looking for a specific component's API?** Every public component (`DSButton`, `DSCard`, `DSAlert`, `DSTabBar`…) ships a doc comment with a compilable usage example. In Xcode, ⌥-click the component name (Quick Help) to see it inline — this stays accurate as the API evolves, which a static README snippet can't guarantee for 30+ components.
 
 <br/>
 
@@ -143,23 +156,23 @@ Every visual value used by the components — color, font, spacing, corner radiu
 
 Typography (`titleFont`, `sectionFont`, `bodyFont`, `labelFont`, `feedbackFont`, `buttonFont`, `captionFont`, `badgeFont`, `numberFont`) is built on three font families via `DSFont` / `DSFontFamily` — **Bricolage Grotesque** (display), **Karla** (body) and **SpaceMono** (numbers/labels) — each of which automatically falls back to the closest system font design until the `.ttf` files are added to the package, so calling code never has to change. Every font is defined **relative to a Dynamic Type text style**, since supporting Dynamic Type is an acceptance criterion for every screen in the app.
 
-To override the theme (mainly useful for previews, tests, or the catalog's live theme switcher — see the note below):
+To override the theme (mainly useful for previews and tests — see the note below):
 
 ```swift
 RootView()
     .dsTheme(DSTheme(brandColor: .purple))
 ```
 
-> ⚠️ **No dark mode.** The app ships with a single visual appearance by design — each color has exactly one value, documented and contrast-checked once. Maintaining two synced palettes isn't worth it until the product actually needs it. `.dsTheme(_:)` still lets you inject a different `DSTheme` (colors *and* fonts) into any view subtree — that's what powers the catalog app's brand-color switcher and component previews — but the shipped app itself always runs on `DSTheme.default`.
+> ⚠️ **No dark mode.** The app ships with a single visual appearance by design — each color has exactly one value, documented and contrast-checked once. Maintaining two synced palettes isn't worth it until the product actually needs it. `.dsTheme(_:)` still lets you inject a different `DSTheme` (colors *and* fonts) into any view subtree for previews and tests, but both the shipped app and the catalog always run on `DSTheme.default` (brand color `.enamel`) in light mode.
 
 ### Spacing & radius
 
 ```swift
-.padding(DSSpacing.lg)         // xs · sm · md · lg · xl · xxl  →  4 · 8 · 12 · 16 · 24 · 32 pt
-.cornerRadius(DSRadius.control) // small · control · large      →  8 · 12 · 16 pt
+.padding(DSSpacing.lg)          // xs · sm · md · lg · xl · xxl                              →  4 · 8 · 12 · 16 · 24 · 32 pt
+.cornerRadius(DSRadius.control) // xsmall · small · control · large · xlarge · xxlarge · mediumHuge · huge  →  4 · 8 · 12 · 16 · 18 · 20 · 24 · 48 pt
 ```
 
-Always reach for `DSSpacing`/`DSRadius` instead of raw numbers — a global spacing adjustment becomes a one-line change instead of a find-and-replace across every screen.
+Beyond `DSSpacing` and `DSRadius`, the same tokenized approach covers `DSPadding` (internal/edge padding), `DSSize` (frame/touch-target sizes, incl. the 44 pt `touchTarget`), `DSBorder` (stroke widths), `DSShadowOffset`, `DSAnimation` and `DSTracking`. Always reach for a token instead of a raw number — a global adjustment becomes a one-line change instead of a find-and-replace across every screen.
 
 <br/>
 
@@ -198,9 +211,9 @@ Always reach for `DSSpacing`/`DSRadius` instead of raw numbers — a global spac
 
 | Component | What it's for |
 |---|---|
-| `DSAlert` | Modal dialog for critical confirmations (e.g. logging out, destructive actions) — present with `.dsAlert(isPresented:alert:)` |
+| `DSAlert` | Modal dialog for critical confirmations (e.g. logging out, destructive actions), shown as a dimmed overlay |
 | `DSInlineMessageCard` | Inline info/warning/error banner |
-| `DSToast` | Snackbar-style confirmation banner — present with `.dsToast(isPresented:message:)` |
+| `DSToast` | Snackbar-style confirmation banner shown over the content |
 | `DSStatusBadge` | Read-only badge reflecting a booking's status |
 | `DSStatusCard` | Card summarizing a booking/request status, with optional action buttons |
 | `DSNoticeCard` | Card listing guidelines, warnings or booking prerequisites |
@@ -272,7 +285,7 @@ Always reach for `DSSpacing`/`DSRadius` instead of raw numbers — a global spac
 
 ## 🖥️ Component catalog (demo app)
 
-A catalog app lets you browse every component with its variations and toggle the brand color live — the same `.dsTheme(_:)` mechanism described above, used here purely for preview purposes.
+A catalog app lets you browse every component with all its variations. It runs on the default `DSTheme` (brand color `.enamel`) in light mode — the same single appearance the app ships with.
 
 ```bash
 cd UIComponents/CatalogDemo
@@ -282,19 +295,6 @@ ruby generate_project.rb
 Then open **`CatalogDemo.xcworkspace`** (the workspace, not the `.xcodeproj`) and run the `CatalogDemo` scheme on an iOS simulator. Opening the workspace is what lets the local package resolve correctly (including `Bundle.module` resources).
 
 > Requires the `xcodeproj` Ruby gem: `gem install xcodeproj`.
-
-The same components, re-branded by a single `DSTheme` — no component changes:
-
-<table>
-  <tr>
-    <td align="center"><strong>appPink</strong></td>
-    <td align="center"><strong>Coral</strong></td>
-  </tr>
-  <tr>
-    <td><img src="docs/media/theme-apppink.png" width="240" alt="Components using the appPink brand color" /></td>
-    <td><img src="docs/media/theme-coral.png" width="240" alt="The same components re-branded to a coral brand color" /></td>
-  </tr>
-</table>
 
 <br/>
 
