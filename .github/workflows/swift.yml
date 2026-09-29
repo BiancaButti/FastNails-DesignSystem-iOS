@@ -77,3 +77,12 @@ jobs:
         with:
           name: TestResults
           path: TestResults.xcresult
+          
+    lint:
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        container: ghcr.io/realm/swiftlint:latest
+        steps:
+        - uses: actions/checkout@v4
+        - name: Lint
+            run: swiftlint --strict --reporter github-actions-logging
