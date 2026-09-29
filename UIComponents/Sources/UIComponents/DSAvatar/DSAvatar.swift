@@ -2,30 +2,30 @@ import SwiftUI
 
 // MARK: - DSAvatar
 
-/// A rounded-square avatar container that displays either a custom circle-clipped image
-/// or a prominent initial letter inside a circular background fallback.
+/// Displays a compact avatar using a custom image or an initial fallback.
 ///
-/// It follows the design system tokens by layering a dark circle (`Color.ink`) or a custom photo
-/// inside a clean square container background (`Color.paper`).
+/// Use `DSAvatar` to represent a user's profile or identity in places where a compact visual representation is needed.
+/// When no image is provided, the component displays the first non-whitespace character from `initial` in uppercase.
 ///
 /// ```swift
-/// // Text version
-/// DSAvatar(initial: "B")
+/// DSAvatar(initial: "Bruno")
 ///
-/// // Image version
-/// DSAvatar(initial: "B", image: Image("profile_picture"))
+/// DSAvatar(
+///     initial: "Bruno",
+///     image: Image("profile_picture")
+/// )
 /// ```
 public struct DSAvatar: View {
-    /// The single letter initial used as a fallback placeholder.
+    /// The normalized initial displayed when no image is provided.
     let initial: String
-    /// An optional custom image to display instead of the text initial.
+
+    /// An optional image displayed instead of the initial.
     let image: Image?
-    
+
     /// Creates a `DSAvatar`.
     /// - Parameters:
-    ///   - initial: The fallback character (typically uppercase) to display if no image is present.
-    ///   - image: An optional custom `Image` to display inside the circular area.
-    ///   - size: The width and height size of the avatar view (default 48 pt).
+    ///   - initial: The fallback text used to derive the displayed initial. Leading and trailing whitespace is removed, and the first character is converted to uppercase. Defaults to `?` when the value is empty.
+    ///   - image: An optional image displayed instead of the initial fallback. Defaults to `nil`.
     public init(
         initial: String,
         image: Image? = nil
@@ -44,26 +44,36 @@ public struct DSAvatar: View {
                 image
                     .resizable()
                     .scaledToFill()
-                    .frame(width: innerCircleSize, height: innerCircleSize)
+                    .frame(
+                        width: innerCircleSize,
+                        height: innerCircleSize
+                    )
                     .clipShape(Circle())
             } else {
                 ZStack {
                     Circle()
                         .fill(DSColor.ink)
-                    
+
                     Text(initial)
                         .font(DSFont.dynamicBold(scaledFrom: DSSize.huge))
                         .foregroundColor(DSColor.blush)
                 }
-                .frame(width: innerCircleSize, height: innerCircleSize)
+                .frame(
+                    width: innerCircleSize,
+                    height: innerCircleSize
+                )
             }
         }
-        .frame(width: DSSize.huge,
-               height: DSSize.huge)
+        .frame(
+            width: DSSize.huge,
+            height: DSSize.huge
+        )
         .background(DSColor.paper)
         .clipShape(
             RoundedRectangle(
                 cornerRadius: DSRadius.huge * 0.25,
-                style: .continuous))
+                style: .continuous
+            )
+        )
     }
 }

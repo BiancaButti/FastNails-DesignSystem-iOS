@@ -1,11 +1,21 @@
 import SwiftUI
 
-/// Defines the background and border styling for the banner component using Fast Nails tokens.
+// MARK: - DSInlineMessageStyle
+
+/// Defines the semantic appearance of an inline message card.
+///
+/// Use `DSInlineMessageStyle` to communicate the context of a message through its background, border, title, and action colors.
 public enum DSInlineMessageStyle {
+    /// A neutral informational message that uses the standard design system colors.
     case info
+
+    /// A cautionary message that uses the warning color treatment.
     case warning
-    case error       
-    
+
+    /// A critical message that uses the error color treatment.
+    case error
+
+    /// The background color associated with the message style.
     var backgroundColor: Color {
         switch self {
         case .info:
@@ -16,7 +26,8 @@ public enum DSInlineMessageStyle {
             return DSColor.alert.opacity(0.06)
         }
     }
-    
+
+    /// The border color associated with the message style.
     var borderColor: Color {
         switch self {
         case .info:
@@ -27,7 +38,8 @@ public enum DSInlineMessageStyle {
             return DSColor.alert.opacity(0.2)
         }
     }
-    
+
+    /// The color applied to the optional message action.
     var actionColor: Color {
         switch self {
         case .info:
@@ -38,7 +50,8 @@ public enum DSInlineMessageStyle {
             return DSColor.terracotta
         }
     }
-    
+
+    /// The color applied to the message title.
     var titleColor: Color {
         switch self {
         case .info, .warning:

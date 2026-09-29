@@ -24,33 +24,168 @@ private struct CatalogDemoItem: Identifiable {
 
 private struct CatalogDemoRootView: View {
     private let items: [CatalogDemoItem] = [
-        CatalogDemoItem(id: "primaryButton", title: "DSPrimaryButton", summary: "Main Button — states and colors", content: AnyView(DSButtonShowcase())),
-        CatalogDemoItem(id: "formTextField", title: "DSTextField", summary: "Text field custom", content: AnyView(DSTextFieldShowcase())),
-        CatalogDemoItem(id: "statusBadge", title: "DSStatusBadge", summary: "Booking status badge", content: AnyView(DSStatusBadgeShowcase())),
-        CatalogDemoItem(id: "filterChip", title: "DSFilterChip", summary: "Filter chips for quickly viewing and updating the active filters.", content: AnyView(DSFilterChipsSectionShowcase())),
-        CatalogDemoItem(id: "selectableOption", title: "DSSelectableOption", summary: "Multiple-choice selectable cards", content: AnyView(DSSelectableOptionShowcase())),
-        CatalogDemoItem(id: "salonCard", title: "DSSalonCard", summary: "Salon listing card — thumbnail, price, distance and accessibility tags", content: AnyView(DSSalonCardShowcase())),
-        CatalogDemoItem(id: "card", title: "DSCard", summary: "Generic elevated container — background, border and elevation", content: AnyView(DSCardShowcase())),
-        CatalogDemoItem(id: "link", title: "DSLink", summary: "Generic link", content: AnyView(DSLinkShowcase())),
-        CatalogDemoItem(id: "otp field", title: "DSOTPField", summary: "OTP Field", content: AnyView(DSOTPFieldShowcase())),
-        CatalogDemoItem(id: "tabbar", title: "DSTabBar", summary: "Tab Bar", content: AnyView(DSTabBarShowcase())),
-        CatalogDemoItem(id: "statusCard", title: "DSStatusCard", summary: "Status card — appointment status with expanded/compact variants and actions", content: AnyView(DSStatusCardShowcase())),
-        CatalogDemoItem(id: "mediaCard", title: "DSMerchantCard", summary: "Media Card", content: AnyView(DSMerchantCardShowcase())),
-        CatalogDemoItem(id: "inlineMessage", title: "DSInlineMessageCard", summary: "Inline Message Card", content: AnyView(DSInlineMessageShowcase())),
-        CatalogDemoItem(id: "summaryCard", title: "DSSummaryCard", summary: "summary card", content: AnyView(DSSummaryCardShowcase())),
-        CatalogDemoItem(id: "priceReceiptCard", title: "DSPriceReceiptCard", summary: "price receipt card", content: AnyView(DSPriceReceiptCardShowcase())),
-        CatalogDemoItem(id: "dayPicker", title: "DSDayPicker", summary: "day picker", content: AnyView(DSDayPickerShowcase())),
-        CatalogDemoItem(id: "timeSlotPicker", title: "DSTimeSlotPicker", summary: "time slot picker", content: AnyView(DSTimeSlotPickerShowcase())),
-        CatalogDemoItem(id: "timeline", title: "DSTimeline", summary: "timeline", content: AnyView(DSTimelineShowcase())),
-        CatalogDemoItem(id: "eventCard", title: "DSEventCard", summary: "event card", content: AnyView(DSEventCardShowcase())),
-        CatalogDemoItem(id: "infoCard", title: "DSInfoCard", summary: "structural information tracking card", content: AnyView(DSInfoCardShowcase())),
-        CatalogDemoItem(id: "segmentedControl", title: "DSSegmentedControl", summary: "custom capsule selection control", content: AnyView(DSSegmentedControlShowcase())),
-        CatalogDemoItem(id: "toast", title: "DSToast", summary: "contextual status toast banner", content: AnyView(DSToastShowcase())),
-        CatalogDemoItem(id: "noticeCard", title: "DSNoticeCard", summary: "checkout guidelines and prerequisites block", content: AnyView(DSNoticeCardShowcase())),
-        CatalogDemoItem(id: "avatar", title: "DSAvatar", summary: "show image or initial letter", content: AnyView(DSAvatarShowcase())),
-        CatalogDemoItem(id: "profileCard", title: "DSProfileCard", summary: "show image, name and email", content: AnyView(DSProfileCardShowcase())),
-        CatalogDemoItem(id: "menuList", title: "DSMenuList", summary: "grouped profile navigation table rows", content: AnyView(DSMenuListShowcase())),
-        CatalogDemoItem(id: "alertModal", title: "DSAlert", summary: "contextual overlay confirmation dialog modal", content: AnyView(DSAlertShowcase()))
+        CatalogDemoItem(
+            id: "primaryButton",
+            title: "DSPrimaryButton",
+            summary: "Primary action button with multiple states and styles",
+            content: AnyView(DSButtonShowcase())
+        ),
+        CatalogDemoItem(
+            id: "formTextField",
+            title: "DSTextField",
+            summary: "Form text field with validation, focus and input types",
+            content: AnyView(DSTextFieldShowcase())
+        ),
+        CatalogDemoItem(
+            id: "statusBadge",
+            title: "DSStatusBadge",
+            summary: "Booking status badge with semantic states",
+            content: AnyView(DSStatusBadgeShowcase())
+        ),
+        CatalogDemoItem(
+            id: "filterChip",
+            title: "DSFilterChip",
+            summary: "Filter chips for selecting and updating active filters",
+            content: AnyView(DSFilterChipsSectionShowcase())
+        ),
+        CatalogDemoItem(
+            id: "selectableOption",
+            title: "DSSelectableOption",
+            summary: "Selectable cards for single or multiple-choice options",
+            content: AnyView(DSSelectableOptionShowcase())
+        ),
+        CatalogDemoItem(
+            id: "salonCard",
+            title: "DSSalonCard",
+            summary: "Salon listing card with image, price, distance and accessibility details",
+            content: AnyView(DSSalonCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "card",
+            title: "DSCard",
+            summary: "Generic card container with background, border and elevation",
+            content: AnyView(DSCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "link",
+            title: "DSLink",
+            summary: "Styled link for navigation and secondary actions",
+            content: AnyView(DSLinkShowcase())
+        ),
+        CatalogDemoItem(
+            id: "otp field",
+            title: "DSOTPField",
+            summary: "One-time password field for verification codes",
+            content: AnyView(DSOTPFieldShowcase())
+        ),
+        CatalogDemoItem(
+            id: "tabbar",
+            title: "DSTabBar",
+            summary: "Tab navigation bar with selection and badge support",
+            content: AnyView(DSTabBarShowcase())
+        ),
+        CatalogDemoItem(
+            id: "statusCard",
+            title: "DSStatusCard",
+            summary: "Appointment status card with variants, emphasis and actions",
+            content: AnyView(DSStatusCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "mediaCard",
+            title: "DSMerchantCard",
+            summary: "Merchant card with media, business details and actions",
+            content: AnyView(DSMerchantCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "inlineMessage",
+            title: "DSInlineMessageCard",
+            summary: "Inline message card for contextual information and feedback",
+            content: AnyView(DSInlineMessageShowcase())
+        ),
+        CatalogDemoItem(
+            id: "summaryCard",
+            title: "DSSummaryCard",
+            summary: "Summary card for transaction details and totals",
+            content: AnyView(DSSummaryCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "priceReceiptCard",
+            title: "DSPriceReceiptCard",
+            summary: "Receipt card for displaying prices, items and totals",
+            content: AnyView(DSPriceReceiptCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "dayPicker",
+            title: "DSDayPicker",
+            summary: "Day selector for browsing and choosing available dates",
+            content: AnyView(DSDayPickerShowcase())
+        ),
+        CatalogDemoItem(
+            id: "timeSlotPicker",
+            title: "DSTimeSlotPicker",
+            summary: "Time slot grid for selecting available appointment times",
+            content: AnyView(DSTimeSlotPickerShowcase())
+        ),
+        CatalogDemoItem(
+            id: "timeline",
+            title: "DSTimeline",
+            summary: "Status timeline for tracking progress through multiple steps",
+            content: AnyView(DSTimelineShowcase())
+        ),
+        CatalogDemoItem(
+            id: "eventCard",
+            title: "DSEventCard",
+            summary: "Event card for displaying appointment or event details",
+            content: AnyView(DSEventCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "infoCard",
+            title: "DSInfoCard",
+            summary: "Information card for displaying structured contextual details",
+            content: AnyView(DSInfoCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "segmentedControl",
+            title: "DSSegmentedControl",
+            summary: "Segmented control for switching between related options",
+            content: AnyView(DSSegmentedControlShowcase())
+        ),
+        CatalogDemoItem(
+            id: "toast",
+            title: "DSToast",
+            summary: "Toast banner for transient contextual status updates",
+            content: AnyView(DSToastShowcase())
+        ),
+        CatalogDemoItem(
+            id: "noticeCard",
+            title: "DSNoticeCard",
+            summary: "Notice card for checkout guidelines and prerequisites",
+            content: AnyView(DSNoticeCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "avatar",
+            title: "DSAvatar",
+            summary: "Avatar displaying a profile image or initial",
+            content: AnyView(DSAvatarShowcase())
+        ),
+        CatalogDemoItem(
+            id: "profileCard",
+            title: "DSProfileCard",
+            summary: "Profile card displaying image, name and email",
+            content: AnyView(DSProfileCardShowcase())
+        ),
+        CatalogDemoItem(
+            id: "menuList",
+            title: "DSMenuList",
+            summary: "Grouped menu list for profile navigation and settings",
+            content: AnyView(DSMenuListShowcase())
+        ),
+        CatalogDemoItem(
+            id: "alertModal",
+            title: "DSAlert",
+            summary: "Alert dialog for confirmations, warnings and contextual actions",
+            content: AnyView(DSAlertShowcase())
+        )
     ]
 
     var body: some View {
@@ -102,7 +237,6 @@ private struct CatalogDemoDetailView: View {
 }
 
 // MARK: - Helper de rótulo de variação
-
 private struct VariantRow<Content: View>: View {
     let label: String
     @ViewBuilder let content: Content
@@ -116,7 +250,6 @@ private struct VariantRow<Content: View>: View {
 }
 
 // MARK: - Showcases
-
 private struct DSButtonShowcase: View {
     @State private var tapCount = 0
 
@@ -226,7 +359,7 @@ private struct DSStatusBadgeShowcase: View {
     }
 }
 
-struct DSFilterChipsSectionShowcase: View {
+private struct DSFilterChipsSectionShowcase: View {
 
     var body: some View {
         DSFilterChipsSection(title: "FILTRO", 
@@ -489,7 +622,6 @@ private struct DSTabBarShowcase: View {
 private struct DSStatusCardShowcase: View {
     var body: some View {
         VStack(alignment: .leading, spacing: DSSpacing.lg) {
-            // MARK: - Aguardando pedido ou Pedido finalizado
             VariantRow(label: "Expandido · pedido enviado (sem ações)") {
                 DSStatusCard(
                     eyebrow: "Pedido enviado",
@@ -517,7 +649,6 @@ private struct DSStatusCardShowcase: View {
                 .statusCardVariant(.compact)
             }
             
-            // MARK: - Pedido confirmado
             VariantRow(label: "Expandido/Compacto · confirmado (com/sem ações)") {
                 DSStatusCard(
                     eyebrow: "Seu próximo horário",
@@ -540,7 +671,6 @@ private struct DSStatusCardShowcase: View {
                 )
             }
             
-            // MARK: - Pedido cancelado
             VariantRow(label: "Expandido/Compacto · cancelado (crítico)") {
                 DSStatusCard(
                     eyebrow: "Agendamento cancelado",
@@ -573,7 +703,6 @@ private struct DSMerchantCardShowcase: View {
     var body: some View {
         VStack(spacing: 16) {
             VariantRow(label: "Merchant Cards with one or more pictures") {
-                // MARK: - One image inside
                 DSMerchantCard(
                     title: "Espaço Camila",
                     subtitle: "A partir de R$ 45",
@@ -591,8 +720,7 @@ private struct DSMerchantCardShowcase: View {
                         .padding(.horizontal, 8).padding(.vertical, 4)
                         .background(Color(.systemGray5)).cornerRadius(6)
                 }
-                
-                // MARK: - Two images inside
+
                 DSMerchantCard(
                     title: "Studio Ana Lima",
                     subtitle: "A partir de R$ 35",
@@ -772,8 +900,7 @@ private struct DSSummaryCardShowcase: View {
         }
         .background(DSColor.surface)
     }
-    
-    /// Helper privado para criar as linhas de detalhes perfeitamente alinhadas nas pontas
+
     @ViewBuilder
     private func detailRow(label: String, value: String) -> some View {
         HStack(alignment: .top) {
@@ -827,7 +954,6 @@ private struct DSPriceReceiptCardShowcase: View {
 }
 
 private struct DSDayPickerShowcase: View {
-    // App variables simulating raw items fetched from a API/Database
     @State private var availableDays: [DSDayPicker.DayItem] = [
         .init(weekday: "Hoje", dayNumber: "02", subtitle: "3 vagas", isSelected: true),
         .init(weekday: "Qui", dayNumber: "03", subtitle: "4 vagas"),
@@ -845,7 +971,6 @@ private struct DSDayPickerShowcase: View {
                         title: "Escolha seu dia",
                         days: availableDays
                     ) { selectedDay in
-                        // Logic to update selection in the container app
                         availableDays = availableDays.map { day in
                             var updatedDay = day
                             updatedDay = .init(
@@ -853,7 +978,7 @@ private struct DSDayPickerShowcase: View {
                                 weekday: day.weekday,
                                 dayNumber: day.dayNumber,
                                 subtitle: day.subtitle,
-                                isSelected: day.id == selectedDay.id, // Only true for the clicked one
+                                isSelected: day.id == selectedDay.id,
                                 isFull: day.isFull
                             )
                             return updatedDay
@@ -889,7 +1014,6 @@ private struct DSTimeSlotPickerShowcase: View {
                         sectionTitle: "Tarde",
                         slots: afternoonSlots
                     ) { selectedSlot in
-                        // Toggle execution matching selection rules inside the host app
                         afternoonSlots = afternoonSlots.map { slot in
                             var updatedSlot = slot
                             updatedSlot = .init(
@@ -911,7 +1035,6 @@ private struct DSTimeSlotPickerShowcase: View {
 }
 
 private struct DSTimelineShowcase: View {
-
     /// Fixed flow definition (title + optional subtitle), rendered by the timeline.
     private let flow: [(title: String, subtitle: String?)] = [
         ("Pedido enviado", "Hoje, 14:00"),
@@ -1047,8 +1170,7 @@ private struct DSInfoCardShowcase: View {
                         .frame(width: 48, height: 48)
                         .background(DSColor.paper2)
                         .cornerRadius(12)
-                        
-                        // Textos de Informação
+
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Espaço Camila")
                                 .font(.headline)
@@ -1061,14 +1183,12 @@ private struct DSInfoCardShowcase: View {
                 }
             }
             
-            // 3. EXEMPLO: ONDE (Where)
             VariantRow(label: "Info Card - Onde") {
                 DSInfoCard(title: "Onde") {
                     VStack(alignment: .leading, spacing: 12) {
                         HStack(spacing: 16) {
-                            // Miniatura do Salão / Prédio
                             ZStack {
-                                Image(systemName: "building.2.fill") // SF Symbol correspondente à imagem
+                                Image(systemName: "building.2.fill")
                                     .foregroundColor(DSColor.ink60)
                                     .font(.system(size: 20))
                             }
@@ -1076,7 +1196,6 @@ private struct DSInfoCardShowcase: View {
                             .background(DSColor.paper2)
                             .cornerRadius(12)
                             
-                            // Textos de Informação
                             VStack(alignment: .leading, spacing: 4) {
                                 Text("Studio Ana Lima")
                                     .font(.headline)
@@ -1090,10 +1209,7 @@ private struct DSInfoCardShowcase: View {
                             }
                         }
                         
-                        // Link de Ação Inferior
-                        Button(action: {
-                            // Ação para abrir mapa / rotas
-                        }) {
+                        Button(action: { }) {
                             Text("Como chegar")
                                 .font(.subheadline)
                                 .fontWeight(.medium)
@@ -1184,21 +1300,20 @@ private struct DSToastShowcase: View {
 
 
 private struct DSNoticeCardShowcase: View {
-    // Array populado seguindo fielmente as strings e tokens da imagem enviada
     private let sampleItems = [
         DSNoticeItem(
             systemIconName: "creditcard.fill",
-            iconColor: Color(hex: 0xC5A880), // Dourado sutil combinando com a carteira/cartão
+            iconColor: Color(hex: 0xC5A880),
             title: "O pagamento é combinado direto no salão."
         ),
         DSNoticeItem(
             systemIconName: "clock.fill",
-            iconColor: DSColor.legacyContentTertiary, // Cinza médio institucional
+            iconColor: DSColor.legacyContentTertiary,
             title: "Cancelamento gratuito até 14:00 de hoje."
         ),
         DSNoticeItem(
             systemIconName: "hourglass",
-            iconColor: DSColor.ink60, // Cinza-asfalto
+            iconColor: DSColor.ink60,
             title: "Atrasos acima de 15 min podem perder a vaga."
         )
     ]

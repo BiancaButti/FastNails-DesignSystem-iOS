@@ -5,7 +5,13 @@ import Foundation
 /// Pure input rules for `DSOTPField`, kept out of the view so they can be tested.
 enum DSOTPFieldInput {
 
-    /// Keeps only digits and clamps the result to `length` characters.
+    /// Sanitizes raw OTP input by keeping only numeric characters and limiting
+    /// the result to the requested number of digits.
+    ///
+    /// - Parameters:
+    ///   - raw: The raw text received from the input control.
+    ///   - length: The maximum number of digits allowed.
+    /// - Returns: A digits-only string containing at most `length` characters.
     static func sanitize(_ raw: String, length: Int) -> String {
         String(raw.filter(\.isNumber).prefix(length))
     }
@@ -13,22 +19,40 @@ enum DSOTPFieldInput {
 
 // MARK: - Completion tracking
 
-/// Decides when a code is complete, firing exactly once per completed code.
+/// Tracks OTP completion independently from the view's rendering state.
 ///
-/// Typing past the limit produces a change whose sanitized value is unchanged,
-/// so the tracker guards against reporting the same code twice. Dropping below
-/// `length` (deleting) rearms it for the next complete code.
+/// The tracker ensures that a completion callback is emitted only once for
+/// each completed code. Deleting digits below the required length resets the
+/// tracker so a newly entered code can trigger completion again.
 struct DSOTPFieldCompletionTracker {
 
+    /// The most recently reported complete code.
+    ///
+    /// Used to prevent the same completed value from triggering the completion
+    /// callback more than once.
     private var lastCompleted: String?
 
-    /// Returns `true` only on the transition into a freshly completed code.
+    /// Determines whether the supplied code represents a newly completed OTP.
+    ///
+    /// When the code is shorter than `length`, the tracker is rearmed. When the
+    /// code reaches the required length, completion is reported only if that
+    /// exact code has not already been reported.
+    ///
+    /// - Parameters:
+    ///   - code: The sanitized OTP value currently entered.
+    ///   - length: The required number of digits.
+    /// - Returns: `true` only when `code` has just reached the required length
+    ///   and has not already been reported.
     mutating func shouldComplete(_ code: String, length: Int) -> Bool {
         guard code.count == length else {
             lastCompleted = nil
             return false
         }
-        guard lastCompleted != code else { return false }
+
+        guard lastCompleted != code else {
+            return false
+        }
+
         lastCompleted = code
         return true
     }

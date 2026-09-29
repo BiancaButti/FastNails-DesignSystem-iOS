@@ -1,15 +1,19 @@
 import SwiftUI
+
 // MARK: - List (multiple choice)
 
 /// A vertical list of multiple-choice selectable cards.
 ///
-/// Use `DSSelectableOptionList` to let the user pick one or more options from a
-/// short set. Each option is rendered as a `DSSelectableCheckboxCard` and the
-/// current selection is driven by a binding, so the caller owns the state and
-/// the list simply reflects and mutates it.
+/// `DSSelectableOptionList` displays a collection of ``SelectableOption``
+/// values as ``DSSelectableCheckboxCard`` instances and provides a binding
+/// to the set of currently selected option identifiers.
 ///
-/// The list displays a title above the cards. Tapping a card toggles its
-/// membership in the selection set.
+/// The component does not own the selection state. The caller provides the
+/// `selection` binding, while the list updates the set when an option is
+/// selected or deselected.
+///
+/// Each card behaves independently, allowing multiple options to be selected
+/// at the same time.
 ///
 /// ## Example
 ///
@@ -19,8 +23,16 @@ import SwiftUI
 /// DSSelectableOptionList(
 ///     title: "Selectable Options",
 ///     options: [
-///         SelectableOption(id: "hands", title: "Hands", description: "Manicure, from 30 min"),
-///         SelectableOption(id: "feet", title: "Feet", description: "Pedicure, from 45 min")
+///         SelectableOption(
+///             id: "hands",
+///             title: "Hands",
+///             description: "Manicure, from 30 min"
+///         ),
+///         SelectableOption(
+///             id: "feet",
+///             title: "Feet",
+///             description: "Pedicure, from 45 min"
+///         )
 ///     ],
 ///     selection: $selection
 /// )
@@ -28,41 +40,60 @@ import SwiftUI
 ///
 /// ## Selection handling
 ///
-/// The list is a multiple-choice control: toggling a card inserts or removes
-/// its `id` from the `selection` set. To build a single-choice variant, clear
-/// the set before inserting in the caller, or enforce the constraint upstream.
+/// The list implements multiple selection by toggling each option's `id`
+/// within the bound selection set:
 ///
-/// Each option's `id` must be stable across list rebuilds so SwiftUI can keep
-/// its identity for diffing and animation.
+/// - If an option is selected, tapping it removes its `id` from `selection`.
+/// - If an option is not selected, tapping it inserts its `id` into
+///   `selection`.
+///
+/// The component does not enforce a minimum or maximum number of selected
+/// options.
+///
+/// If a single-choice behavior is required, the caller should enforce that
+/// constraint when updating the selection.
+///
+/// Each option's `id` must remain stable across list rebuilds so SwiftUI can
+/// preserve identity, state, diffing, and animations.
 ///
 /// ## Accessibility
 ///
-/// The list is exposed as a container that groups its cards, with an
-/// accessibility label combining the title and an instruction to select one or
-/// more options. Each card is an independent button that announces its
-/// selected state through its accessibility value.
+/// The list groups its child cards into an accessibility container and
+/// exposes the list title together with an instruction that multiple options
+/// can be selected.
 ///
-/// - Note: The list does not manage the selection itself; the caller is
-///   responsible for providing and updating the `selection` binding.
+/// Each ``DSSelectableCheckboxCard`` remains an independent accessibility
+/// element and announces its own title, description, and selection state.
 ///
-/// - SeeAlso: `SelectableOption`
+/// - Note: The list does not manage selection state independently. The caller
+///   is responsible for owning and providing the `selection` binding.
+///
+/// - SeeAlso: ``SelectableOption``
+/// - SeeAlso: ``DSSelectableCheckboxCard``
 public struct DSSelectableOptionList: View {
 
-    /// The title displayed above the options.
+    /// The title displayed above the selectable options.
     let title: String
 
     /// The ordered collection of options displayed by the list.
+    ///
+    /// The order of this array determines the visual and accessibility order
+    /// of the cards.
     let options: [SelectableOption]
 
-    /// The set of currently selected option identifiers.
+    /// The set containing the identifiers of currently selected options.
+    ///
+    /// The parent view owns this state. The list mutates the bound set when
+    /// the user toggles an option.
     @Binding var selection: Set<SelectableOption.ID>
 
     /// Creates a multiple-choice selectable option list.
     ///
     /// - Parameters:
     ///   - title: The title displayed above the options.
-    ///   - options: The ordered collection of options to display.
-    ///   - selection: A binding to the set of selected option identifiers.
+    ///   - options: The ordered collection of options displayed by the list.
+    ///   - selection: A binding to the set containing the identifiers of the
+    ///     currently selected options.
     public init(
         title: String,
         options: [SelectableOption],
@@ -74,7 +105,10 @@ public struct DSSelectableOptionList: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: DSSpacing.md) {
+        VStack(
+            alignment: .leading,
+            spacing: DSSpacing.md
+        ) {
             Text(title)
                 .font(DSFont.technicalTag)
                 .textCase(.uppercase)
@@ -96,6 +130,8 @@ public struct DSSelectableOptionList: View {
             }
         }
         .accessibilityElement(children: .contain)
-        .accessibilityLabel("\(title). Select one or more options.")
+        .accessibilityLabel(
+            "\(title). Select one or more options."
+        )
     }
 }

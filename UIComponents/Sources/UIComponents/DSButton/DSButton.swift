@@ -1,89 +1,63 @@
 import SwiftUI
 
-/// A design system button that provides a consistent appearance and interaction
-/// behavior across the application.
+// MARK: - DSButton
+
+/// A design system button with configurable style, tone, loading, and enabled states.
 ///
-/// `DSButton` delegates its visual configuration to `DSButtonAppearance`, using
-/// the current `DSTheme`, `DSButtonAppearance`, and `DSButtonTone`. This view is
-/// responsible for applying the resolved appearance to the SwiftUI button
-/// hierarchy.
-///
-/// The button supports enabled, disabled, and loading visual states, as well
-/// as optional accessibility hints.
-///
-/// ## Example
+/// Use `DSButton` for actions that should follow the application's design tokens and interaction behavior.
+/// The button automatically applies the resolved appearance and disables interaction while loading or disabled.
 ///
 /// ```swift
 /// DSButton(
 ///     title: "Continue",
 ///     style: .primary,
-///     tone: .brand,
-///     isEnabled: true,
-///     accessibilityHint: "Continues to the next step"
+///     tone: .brand
 /// ) {
 ///     continueAction()
 /// }
 /// ```
 ///
-/// - Note: The button stops responding to taps while `isEnabled` is `false`
-///   or `isLoading` is `true`.
+/// ## Accessibility
+/// Supports an optional accessibility hint and exposes a loading state through `accessibilityValue`.
 public struct DSButton: View {
     @Environment(\.dsTheme) private var theme
 
     /// The text displayed inside the button.
     let title: String
 
-    /// The visual style of the button.
-    ///
-    /// Defaults to `.primary`.
+    /// The visual style of the button. Defaults to `.primary`.
     var style: DSButtonStyle = .primary
 
-    /// The semantic color tone applied to the button.
-    ///
-    /// Defaults to `.brand`.
+    /// The semantic color tone applied to the button. Defaults to `.brand`.
     var tone: DSButtonTone = .brand
 
-    /// Indicates whether the button is currently loading.
+    /// A Boolean value indicating whether the button is currently loading.
     ///
-    /// When loading:
-    /// - The button action is disabled.
-    /// - A circular progress indicator is displayed alongside the title.
-    /// - The background color is displayed with reduced opacity.
-    /// - The border color, when present, is displayed with reduced opacity.
-    ///
+    /// When `true`, the button displays a progress indicator and does not respond to user interaction.
     /// Defaults to `false`.
     var isLoading: Bool = false
 
-    /// Controls the enabled state of the button.
+    /// A Boolean value indicating whether the button can be activated.
     ///
-    /// When `false`, the button uses disabled colors, removes its border, and
-    /// stops responding to taps.
-    ///
+    /// When `false`, the button uses its disabled appearance and does not respond to user interaction.
     /// Defaults to `true`.
     var isEnabled: Bool = true
 
-    /// An optional accessibility hint that provides additional context about
-    /// the button's action.
-    ///
-    /// When a value is provided, it is exposed through SwiftUI's
-    /// `accessibilityHint`.
+    /// An optional hint providing additional accessibility context for the button's action.
     var accessibilityHint: String?
 
     /// The closure executed when the button is activated.
     let action: () -> Void
 
-    /// Creates a design system button.
-    ///
+    /// Creates a `DSButton`.
     /// - Parameters:
     ///   - title: The text displayed inside the button.
     ///   - style: The visual style of the button. Defaults to `.primary`.
-    ///   - tone: The semantic color tone of the button. Defaults to `.brand`.
-    ///   - isLoading: Whether the button is currently loading. Defaults to
-    ///     `false`.
-    ///   - isEnabled: Whether the button is enabled. Defaults to `true`.
-    ///   - accessibilityHint: An optional hint providing additional
-    ///     accessibility context.
-    ///   - action: The closure to execute when the button is activated.
+    ///   - tone: The semantic color tone applied to the button. Defaults to `.brand`.
+    ///   - isLoading: Whether the button is currently loading. Defaults to `false`.
+    ///   - isEnabled: Whether the button can be activated. Defaults to `true`.
+    ///   - accessibilityHint: An optional hint providing additional accessibility context.
+    ///   - action: The closure executed when the button is activated.
     public init(
         title: String,
         style: DSButtonStyle = .primary,
@@ -102,17 +76,6 @@ public struct DSButton: View {
         self.action = action
     }
 
-    /// The view hierarchy that renders the button.
-    ///
-    /// The appearance is resolved from `DSButtonAppearance` using the current
-    /// theme, style, and tone.
-    ///
-    /// The button automatically applies:
-    /// - The design system button font.
-    /// - Design system spacing.
-    /// - Design system corner radius.
-    /// - Enabled, disabled, and loading colors.
-    /// - Accessibility labels and optional hints.
     public var body: some View {
         let appearance = DSButtonAppearance(
             style: style,
@@ -138,6 +101,7 @@ public struct DSButton: View {
                         .progressViewStyle(.circular)
                         .tint(textColor)
                 }
+
                 Text(title)
                     .font(theme.buttonFont)
                     .lineLimit(1)
@@ -191,26 +155,14 @@ public struct DSButton: View {
     }
 }
 
-// MARK: - Helper
+// MARK: - Helpers
 
-/// A view modifier that conditionally applies an accessibility hint.
-///
-/// The modifier avoids applying an empty or missing accessibility hint when
-/// `hint` is `nil`.
-/// A view modifier that conditionally applies an accessibility value.
-///
-/// The modifier avoids applying an empty or missing accessibility value when
-/// `value` is `nil`, which prevents redundant announcements (for example, the
-/// native "dimmed" state already conveyed by `disabled`).
+/// Applies an accessibility value only when one is provided.
 private struct OptionalAccessibilityValue: ViewModifier {
     /// The optional accessibility value to apply.
     let value: String?
 
-    /// Applies the accessibility value when one is available.
-    ///
-    /// - Parameter content: The view to which the modifier is applied.
-    /// - Returns: The original view, optionally configured with an
-    ///   accessibility value.
+    /// Applies the accessibility value when available.
     func body(content: Content) -> some View {
         if let value {
             content.accessibilityValue(value)
@@ -220,15 +172,12 @@ private struct OptionalAccessibilityValue: ViewModifier {
     }
 }
 
+/// Applies an accessibility hint only when one is provided.
 private struct OptionalAccessibilityHint: ViewModifier {
     /// The optional accessibility hint to apply.
     let hint: String?
 
-    /// Applies the accessibility hint when one is available.
-    ///
-    /// - Parameter content: The view to which the modifier is applied.
-    /// - Returns: The original view, optionally configured with an
-    ///   accessibility hint.
+    /// Applies the accessibility hint when available.
     func body(content: Content) -> some View {
         if let hint {
             content.accessibilityHint(hint)

@@ -1,24 +1,59 @@
 import SwiftUI
+
 // MARK: - Palette per state
 
-/// Surface and content of a card state, together.
+/// Defines the complete visual appearance of a selectable option card state.
 ///
-/// It exists because swapping the background without revisiting the text on top
-/// of it is too easy when the two choices live in distant spots of the file —
-/// that's how `tinta60` ended up over solid Esmalte, at 1.04:1.
-/// Any new state is forced to declare all seven colors at once.
+/// `DSSelectableOptionCardPalette` groups the surface, border, typography,
+/// checkbox, and checkmark colors that must be used together for a given card
+/// state.
+///
+/// Keeping these values together prevents an individual color from being
+/// changed without considering its visual relationship with the other elements
+/// in the same state.
+///
+/// Every predefined state declares the complete visual configuration required
+/// by ``DSSelectableCheckboxCard``.
+///
+/// ## Accessibility
+///
+/// The predefined palettes are designed to maintain appropriate contrast
+/// between text, controls, and their backgrounds.
+///
+/// - Important: When adding a new state, define all palette properties
+///   together and verify the resulting contrast before using it in a
+///   production component.
 struct DSSelectableOptionCardPalette {
+
+    /// The card's background color.
     let surface: Color
+
+    /// The color of the card's border.
     let border: Color
+
+    /// The width of the card's border.
     let borderWidth: CGFloat
+
+    /// The primary text color used for the option title.
     let title: Color
+
+    /// The secondary text color used for the option description.
     let subtitle: Color
+
+    /// The background color of the checkbox.
     let box: Color
+
+    /// The border color of the checkbox.
     let boxBorder: Color
+
+    /// The color of the checkmark displayed when the option is selected.
     let check: Color
 
-    /// Not selected. The box border uses Controle (3.7:1) because it is the
-    /// only signal that there is something actionable; Linha (1.5:1) won't do here.
+    /// The default appearance for an unselected option.
+    ///
+    /// The card uses the standard surface and border tokens, while the
+    /// checkbox uses the control token to provide a clear actionable
+    /// affordance.
     static let idle = DSSelectableOptionCardPalette(
         surface: DSColor.paper,
         border: DSColor.line,
@@ -30,8 +65,11 @@ struct DSSelectableOptionCardPalette {
         check: DSColor.clear
     )
 
-    /// Selected. The background is Esmalte at 6%, already flattened — the text
-    /// stays dark and keeps the same contrast as the normal state.
+    /// The default appearance for a selected option.
+    ///
+    /// Uses a subtle selected-state surface while preserving readable text.
+    /// The checkbox uses the enamel color and displays a contrasting
+    /// checkmark.
     static let selected = DSSelectableOptionCardPalette(
         surface: DSColor.softEnamel,
         border: DSColor.enamel,
@@ -43,10 +81,13 @@ struct DSSelectableOptionCardPalette {
         check: DSColor.paper
     )
 
-    /// Solid-fill variant, in case the Design System wants that weight.
-    /// Title and description both go in Papel: Blush over Esmalte is 4.35:1
-    /// and fails AA for small text. Hierarchy here comes from size and weight,
-    /// not color.
+    /// A solid-fill variant for the selected state.
+    ///
+    /// This variant uses the enamel color as the card surface and the paper
+    /// color for both title and description text.
+    ///
+    /// Selection hierarchy is communicated through the selected surface and
+    /// typography rather than relying on a lower-contrast text color.
     static let selectedSolid = DSSelectableOptionCardPalette(
         surface: DSColor.enamel,
         border: DSColor.enamel,

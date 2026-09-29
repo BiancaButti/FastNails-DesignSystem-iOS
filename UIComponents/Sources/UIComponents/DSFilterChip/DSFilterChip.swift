@@ -1,75 +1,45 @@
 import SwiftUI
+
 // MARK: - DSFilterChipView
 
-/// A selectable filter chip.
+/// Displays a selectable filter option as a compact chip.
 ///
-/// `DSFilterChipView` represents a single filter option as a button with two
-/// visual states:
-///
-/// - **Active:** uses the theme's brand color with white text.
-/// - **Inactive:** uses a neutral background with primary text.
-///
-/// An optional SF Symbol can be displayed before the label.
-///
-/// ## Example
+/// Use `DSFilterChipView` for filters that can be toggled independently.
+/// The chip changes its visual treatment according to `isActive` and can optionally display an SF Symbol before its label.
 ///
 /// ```swift
 /// DSFilterChipView(
 ///     label: "Mãos",
 ///     isActive: true
 /// ) {
-///     viewModel.toggleHandsFilter()
-/// }
-/// ```
-///
-/// With an icon:
-///
-/// ```swift
-/// DSFilterChipView(
-///     label: "Acessível",
-///     isActive: false,
-///     systemImage: "accessibility"
-/// ) {
-///     viewModel.toggleAccessibilityFilter()
+///     toggleHandsFilter()
 /// }
 /// ```
 ///
 /// ## Accessibility
-///
-/// The chip is exposed as a button using the provided label.
-///
-/// When `isActive` is `true`, the `.isSelected` accessibility trait is added
-/// so assistive technologies can communicate the selected state.
-///
-/// - Note: This view does not manage its own selected state. The caller must
-///   update `isActive` after executing the action.
-///
-/// - SeeAlso: `DSFilterChipsSection`
-/// - SeeAlso: `DSFilterChipItem`
+/// Exposes the chip as a button and adds the `.isSelected` trait when `isActive` is `true`.
 public struct DSFilterChipView: View {
-
     @Environment(\.dsTheme)
     private var theme
 
     /// The text displayed inside the chip.
     let label: String
 
-    /// Whether the chip is currently selected.
+    /// A Boolean value indicating whether the filter is currently selected.
     let isActive: Bool
 
-    /// An optional SF Symbol displayed before the label.
+    /// The optional SF Symbol name displayed before the label.
     let systemImage: String?
 
-    /// The action executed when the chip is tapped.
+    /// The closure executed when the chip is tapped.
     let action: () -> Void
 
-    /// Creates a filter chip.
-    ///
+    /// Creates a `DSFilterChipView`.
     /// - Parameters:
     ///   - label: The text displayed inside the chip.
-    ///   - isActive: Whether the chip is currently selected.
-    ///   - systemImage: An optional SF Symbol name displayed before the label.
-    ///   - action: The action executed when the chip is tapped.
+    ///   - isActive: Whether the filter is currently selected.
+    ///   - systemImage: An optional SF Symbol name displayed before the label. Defaults to `nil`.
+    ///   - action: The closure executed when the chip is tapped.
     public init(
         label: String,
         isActive: Bool,

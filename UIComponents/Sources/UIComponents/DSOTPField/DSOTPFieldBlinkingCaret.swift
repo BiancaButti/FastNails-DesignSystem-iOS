@@ -2,43 +2,58 @@ import SwiftUI
 
 // MARK: - Caret
 
-/// Blinking caret that marks the active digit box in ``DSOTPField``.
+/// A blinking caret that marks the active digit box in ``DSOTPField``.
 ///
-/// A thin vertical bar that fades in and out forever to signal where the next
-/// digit will land. It is a pure decoration: the real cursor lives in the
-/// hidden text field behind the boxes, so this view is marked
-/// `accessibilityHidden` by its parent.
+/// The caret is a visual decoration that indicates where the next digit will
+/// be entered. The actual text cursor is managed by the hidden `TextField`
+/// owned by ``DSOTPField``.
 ///
-/// The caret is an implementation detail of ``DSOTPField`` and is not part of
-/// the package's public API.
+/// This view is an internal implementation detail and is not part of the
+/// package's public API.
 ///
-/// ## Reduce Motion
-/// When **Reduce Motion** is enabled the caret stops blinking and stays solid,
-/// still marking the active box without any animation.
+/// When Reduce Motion is enabled, the caret remains continuously visible
+/// instead of performing its blinking animation.
 struct DSOTPFieldBlinkingCaret: View {
 
-    /// Fill color of the bar. ``DSOTPField`` passes the theme's brand color.
+    /// The color applied to the caret.
+    ///
+    /// ``DSOTPField`` provides the active brand color from the current theme.
     let color: Color
 
-    /// Height of the bar in points, sized relative to the box height.
+    /// The vertical height of the caret in points.
+    ///
+    /// The parent ``DSOTPField`` calculates this value relative to the
+    /// height of the digit box.
     let height: CGFloat
 
-    /// Drives the blink. Toggled inside an autoreversing, repeating animation.
+    /// Whether the caret is currently visible.
+    ///
+    /// This state is toggled by the repeating blink animation. It starts
+    /// visible so the active input position is immediately apparent.
     @State private var visible = true
 
-    /// When on, the caret stays solid instead of blinking.
+    /// Whether the user has enabled Reduce Motion.
+    ///
+    /// When enabled, the blinking animation is skipped and the caret remains
+    /// continuously visible.
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Rectangle()
-            .frame(width: DSSize.xsmall,
-                   height: height)
+            .frame(
+                width: DSSize.xsmall,
+                height: height
+            )
             .foregroundStyle(color)
             .opacity(visible ? 1 : .zero)
             .task {
-                // With reduce motion on, the caret stays put.
+                // Reduce Motion keeps the caret continuously visible.
                 guard !reduceMotion else { return }
-                withAnimation(.easeInOut(duration: 0.5).repeatForever(autoreverses: true)) {
+
+                withAnimation(
+                    .easeInOut(duration: 0.5)
+                        .repeatForever(autoreverses: true)
+                ) {
                     visible = false
                 }
             }

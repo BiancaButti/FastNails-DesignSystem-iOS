@@ -7,9 +7,9 @@ final class DSTimelineTests: XCTestCase {
     func test_init_withValidSequence_buildsComponentInterface() {
         // Given
         let mockedSteps = [
-            DSTimelineStepItem(title: "Step 1", subtitle: "Done", state: .completed),
-            DSTimelineStepItem(title: "Step 2", subtitle: "Active", state: .current),
-            DSTimelineStepItem(title: "Step 3", subtitle: nil, state: .pending)
+            DSTimelineStepItem(id: "123", title: "Step 1", subtitle: "Done", state: .completed),
+            DSTimelineStepItem(id: "456", title: "Step 2", subtitle: "Active", state: .current),
+            DSTimelineStepItem(id: "789", title: "Step 3", subtitle: nil, state: .pending)
         ]
         
         // When

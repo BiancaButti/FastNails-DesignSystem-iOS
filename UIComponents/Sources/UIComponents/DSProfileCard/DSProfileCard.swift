@@ -2,30 +2,44 @@ import SwiftUI
 
 // MARK: - DSProfileCard
 
-/// A card row that groups user profile details, showcasing a ``DSAvatar``
-/// alongside a name and an optional secondary descriptive label (like an email or phone).
+/// A card row that presents a user's profile information alongside a ``DSAvatar``.
 ///
-/// It strictly adheres to your design tokens, using `Color.paper` for background,
-/// `Color.line` for the continuous border, and standard typography colors.
+/// `DSProfileCard` displays a primary name, an optional secondary description,
+/// and either a custom avatar image or the initial fallback provided to
+/// ``DSAvatar``.
 ///
-/// ```swift
-/// DSProfileCard(
-///     name: "Bianca",
-///     description: "bianca@email.com",
-///     avatarInitial: "B"
-/// )
-/// ```
+/// The component uses the Design System surface, border, spacing, and
+/// typography tokens to maintain consistent profile presentation.
 public struct DSProfileCard: View {
-    /// The primary name title displayed in bold.
+
+    /// The primary profile name displayed as the card's main title.
     let name: String
-    /// The secondary text displayed under the name (e.g., email, subtitle).
+
+    /// Optional secondary information displayed below the profile name.
+    ///
+    /// This can represent supporting information such as an email address,
+    /// phone number, role, or other contextual profile text.
     let description: String?
-    /// The letter initial passed to the underlying fallback avatar view.
+
+    /// The fallback initial passed to ``DSAvatar`` when no custom image is provided.
+    ///
+    /// ``DSAvatar`` is responsible for trimming and normalizing the initial.
     let avatarInitial: String
-    /// An optional custom image to display inside the avatar view.
+
+    /// An optional custom image displayed by ``DSAvatar``.
+    ///
+    /// When provided, the image takes precedence over the initial fallback.
     let avatarImage: Image?
 
-    /// Creates a `DSProfileCard`.
+    /// Creates a profile card.
+    ///
+    /// - Parameters:
+    ///   - name: The primary profile name displayed in the card.
+    ///   - description: Optional supporting information displayed below the name.
+    ///   - avatarInitial: The fallback initial displayed when no avatar image
+    ///     is provided.
+    ///   - avatarImage: An optional custom image displayed instead of the
+    ///     initial fallback.
     public init(
         name: String,
         description: String? = nil,
@@ -38,29 +52,33 @@ public struct DSProfileCard: View {
         self.avatarImage = avatarImage
     }
 
+    /// The continuous rounded rectangle shape used by the card container.
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: DSRadius.xxlarge, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: DSRadius.xxlarge,
+            style: .continuous
+        )
     }
 
     public var body: some View {
         HStack(spacing: DSSpacing.lg) {
             DSAvatar(
                 initial: avatarInitial,
-                image: avatarImage,
+                image: avatarImage
             )
-            
+
             VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(name)
                     .font(DSFont.sectionHeader)
                     .foregroundColor(DSColor.ink)
-                
+
                 if let description {
                     Text(description)
                         .font(DSFont.fieldLabel)
                         .foregroundColor(DSColor.ink60)
                 }
             }
-            
+
             Spacer()
         }
         .padding(DSPadding.regular)
@@ -68,7 +86,10 @@ public struct DSProfileCard: View {
         .background(DSColor.paper)
         .clipShape(shape)
         .overlay(
-            shape.strokeBorder(DSColor.line, lineWidth: DSBorder.thin)
+            shape.strokeBorder(
+                DSColor.line,
+                lineWidth: DSBorder.thin
+            )
         )
     }
 }

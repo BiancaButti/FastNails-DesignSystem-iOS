@@ -1,9 +1,12 @@
 import SwiftUI
 
-/// `DSEventCard` is a reusable UI component designed for the Design System.
-/// It displays scheduling information including dates, times, pricing, and statuses.
+// MARK: - DSEventCard
+
+/// Displays appointment information in a compact, interactive card.
 ///
-/// ### Example Usage:
+/// Use `DSEventCard` to present an event's date, schedule, service details, price, and status in a single tappable container.
+/// The card can optionally highlight the event with a distinct border and background treatment.
+///
 /// ```swift
 /// DSEventCard(
 ///     day: "02",
@@ -12,41 +15,62 @@ import SwiftUI
 ///     endTime: "16:30",
 ///     title: "Studio Ana Lima",
 ///     serviceDetails: "Mãos · 30 min · no salão",
-///     price: "R\$ 35",
-///     status: DSStatusBadge(title: "Confirmado", status: .confirmed),
+///     price: "R$ 35",
+///     status: DSStatusBadge(
+///         title: "Confirmado",
+///         status: .confirmed
+///     ),
 ///     hasHighlightBorder: false
 /// ) {
-///     // Handle tap action here
+///     openEvent()
 /// }
 /// ```
+///
+/// ## Accessibility
+/// The entire card is exposed as a single button and activates `onTap` when selected.
 public struct DSEventCard: View {
-    // MARK: - Properties
-    
-    /// The day of the month (e.g., "02", "04").
+    /// The day of the month displayed in the calendar block.
     private let day: String
-    /// The abbreviated month text (e.g., "Sep", "Set").
+
+    /// The abbreviated month displayed above the day number.
     private let month: String
-    /// The starting time of the appointment (e.g., "16:00").
+
+    /// The starting time of the event.
     private let startTime: String
-    /// The ending time of the appointment (e.g., "16:30").
+
+    /// The ending time of the event.
     private let endTime: String
-    /// The main title or venue name (e.g., "Studio Ana Lima").
+
+    /// The main title or venue name associated with the event.
     private let title: String
-    /// Subtitle string detailing services, duration, and venue type.
+
+    /// The descriptive metadata containing service, duration, and venue information.
     private let serviceDetails: String
-    /// The formatted currency or price text (e.g., "R$ 35").
+
+    /// The formatted price displayed in the event details.
     private let price: String
-    
-    /// The ready-made status badge shown in the footer.
+
+    /// The status badge displayed in the card footer.
     private let status: DSStatusBadge
-    /// Dictates whether an active/ongoing state outline border is rendered around the card.
+
+    /// A Boolean value indicating whether the card uses its highlighted border and background treatment.
     private let hasHighlightBorder: Bool
-    
-    /// Optional closure callback triggered when the user interacts with the card.
+
+    /// An optional closure executed when the card is tapped.
     private var onTap: (() -> Void)?
 
-    // MARK: - Initializer
-    
+    /// Creates a `DSEventCard`.
+    /// - Parameters:
+    ///   - day: The day of the month displayed in the calendar block.
+    ///   - month: The abbreviated month displayed above the day number.
+    ///   - startTime: The starting time of the event.
+    ///   - endTime: The ending time of the event.
+    ///   - title: The main title or venue name associated with the event.
+    ///   - serviceDetails: The descriptive metadata containing service, duration, and venue information.
+    ///   - price: The formatted price displayed in the event details.
+    ///   - status: The status badge displayed in the card footer.
+    ///   - hasHighlightBorder: Whether the card uses its highlighted border and background treatment.
+    ///   - onTap: An optional closure executed when the card is tapped. Defaults to `nil`.
     public init(
         day: String,
         month: String,
@@ -71,38 +95,48 @@ public struct DSEventCard: View {
         self.onTap = onTap
     }
 
-    // MARK: - Body
-    
     public var body: some View {
         Button(action: {
             onTap?()
         }) {
             VStack(alignment: .leading, spacing: .zero) {
-                // MARK: Main Content Section
                 HStack(alignment: .top, spacing: DSSpacing.lg) {
-
-                    // Calendar Block (Month & Day)
                     VStack(spacing: DSSpacing.xs) {
                         Text(month.uppercased())
                             .font(DSFont.technicalTag)
                             .foregroundStyle(DSColor.ink60)
+
                         Text(day)
                             .font(DSFont.title)
                             .foregroundStyle(DSColor.ink)
                     }
-                    .frame(width: DSSize.huge,
-                           height: DSSize.huge)
-                    .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: DSRadius.small, style: .continuous)
-                            .stroke(hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line, lineWidth: 1)
+                    .frame(
+                        width: DSSize.huge,
+                        height: DSSize.huge
                     )
-                    
-                    // Schedule Details and Pricing Area
-                    VStack(alignment: .leading, spacing: DSSpacing.sm) {
-                        HStack(alignment: .firstTextBaseline, spacing: DSSpacing.xs) {
+                    .background(
+                        hasHighlightBorder
+                            ? DSColor.eventHighlightSurface
+                            : DSColor.paper
+                    )
+                    .overlay(
+                        RoundedRectangle(
+                            cornerRadius: DSRadius.small,
+                            style: .continuous
+                        )
+                        .stroke(
+                            hasHighlightBorder
+                                ? DSColor.eventHighlightBorder
+                                : DSColor.line,
+                            lineWidth: 1
+                        )
+                    )
 
-                            // Time Framework and Location Title
+                    VStack(alignment: .leading, spacing: DSSpacing.sm) {
+                        HStack(
+                            alignment: .firstTextBaseline,
+                            spacing: DSSpacing.xs
+                        ) {
                             Group {
                                 Text("\(startTime) às \(endTime) ")
                                     .font(DSFont.descriptionBold)
@@ -115,13 +149,11 @@ public struct DSEventCard: View {
 
                             Spacer()
 
-                            // Pricing Data
                             Text(price)
                                 .font(DSFont.numericValue)
                                 .foregroundStyle(DSColor.salonCardPrice)
                         }
 
-                        // Metadata string description
                         Text(serviceDetails)
                             .font(DSFont.inputSupport)
                             .foregroundStyle(DSColor.ink60)
@@ -132,15 +164,12 @@ public struct DSEventCard: View {
 
                 Divider()
                     .padding(.top, DSPadding.regular)
-                
-                // MARK: Footer Section
+
                 HStack {
-                    // Ready-made status badge
                     status
 
                     Spacer()
-                    
-                    // Action navigation indicator
+
                     Image(systemName: "chevron.right")
                         .font(DSFont.captionSemibold)
                         .foregroundStyle(DSColor.ink60)
@@ -148,22 +177,31 @@ public struct DSEventCard: View {
                 .padding(.horizontal, DSPadding.regular)
                 .padding(.vertical, DSPadding.medium)
             }
-            .background(hasHighlightBorder ? DSColor.eventHighlightSurface : DSColor.paper)
+            .background(
+                hasHighlightBorder
+                    ? DSColor.eventHighlightSurface
+                    : DSColor.paper
+            )
             .clipShape(
                 RoundedRectangle(
                     cornerRadius: DSRadius.large,
-                    style: .continuous))
+                    style: .continuous
+                )
+            )
             .overlay(
                 RoundedRectangle(
                     cornerRadius: DSRadius.large,
-                    style: .continuous)
-                    .stroke(
-                        hasHighlightBorder ? DSColor.eventHighlightBorder : DSColor.line,
-                        lineWidth: 1
-                    )
+                    style: .continuous
+                )
+                .stroke(
+                    hasHighlightBorder
+                        ? DSColor.eventHighlightBorder
+                        : DSColor.line,
+                    lineWidth: 1
+                )
             )
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
         .environment(\.colorScheme, .light)
     }
 }

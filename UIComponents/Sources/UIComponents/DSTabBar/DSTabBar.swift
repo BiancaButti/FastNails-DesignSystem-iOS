@@ -1,35 +1,114 @@
 import SwiftUI
 
-/// The Fast Nails tab bar: a horizontal row of ``DSTabBarButton`` tabs.
+/// A horizontal tab bar for displaying and selecting ``DSTabItem`` values.
 ///
-/// Drop it wherever you need the bar itself — for a full container that also
-/// hides the native tab bar and preserves per-tab state, use ``DSTabBarView``.
-/// Appearance comes from the environment via ``SwiftUICore/View/dsTabBarStyle(_:)``,
-/// and on iOS 17+ selection changes trigger `.selection` sensory feedback.
+/// `DSTabBar` renders a row of ``DSTabBarButton`` instances and keeps the
+/// currently selected tab synchronized through a binding.
+///
+/// The component is responsible only for rendering the tab bar and updating
+/// the selection. It does not manage navigation, child view state, or the
+/// system tab bar.
+///
+/// For a complete tab-based container that also handles navigation concerns,
+/// hides the native tab bar, and preserves per-tab state, use
+/// ``DSTabBarView``.
+///
+/// ## Example
 ///
 /// ```swift
-/// DSTabBar(selection: $tab, badges: [.bookings: 2])
+/// @State private var tab: AppTab = .home
+///
+/// DSTabBar(
+///     selection: $tab,
+///     badges: [
+///         .bookings: 2
+///     ]
+/// )
 /// ```
+///
+/// ## Tabs
+///
+/// By default, the bar displays every case of `Tab` in the order returned by
+/// `Tab.allCases`.
+///
+/// Pass a custom `tabs` array when only a subset of the available tabs should
+/// be displayed or when a specific ordering is required.
+///
+/// ## Badges
+///
+/// Badge counts are supplied through the `badges` dictionary and are keyed by
+/// the corresponding tab.
+///
+/// A badge is not displayed when:
+///
+/// - The tab has no entry in `badges`.
+/// - The associated count is `0`.
+///
+/// The interpretation and formatting of the count are handled by the tab
+/// button component.
+///
+/// ## Appearance
+///
+/// The visual appearance is provided by the
+/// ``SwiftUICore/View/dsTabBarStyle(_:)`` environment value. This allows the
+/// same tab bar component to be reused with different style configurations
+/// without embedding color or surface decisions in the component itself.
+///
+/// The bar also renders an optional top divider supplied by the current style.
+///
+/// ## Interaction
+///
+/// Tapping a tab updates the `selection` binding with the selected tab.
+///
+/// On iOS 17 and later, selection changes provide `.selection` sensory
+/// feedback. Earlier iOS versions use the same interaction without sensory
+/// feedback.
+///
+/// ## Safe Area
+///
+/// The tab bar extends its background through the bottom safe area. Its content
+/// retains the configured horizontal and vertical Design System spacing.
+///
+/// - Note: `DSTabBar` does not own the selected-tab state. The caller must
+///   provide a binding and is responsible for reacting to selection changes.
+///
+/// - SeeAlso: ``DSTabBarButton``
+/// - SeeAlso: ``DSTabBarView``
+/// - SeeAlso: ``DSTabItem``
 public struct DSTabBar<Tab: DSTabItem>: View {
 
-    /// The currently selected tab, updated when a tab is tapped.
+    /// The currently selected tab.
+    ///
+    /// Updating this binding changes the selected tab displayed by the bar.
     @Binding private var selection: Tab
 
-    /// The tabs to display, in order. Defaults to every case of `Tab`.
+    /// The tabs displayed by the bar, in display order.
+    ///
+    /// Defaults to all cases provided by `Tab.allCases`.
     private let tabs: [Tab]
 
-    /// Badge counts keyed by tab. Missing entries (or `0`) show no badge.
+    /// Badge counts associated with individual tabs.
+    ///
+    /// Tabs without a value, or with a count of `0`, display no badge.
     private let badges: [Tab: Int]
- 
-    @Environment(\.dsTabBarStyle) private var style
-    @Environment(\.displayScale) private var displayScale
- 
+
+    /// The visual style supplied through the environment.
+    @Environment(\.dsTabBarStyle)
+    private var style
+
+    /// The display scale used to resolve the divider to a single physical
+    /// pixel when required.
+    @Environment(\.displayScale)
+    private var displayScale
+
     /// Creates a tab bar.
     ///
     /// - Parameters:
-    ///   - selection: The currently selected tab.
-    ///   - tabs: The tabs to show, in order. Defaults to `Array(Tab.allCases)`.
-    ///   - badges: The badge count per tab. Tabs with no entry (or `0`) show no badge.
+    ///   - selection: A binding to the currently selected tab.
+    ///   - tabs: The tabs displayed by the bar, in order. Defaults to every
+    ///     case of `Tab`.
+    ///   - badges: Badge counts keyed by tab. Missing entries and zero values
+    ///     display no badge.
     public init(
         selection: Binding<Tab>,
         tabs: [Tab] = Array(Tab.allCases),
@@ -39,25 +118,31 @@ public struct DSTabBar<Tab: DSTabItem>: View {
         self.tabs = tabs
         self.badges = badges
     }
- 
+
     public var body: some View {
         content
             .padding(.horizontal, DSPadding.medium)
             .padding(.top, DSPadding.xsmall)
             .padding(.bottom, DSPadding.xsmall)
             .background {
-                style.background.ignoresSafeArea(edges: .bottom)
+                style.background
+                    .ignoresSafeArea(edges: .bottom)
             }
             .overlay(alignment: .top) {
                 if let divider = style.dividerColor {
                     Rectangle()
                         .fill(divider)
-                        .frame(height: DSLayoutIndex.base / displayScale)
+                        .frame(
+                            height: DSLayoutIndex.base / displayScale
+                        )
                 }
             }
     }
 
-    /// The row of tab buttons, adding `.selection` sensory feedback on iOS 17+.
+    /// The row containing the individual tab buttons.
+    ///
+    /// On iOS 17 and later, selection changes trigger the system's
+    /// `.selection` sensory feedback.
     @ViewBuilder
     private var content: some View {
         let bar = HStack(spacing: .zero) {
@@ -74,7 +159,10 @@ public struct DSTabBar<Tab: DSTabItem>: View {
         }
 
         if #available(iOS 17.0, *) {
-            bar.sensoryFeedback(.selection, trigger: selection)
+            bar.sensoryFeedback(
+                .selection,
+                trigger: selection
+            )
         } else {
             bar
         }
