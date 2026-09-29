@@ -1,38 +1,52 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
+about: Reporte um problema em um componente do design system
+title: '[Bug] <Componente>: <resumo do problema>'
+labels: 'bug'
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+**Componente afetado**
+Ex.: `PrimaryButton`, `TextField`, tokens de cor, tipografia.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+**Descrição do bug**
+Descrição clara e objetiva do problema.
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+**Como reproduzir**
+1. Usar o componente com a configuração '...'
+2. Interagir com '...'
+3. Ver o erro
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+Reproduz no CatalogDemo? [ ] Sim  [ ] Não  [ ] Não testado
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+**Código mínimo para reproduzir**
+```swift
+// Trecho mínimo que reproduz o problema
+```
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**Comportamento esperado**
+O que deveria acontecer.
 
-**Additional context**
-Add any other context about the problem here.
+**Comportamento atual**
+O que acontece de fato. Se houver crash, inclua o log ou stack trace.
+
+**Screenshots / vídeos**
+Se aplicável, adicione capturas (ideal: esperado × atual).
+
+**Ambiente**
+- Versão do UIComponents: [ex.: 1.4.0 ou hash do commit]
+- iOS: [ex.: 18.2]
+- Dispositivo / Simulador: [ex.: iPhone 15 Pro, Simulador]
+- Xcode: [ex.: 16.2]
+- Framework: [SwiftUI / UIKit]
+
+**Aparência e acessibilidade**
+- Modo: [Light / Dark]
+- Tamanho de fonte (Dynamic Type): [ex.: padrão, AX3]
+- VoiceOver ativo? [Sim / Não]
+- Orientação: [Retrato / Paisagem]
+- Idioma / direção: [ex.: pt-BR, RTL]
+
+**Contexto adicional**
+Qualquer outra informação relevante (regressão desde a versão X, workaround conhecido etc.).

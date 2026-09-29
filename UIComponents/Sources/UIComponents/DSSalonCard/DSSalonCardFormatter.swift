@@ -192,13 +192,13 @@ enum DSSalonCardFormatter {
 
         decimal.maximumFractionDigits = distanceFractionDigits
 
-        let km = decimal.string(
+        let kilometers = decimal.string(
             from: NSNumber(
                 value: Double(meters) / metersInKilometerDouble
             )
         ) ?? "\(meters / metersInKilometer)"
 
-        return "\(km) km"
+        return "\(kilometers) km"
     }
 
     /// Formats a distance as natural-language text for VoiceOver.
