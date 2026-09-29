@@ -2,29 +2,54 @@ import SwiftUI
 
 // MARK: - DSAlert
 
-/// A custom structural modal dialog overlay used for critical user confirmations,
-/// such as logging out or destructive actions.
+/// Displays a modal dialog for confirmations and potentially destructive actions.
 ///
-/// It layers a white container (`Color.paper`) over a dimmed background, featuring
-/// a semantic line divider configuration to isolate choice boundaries.
+/// Use `DSAlert` when the user needs to review a message and choose between two actions.
+/// The secondary action can be styled as destructive to highlight consequences such as deletion or logout.
+///
+/// ```swift
+/// DSAlert(
+///     title: "Log out?",
+///     message: "You will need to sign in again to access your account.",
+///     primaryButtonTitle: "Cancel",
+///     secondaryButtonTitle: "Log Out",
+///     primaryAction: { },
+///     secondaryAction: { }
+/// )
+/// ```
 public struct DSAlert: View {
+    /// The main headline displayed at the top of the alert.
     let title: String
+
+    /// The message describing the action or its consequences.
     let message: String
+
+    /// The title displayed by the primary action button.
     let primaryButtonTitle: String
+
+    /// The title displayed by the secondary action button.
     let secondaryButtonTitle: String
+
+    /// A Boolean value that determines whether the secondary action uses the destructive style.
+    ///
+    /// Defaults to `true`.
     let isSecondaryDestructive: Bool
+
+    /// The closure executed when the primary button is tapped.
     let primaryAction: () -> Void
+
+    /// The closure executed when the secondary button is tapped.
     let secondaryAction: () -> Void
 
     /// Creates a `DSAlert`.
     /// - Parameters:
-    ///   - title: The main bold headline text.
-    ///   - message: The body text explaining the consequence.
-    ///   - primaryButtonTitle: The text for the main/neutral button (e.g., "Cancelar").
-    ///   - secondaryButtonTitle: The text for the confirm/action button (e.g., "Sair").
-    ///   - isSecondaryDestructive: When `true`, paints the secondary text with `Color.alert` (default `true`).
-    ///   - primaryAction: Closure to run when the primary button is tapped.
-    ///   - secondaryAction: Closure to run when the secondary button is tapped.
+    ///   - title: The main headline displayed at the top of the alert.
+    ///   - message: The message describing the action or its consequences.
+    ///   - primaryButtonTitle: The title displayed by the primary action button.
+    ///   - secondaryButtonTitle: The title displayed by the secondary action button.
+    ///   - isSecondaryDestructive: Whether the secondary action uses the destructive style. Defaults to `true`.
+    ///   - primaryAction: The closure executed when the primary button is tapped.
+    ///   - secondaryAction: The closure executed when the secondary button is tapped.
     public init(
         title: String,
         message: String,
@@ -50,7 +75,7 @@ public struct DSAlert: View {
                     .font(DSFont.sectionHeader)
                     .foregroundColor(DSColor.ink)
                     .multilineTextAlignment(.center)
-                
+
                 Text(message)
                     .font(DSFont.fieldLabel)
                     .foregroundColor(DSColor.ink60)
@@ -61,10 +86,10 @@ public struct DSAlert: View {
             .padding(.top, DSPadding.large)
             .padding(.horizontal, DSPadding.large)
             .padding(.bottom, DSPadding.large)
-            
+
             DSColor.line
                 .frame(height: 1)
-            
+
             HStack(spacing: .zero) {
                 Button(action: primaryAction) {
                     Text(primaryButtonTitle)
@@ -73,13 +98,12 @@ public struct DSAlert: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
                 .buttonStyle(.plain)
-                
+
                 DSColor.line
                     .frame(width: 1)
-                
+
                 Button(action: secondaryAction) {
                     Text(secondaryButtonTitle)
-                        .font(.body)
                         .font(isSecondaryDestructive ? DSFont.description : DSFont.descriptionBold)
                         .foregroundColor(isSecondaryDestructive ? DSColor.alert : DSColor.enamel)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -93,10 +117,14 @@ public struct DSAlert: View {
         .clipShape(
             RoundedRectangle(
                 cornerRadius: DSRadius.mediumHuge,
-                style: .continuous))
-        .shadow(color: DSColor.ink.opacity(0.15),
-                radius: DSRadius.large,
-                x: .zero,
-                y: 8)
+                style: .continuous
+            )
+        )
+        .shadow(
+            color: DSColor.ink.opacity(0.15),
+            radius: DSRadius.large,
+            x: .zero,
+            y: 8
+        )
     }
 }

@@ -1,26 +1,41 @@
 import SwiftUI
 
-// MARK: - Card button style
+// MARK: - DSCardButtonStyle
 
-/// A filled, full-width button style for the actions inside a status-style card
-/// (e.g. ``DSStatusCard``).
+/// Defines a filled, full-width button style for actions displayed inside status-style cards.
 ///
-/// The colors are supplied by the host card's palette rather than fixed tokens,
-/// so the same style adapts to a dark, light, or accent card background. Apply
-/// it ergonomically through ``SwiftUI/ButtonStyle/dsStatusCard(background:foreground:)``:
+/// Use `DSCardButtonStyle` when the button's colors should be inherited from its host container.
+/// The style adapts its foreground and background colors to the provided card palette and reduces opacity while pressed.
 ///
 /// ```swift
-/// HStack { actions }
-///     .buttonStyle(.dsStatusCard(background: palette.actionBackground,
-///                                foreground: palette.actionForeground))
+/// Button("Action") {
+///     performAction()
+/// }
+/// .buttonStyle(
+///     .dsStatusCard(
+///         background: palette.actionBackground,
+///         foreground: palette.actionForeground
+///     )
+/// )
 /// ```
 struct DSCardButtonStyle: ButtonStyle {
-
-    /// Fill behind the button.
+    /// The background color applied to the button.
     let background: Color
 
-    /// Color of the button's label.
+    /// The foreground color applied to the button's label and icons.
     let foreground: Color
+
+    /// Creates a `DSCardButtonStyle`.
+    /// - Parameters:
+    ///   - background: The background color applied to the button.
+    ///   - foreground: The foreground color applied to the button's label and icons.
+    init(
+        background: Color,
+        foreground: Color
+    ) {
+        self.background = background
+        self.foreground = foreground
+    }
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -30,24 +45,32 @@ struct DSCardButtonStyle: ButtonStyle {
             .padding(.vertical, DSPadding.small)
             .padding(.horizontal, DSPadding.medium)
             .frame(maxWidth: .infinity)
-            .background(background,
-                        in: .rect(cornerRadius: DSRadius.control,
-                                  style: .continuous))
+            .background(
+                background,
+                in: .rect(
+                    cornerRadius: DSRadius.control,
+                    style: .continuous
+                )
+            )
             .opacity(configuration.isPressed ? 0.85 : 1)
     }
 }
 
-// MARK: - Ergonomic factory
+// MARK: - Ergonomic Factory
 
 extension ButtonStyle where Self == DSCardButtonStyle {
-
-    /// The filled, full-width action style used inside status-style cards,
-    /// tinted with the card palette's colors.
-    ///
+    /// Creates a card button style using the provided container colors.
     /// - Parameters:
-    ///   - background: Fill behind the button.
-    ///   - foreground: Color of the button's label.
-    static func dsStatusCard(background: Color, foreground: Color) -> DSCardButtonStyle {
-        DSCardButtonStyle(background: background, foreground: foreground)
+    ///   - background: The background color applied to the button.
+    ///   - foreground: The foreground color applied to the button's label and icons.
+    /// - Returns: A `DSCardButtonStyle` configured with the provided colors.
+    static func dsStatusCard(
+        background: Color,
+        foreground: Color
+    ) -> DSCardButtonStyle {
+        DSCardButtonStyle(
+            background: background,
+            foreground: foreground
+        )
     }
 }

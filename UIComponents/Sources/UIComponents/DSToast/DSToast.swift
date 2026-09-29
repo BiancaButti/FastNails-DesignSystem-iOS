@@ -2,25 +2,49 @@ import SwiftUI
 
 // MARK: - DSToast
 
-/// A snackbar-style notification banner that appears over the content to communicate
-/// real-time state updates, such as successful appointment confirmations.
+/// A transient notification banner used to communicate short-lived updates
+/// or feedback over the current content.
 ///
-/// It features a rounded container anchored on the theme's `Color.ink` palette, with a leading
-/// status dot tracking confirmation indicators.
+/// `DSToast` displays a message inside a rounded dark container with a leading
+/// status indicator. The indicator color can be customized to match the type
+/// of feedback being presented.
+///
+/// The toast is presentation-only: it does not manage its own visibility or
+/// dismissal. The caller is responsible for deciding when it should be shown
+/// and removed from the view hierarchy.
+///
+/// ## Example
 ///
 /// ```swift
 /// DSToast(message: "O salão confirmou seu horário.")
 /// ```
+///
+/// ## Custom indicator
+///
+/// The status indicator uses `DSColor.confirmed` by default, but a custom color
+/// can be provided when the notification represents a different state.
+///
+/// ```swift
+/// DSToast(
+///     message: "Seu horário foi atualizado.",
+///     dotColor: DSColor.warning
+/// )
+/// ```
 public struct DSToast: View {
-    /// The message string to be displayed inside the toast.
+    /// The message displayed by the toast.
     let message: String
-    /// The status indicator dot color. Defaults to `Color.confirmed`.
+
+    /// The color of the leading status indicator.
+    ///
+    /// Defaults to `DSColor.confirmed`.
     let dotColor: Color
     
-    /// Creates a `DSToast`.
+    /// Creates a toast notification.
+    ///
     /// - Parameters:
-    ///   - message: The text content conveying the notification message.
-    ///   - dotColor: The tracking indicator dot color (default `Color.confirmed`).
+    ///   - message: The message displayed to the user.
+    ///   - dotColor: The color of the leading status indicator.
+    ///     Defaults to `DSColor.confirmed`.
     public init(
         message: String,
         dotColor: Color = DSColor.confirmed

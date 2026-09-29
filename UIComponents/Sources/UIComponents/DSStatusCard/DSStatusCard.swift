@@ -2,56 +2,147 @@ import SwiftUI
 
 // MARK: - DSStatusCard Component
 
-/// A card that surfaces the state of something (an appointment, a request) with
-/// an eyebrow, a title, supporting detail lines, an optional status badge, and
-/// optional actions.
+/// A card that presents the state and details of an appointment or request.
 ///
-/// The layout adapts to ``DSStatusCardVariant`` read from the environment:
-/// `.expanded` shows the action buttons, `.compact` uses tighter padding and
-/// hides them.
+/// `DSStatusCard` displays an eyebrow, title, supporting details, an optional
+/// ``DSStatusBadge``, and optional action content.
+///
+/// The card adapts its layout according to the ``DSStatusCardVariant`` provided
+/// through the environment:
+///
+/// - `.expanded` uses the standard card spacing and displays actions.
+/// - `.compact` uses tighter spacing and does not display actions.
+///
+/// The card's visual emphasis can also be provided through
+/// `statusCardEmphasis`. When no explicit emphasis is provided, the card
+/// derives its appearance from the booking status.
+///
+/// ## Example
+///
+/// A card with actions:
 ///
 /// ```swift
 /// DSStatusCard(
 ///     eyebrow: "Your next appointment",
 ///     title: "Fri, 28/08 · 14:00",
-///     details: ["Studio Ana Lima · Hands · R$ 35"],
-///     status: DSStatusBadge(title: "Confirmed", status: .confirmed)
+///     details: [
+///         "Studio Ana Lima · Hands · R$ 35"
+///     ],
+///     status: DSStatusBadge(
+///         title: "Confirmed",
+///         status: .confirmed
+///     )
 /// ) {
-///     DSStatusCardButton(title: "Directions") {}
+///     DSStatusCardButton(title: "Directions") {
+///         // Handle action.
+///     }
 /// }
 /// ```
+///
+/// A card without actions:
+///
+/// ```swift
+/// DSStatusCard(
+///     eyebrow: "Previous appointment",
+///     title: "Mon, 18/08 · 10:00",
+///     details: [
+///         "Studio Ana Lima · Hands · R$ 35"
+///     ],
+///     status: DSStatusBadge(
+///         title: "Finished",
+///         status: .finished
+///     )
+/// )
+/// ```
+///
+/// ## Actions
+///
+/// Actions are rendered only when the card uses the `.expanded` variant and
+/// the caller provides action content.
+///
+/// When multiple actions are provided, the card attempts to display them
+/// horizontally. If the available width is insufficient, the layout
+/// automatically switches to a vertical arrangement using `ViewThatFits`.
+///
+/// This allows the action row to adapt to larger Dynamic Type sizes without
+/// requiring the caller to manage the layout.
+///
+/// ## Status and emphasis
+///
+/// When an explicit `statusCardEmphasis` is provided, it takes precedence over
+/// the emphasis inferred from the status.
+///
+/// When the emphasis remains `.standard`, the booking status can determine the
+/// card's semantic appearance. For example, confirmed bookings use the
+/// positive appearance, while declined and cancelled bookings use the critical
+/// appearance.
+///
+/// ## Accessibility
+///
+/// The card keeps its child views as contained accessibility elements, allowing
+/// VoiceOver to navigate through the eyebrow, title, details, status, and
+/// actions according to their semantic roles.
+///
+/// The status badge receives a contextual appearance from the card so that its
+/// foreground and background remain legible against the card's surface.
+///
+/// ## Appearance
+///
+/// The card is intentionally rendered using the light color scheme. This keeps
+/// the component aligned with the Design System's light-only palette,
+/// including controls and other views contained inside the card.
+///
+/// - Note: The caller owns the behavior of the provided action views. The card
+///   is responsible only for their layout and visual styling.
+/// - SeeAlso: ``DSStatusBadge``
+/// - SeeAlso: ``DSStatusCardVariant``
+/// - SeeAlso: ``DSStatusCardEmphasis``
 public struct DSStatusCard<Actions: View>: View {
-    /// The layout density, read from the environment via
-    /// ``SwiftUICore/View/statusCardVariant(_:)``.
+
+    /// The layout density of the card.
+    ///
+    /// The value is provided through the `statusCardVariant` environment key.
+    /// The `.expanded` variant supports actions, while `.compact` uses a
+    /// tighter layout and hides them.
     @Environment(\.statusCardVariant)
     private var variant
 
+    /// The explicitly requested visual emphasis for the card.
+    ///
+    /// The value is resolved together with the optional booking status to
+    /// determine the final card palette.
     @Environment(\.statusCardEmphasis)
     private var emphasis
-    
-    /// The uppercase overline shown above the title.
+
+    /// The uppercase overline displayed above the title.
     private let eyebrow: String
 
-    /// The card's headline.
+    /// The primary headline displayed by the card.
     private let title: String
 
-    /// Supporting lines rendered under the title, one per entry.
+    /// Supporting text lines displayed below the title.
+    ///
+    /// Each element is rendered as a separate line in the same order provided
+    /// by the caller.
     private let details: [String]
 
-    /// The optional status badge, shown as-is under the details.
+    /// The optional status badge displayed below the supporting details.
     private let status: DSStatusBadge?
 
-    /// The action buttons, shown only in the `.expanded` variant.
+    /// The action content supplied by the caller.
+    ///
+    /// Actions are displayed only by the `.expanded` variant.
     private let actions: Actions
 
     /// Creates a status card.
     ///
     /// - Parameters:
-    ///   - eyebrow: The uppercase overline shown above the title.
-    ///   - title: The card's headline.
-    ///   - details: Supporting lines rendered under the title.
-    ///   - status: An optional ready-made ``DSStatusBadge`` to display.
-    ///   - actions: The action buttons, shown only when `.expanded`.
+    ///   - eyebrow: The uppercase overline displayed above the title.
+    ///   - title: The primary headline displayed by the card.
+    ///   - details: Supporting text lines displayed below the title.
+    ///   - status: An optional ``DSStatusBadge`` displayed below the details.
+    ///   - actions: The action content displayed when the card uses the
+    ///     `.expanded` variant.
     public init(
         eyebrow: String,
         title: String,
@@ -66,38 +157,49 @@ public struct DSStatusCard<Actions: View>: View {
         self.actions = actions()
     }
 
-    /// The emphasis actually used to color the card.
+    /// Resolves the visual emphasis actually used by the card.
     ///
-    /// An explicit ``SwiftUICore/View/statusCardEmphasis(_:)`` always wins; when
-    /// left at `.standard`, the status drives the color on its own — `.confirmed`
-    /// promotes the card to the positive (green) appearance, while `.declined`
-    /// and `.cancelled` promote it to the critical (red) one.
+    /// An explicit environment value takes precedence. When the configured
+    /// emphasis is `.standard`, the booking status can determine the semantic
+    /// appearance.
     private var resolvedEmphasis: DSStatusCardEmphasis {
-        DSStatusCardEmphasis.resolved(explicit: emphasis, for: status?.status)
+        DSStatusCardEmphasis.resolved(
+            explicit: emphasis,
+            for: status?.status
+        )
     }
 
-    /// Whether the card should render its action row.
+    /// Indicates whether the action row should be rendered.
     ///
-    /// Actions only exist in the `.expanded` variant, and only when the caller
-    /// actually passed some — a card built without buttons resolves `Actions` to
-    /// `EmptyView`, so the whole row (and its spacing) is dropped, leaving no
-    /// empty gap at the bottom.
+    /// Actions are rendered only in the `.expanded` variant and when the
+    /// generic action content is not `EmptyView`.
     private var hasActions: Bool {
         variant == .expanded && Actions.self != EmptyView.self
     }
 
     public var body: some View {
-        let palette = DSStatusCardPalette.resolve(variant, emphasis: resolvedEmphasis)
+        let palette = DSStatusCardPalette.resolve(
+            variant,
+            emphasis: resolvedEmphasis
+        )
 
-        VStack(alignment: .leading, spacing: DSPadding.small) {
+        VStack(
+            alignment: .leading,
+            spacing: DSPadding.small
+        ) {
             DSStatusCardEyebrow(eyebrow)
-                .foregroundStyle(palette.secondary.opacity(0.7))
+                .foregroundStyle(
+                    palette.secondary.opacity(0.7)
+                )
 
             Text(title)
                 .font(DSFont.title)
                 .foregroundStyle(palette.secondary)
 
-            ForEach(Array(details.enumerated()), id: \.offset) { _, line in
+            ForEach(
+                Array(details.enumerated()),
+                id: \.offset
+            ) { _, line in
                 Text(line)
                     .font(DSFont.inputSupport)
                     .foregroundStyle(palette.secondary)
@@ -105,65 +207,82 @@ public struct DSStatusCard<Actions: View>: View {
 
             if let status {
                 status
-                    .environment(\.statusBadgeOnCard,
-                                 DSStatusBadgeOnCardAppearance(
-                                    foreground: palette.secondary,
-                                    background: palette.secondary.opacity(0.18)))
+                    .environment(
+                        \.statusBadgeOnCard,
+                        DSStatusBadgeOnCardAppearance(
+                            foreground: palette.secondary,
+                            background: palette.secondary.opacity(0.18)
+                        )
+                    )
                     .padding(.top, DSPadding.xsmall)
             }
 
-            // Actions only render when there are some (see `hasActions`), so a
-            // card without buttons skips the row and its top padding entirely —
-            // no empty space is left behind.
-            //
-            // `ViewThatFits` tries the horizontal row first and, if it would
-            // overflow the available width — typically at large Dynamic Type
-            // sizes — falls back to stacking the buttons vertically. Both
-            // branches share the same filled, full-width button style tinted
-            // from the palette.
             if hasActions {
                 ViewThatFits {
-                    HStack(spacing: DSPadding.xsmall) { actions }
-                    VStack(spacing: DSPadding.xsmall) { actions }
+                    HStack(spacing: DSPadding.xsmall) {
+                        actions
+                    }
+
+                    VStack(spacing: DSPadding.xsmall) {
+                        actions
+                    }
                 }
-                .buttonStyle(.dsStatusCard(background: palette.actionBackground,
-                                           foreground: palette.actionForeground))
+                .buttonStyle(
+                    .dsStatusCard(
+                        background: palette.actionBackground,
+                        foreground: palette.actionForeground
+                    )
+                )
                 .padding(.top, DSPadding.small)
             }
         }
-        .padding(variant == .expanded ? DSPadding.medium : DSPadding.small)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(palette.background,
-                    in: .rect(cornerRadius: DSRadius.large,
-                              style: .continuous))
-        // Single-appearance lock: the design system is light-only, so the card
-        // always renders in light mode. Every color above is a fixed token, and
-        // pinning the color scheme to `.light` keeps any nested control on the
-        // same appearance — the iOS dark theme can't alter it.
+        .padding(
+            variant == .expanded
+                ? DSPadding.medium
+                : DSPadding.small
+        )
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
+        .background(
+            palette.background,
+            in: .rect(
+                cornerRadius: DSRadius.large,
+                style: .continuous
+            )
+        )
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)
     }
 }
 
-/// Convenience for a card without action buttons.
+// MARK: - Convenience Initializer
+
 public extension DSStatusCard where Actions == EmptyView {
 
-    /// Creates a status card with no actions.
+    /// Creates a status card without action buttons.
+    ///
+    /// Use this initializer when the card only needs to present information
+    /// and an optional status.
     ///
     /// - Parameters:
-    ///   - eyebrow: The uppercase overline shown above the title.
-    ///   - title: The card's headline.
-    ///   - details: Supporting lines rendered under the title.
-    ///   - status: An optional ready-made ``DSStatusBadge`` to display.
+    ///   - eyebrow: The uppercase overline displayed above the title.
+    ///   - title: The primary headline displayed by the card.
+    ///   - details: Supporting text lines displayed below the title.
+    ///   - status: An optional ``DSStatusBadge`` displayed below the details.
     init(
         eyebrow: String,
         title: String,
         details: [String] = [],
-        status: DSStatusBadge? = nil) {
-        self.init(eyebrow: eyebrow,
-                  title: title,
-                  details: details,
-                  status: status) {
+        status: DSStatusBadge? = nil
+    ) {
+        self.init(
+            eyebrow: eyebrow,
+            title: title,
+            details: details,
+            status: status
+        ) {
             EmptyView()
         }
     }

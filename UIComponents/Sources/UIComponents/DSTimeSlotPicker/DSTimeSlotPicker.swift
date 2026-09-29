@@ -1,6 +1,48 @@
 import SwiftUI
 
 /// A grid-based time slot selection component for the Fast Nails Design System.
+///
+/// `DSTimeSlotPicker` displays a section title followed by a three-column grid
+/// of time slots. Each slot reflects its availability and selection state
+/// through its visual appearance.
+///
+/// The picker does not manage selection state itself. When an available slot
+/// is tapped, the corresponding `DSTimeSlotPickerItem` is passed to
+/// `onSlotSelected`, allowing the caller to update the selection state.
+///
+/// ## Example
+///
+/// ```swift
+/// DSTimeSlotPicker(
+///     sectionTitle: "Tarde",
+///     slots: [
+///         DSTimeSlotPickerItem(
+///             id: "14:00",
+///             time: "14:00",
+///             isSelected: false,
+///             isAvailable: true
+///         ),
+///         DSTimeSlotPickerItem(
+///             id: "14:30",
+///             time: "14:30",
+///             isSelected: false,
+///             isAvailable: false
+///         )
+///     ]
+/// ) { slot in
+///     selectedSlot = slot
+/// }
+/// ```
+///
+/// ## Selection handling
+///
+/// Only available slots can be selected. Tapping an unavailable slot does not
+/// trigger `onSlotSelected`.
+///
+/// The picker does not mutate the provided `DSTimeSlotPickerItem` values.
+/// Selection state is controlled by the caller through the `slots` collection.
+///
+/// - SeeAlso: ``DSTimeSlotPickerItem``
 public struct DSTimeSlotPicker: View {
     private let sectionTitle: String
     private let slots: [DSTimeSlotPickerItem]
@@ -13,11 +55,14 @@ public struct DSTimeSlotPicker: View {
         GridItem(.flexible(), spacing: DSSpacing.md)
     ]
     
-    /// Public initializer structured for the SPM package.
+    /// Creates a time slot picker.
+    ///
     /// - Parameters:
-    ///   - sectionTitle: The descriptive category text above the grid (e.g., "TARDE").
-    ///   - slots: The list of `TimeSlotItem` objects to render inside the grid.
-    ///   - onSlotSelected: Closure executed when an available time slot is tapped.
+    ///   - sectionTitle: The descriptive section title displayed above the
+    ///     grid, such as `"Tarde"`.
+    ///   - slots: The time slots displayed by the picker.
+    ///   - onSlotSelected: The action performed when an available time slot
+    ///     is tapped.
     public init(
         sectionTitle: String,
         slots: [DSTimeSlotPickerItem],
@@ -111,8 +156,11 @@ public struct DSTimeSlotPicker: View {
 
 // MARK: - Helper Shapes
 
-/// Custom shape to draw a neat diagonal strikethrough over unavailable slots.
-/// **Mantenha esta struct aqui, fora da DSTimeSlotPicker mas no mesmo arquivo.**
+/// A horizontal line used to indicate an unavailable time slot.
+///
+/// This shape is an internal visual building block used by
+/// ``DSTimeSlotPicker``. It is not interactive and does not represent a
+/// standalone component.
 struct LineStrikethrough: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()

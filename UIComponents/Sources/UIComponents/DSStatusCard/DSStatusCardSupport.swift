@@ -2,25 +2,34 @@ import SwiftUI
 
 // MARK: - DSStatusCardEyebrow
 
-/// The overline (eyebrow) shown at the very top of a ``DSStatusCard``.
+/// A decorative overline displayed at the top of a ``DSStatusCard``.
 ///
-/// Renders a short, uppercase, letter-spaced label using the `DSFont.etiqueta`
-/// token. It sets the context for the card's title — e.g. "TODAY",
-/// "CONFIRMED" — and stays purely decorative, leaving the spoken content to the
-/// card itself.
+/// `DSStatusCardEyebrow` provides contextual information above the card's
+/// title, such as "Today", "Confirmed", or "Upcoming".
+///
+/// The view applies the Design System's technical label typography, uppercase
+/// transformation, and letter spacing. Callers should provide the text in its
+/// natural casing.
+///
+/// ## Example
 ///
 /// ```swift
 /// DSStatusCardEyebrow("Confirmed")
 /// ```
+///
+/// - Note: The eyebrow is a visual context label. It does not define the
+///   accessibility reading order of the card; the containing
+///   ``DSStatusCard`` is responsible for the card's accessibility structure.
 struct DSStatusCardEyebrow: View {
 
-    /// The label text. Uppercasing and tracking are applied by the view, so
-    /// pass it in its natural casing.
+    /// The text displayed by the eyebrow.
+    ///
+    /// The view applies uppercase styling automatically.
     private let text: String
 
     /// Creates an eyebrow label.
     ///
-    /// - Parameter text: The label text, styled uppercase by the view.
+    /// - Parameter text: The contextual label displayed above the card title.
     init(_ text: String) {
         self.text = text
     }

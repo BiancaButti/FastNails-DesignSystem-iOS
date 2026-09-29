@@ -1,65 +1,117 @@
 import SwiftUI
 
-/// The contract for a tab shown by the ``DSTabBar``.
+/// Defines the contract for a tab displayed by ``DSTabBar``.
 ///
-/// Any app `enum` becomes a tab bar by conforming to this protocol: each `case`
-/// is a tab, and the tab order follows the order of `allCases`.
+/// Conform an application `enum` to `DSTabItem` to describe the tabs available
+/// in the application's tab-based navigation.
+///
+/// Each enum case represents one tab. The order of the cases in `allCases`
+/// determines the order in which the tabs are rendered by ``DSTabBar`` and
+/// ``DSTabBarView``.
+///
+/// The protocol provides the tab's localized title, unselected icon, and
+/// optionally a different icon for the selected state.
+///
+/// ## Example
 ///
 /// ```swift
 /// enum AppTab: DSTabItem {
-///     case home, bookings, profile
+///     case home
+///     case bookings
+///     case profile
 ///
 ///     var title: LocalizedStringKey {
 ///         switch self {
-///         case .home: "Home"
-///         case .bookings: "Bookings"
-///         case .profile: "Profile"
+///         case .home:
+///             "Home"
+///         case .bookings:
+///             "Bookings"
+///         case .profile:
+///             "Profile"
 ///         }
 ///     }
 ///
 ///     var icon: Image {
 ///         switch self {
-///         case .home: Image(systemName: "house")
-///         case .bookings: Image(systemName: "calendar")
-///         case .profile: Image(systemName: "person.crop.circle")
+///         case .home:
+///             Image(systemName: "house")
+///         case .bookings:
+///             Image(systemName: "calendar")
+///         case .profile:
+///             Image(systemName: "person.crop.circle")
 ///         }
 ///     }
 ///
-///     // `selectedIcon` is optional — without it, the selected icon matches `icon`.
 ///     var selectedIcon: Image {
 ///         switch self {
-///         case .home: Image(systemName: "house.fill")
-///         case .bookings: Image(systemName: "calendar")
-///         case .profile: Image(systemName: "person.crop.circle.fill")
+///         case .home:
+///             Image(systemName: "house.fill")
+///         case .bookings:
+///             Image(systemName: "calendar")
+///         case .profile:
+///             Image(systemName: "person.crop.circle.fill")
 ///         }
 ///     }
 /// }
 /// ```
 ///
-/// - Note: `Identifiable` is already satisfied by the default extension
-///   (`id == self`), so the `enum` only needs to provide `title`, `icon`, and —
-///   optionally — `selectedIcon`.
+/// ## Identity
+///
+/// `DSTabItem` inherits from `Identifiable`, but conforming types do not need
+/// to implement `id` manually. The default implementation uses the enum case
+/// itself as its identity.
+///
+/// This works because `DSTabItem` also requires `Hashable`.
+///
+/// ## Selected Icon
+///
+/// A tab can provide a dedicated ``selectedIcon`` for its selected state.
+///
+/// When no custom implementation is provided, the default implementation
+/// returns ``icon``. This makes `selectedIcon` effectively optional while
+/// keeping the protocol requirement explicit and predictable.
+///
+/// ## Localization
+///
+/// The tab title uses `LocalizedStringKey`, allowing callers to provide
+/// localization keys directly while retaining SwiftUI's localization support.
+///
+/// - SeeAlso: ``DSTabBar``
+/// - SeeAlso: ``DSTabBarView``
+/// - SeeAlso: ``DSTabBarButton``
 public protocol DSTabItem: Hashable, CaseIterable, Identifiable {
 
-    /// Label shown below the icon. Use `LocalizedStringKey` to get automatic
-    /// localization.
+    /// The localized label displayed below the tab's icon.
+    ///
+    /// Use a `LocalizedStringKey` so the tab title can be resolved through
+    /// SwiftUI's localization system.
     var title: LocalizedStringKey { get }
 
-    /// The tab's icon in the unselected state.
+    /// The icon displayed when the tab is not selected.
     var icon: Image { get }
 
-    /// The icon shown when the tab is selected.
+    /// The icon displayed when the tab is selected.
     ///
-    /// Optional: without a custom implementation, the default extension returns
-    /// the same value as ``icon``.
+    /// If the conforming type does not provide a custom implementation,
+    /// ``DSTabItem/selectedIcon`` falls back to ``DSTabItem/icon``.
     var selectedIcon: Image { get }
 }
 
 public extension DSTabItem {
 
-    /// Uses the case itself as identity, so no manual `id` is needed.
-    var id: Self { self }
+    /// Uses the enum case itself as the tab's stable identity.
+    ///
+    /// Because conforming types are required to be `Hashable`, no separate
+    /// identifier property is necessary.
+    var id: Self {
+        self
+    }
 
-    /// Default fallback: when a tab defines no selected icon, it reuses ``icon``.
-    var selectedIcon: Image { icon }
+    /// Uses the unselected icon for the selected state by default.
+    ///
+    /// Override this property when the selected tab should use a different
+    /// icon, such as a filled SF Symbol.
+    var selectedIcon: Image {
+        icon
+    }
 }

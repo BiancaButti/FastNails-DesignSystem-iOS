@@ -2,47 +2,47 @@ import SwiftUI
 
 // MARK: - DSInfoCard
 
-/// A structural information card that groups contextual scheduling details — typically split
-/// into specific sections like "When", "Who", or "Where" over a clean background.
+/// Groups contextual information inside a styled container with a section label.
 ///
-/// The card uses `Color.paper` as its background and `Color.line`
-/// as its stroke color by default to subtly elevate relevant transaction tokens.
+/// Use `DSInfoCard` to organize related details such as scheduling, customer, or location information.
+/// The card supports custom alignment, background, border color, and arbitrary SwiftUI content.
 ///
 /// ```swift
 /// DSInfoCard(title: "When") {
-///     Text("Hoje, terça-feira")
-///         .font(.headline)
-///     Text("16:00 às 16:30")
-///         .font(.subheadline)
+///     Text("Today, Tuesday")
+///     Text("16:00 to 16:30")
 /// }
 /// ```
 ///
 /// ## Accessibility
-/// The upper section label is set to mono-spaced tracking to facilitate scanning by assistive tools.
-/// VoiceOver reads straight through the inner stack contents dynamically.
+/// The title and card content remain available to assistive technologies as separate text elements.
 public struct DSInfoCard<Content: View>: View {
+    /// The view content displayed inside the card.
     @ViewBuilder let content: () -> Content
 
-    /// The category descriptor string displayed above the card (e.g., "QUANDO", "QUEM", "ONDE").
+    /// The section title displayed above the card content.
     let title: String
-    /// Horizontal alignment of the inner content elements.
+
+    /// The horizontal alignment applied to the card's content.
     let alignment: HorizontalAlignment
-    /// Background color. When `nil`, defaults to the theme's `paper` token (#FFFFFF).
+
+    /// The custom background color applied to the card.
+    ///
+    /// When `nil`, the card uses `DSColor.paper`.
     let background: Color?
-    /// Border stroke color. When `nil`, defaults to the theme's `line` token (#D9D0D3).
+
+    /// The custom border color applied to the card.
+    ///
+    /// When `nil`, the card uses `DSColor.line`.
     let borderColor: Color?
 
     /// Creates a `DSInfoCard`.
     /// - Parameters:
-    ///   - title: The localized section text to appear as a small upper tracker header.
-    ///   - alignment: Horizontal alignment of inner items (default `.leading`).
-    ///   - spacing: Vertical space block between children (default 8 pt).
-    ///   - padding: Inner container inset padding (default 16 pt).
-    ///   - cornerRadius: Inner stroke continuous clipping radius (default 16 pt).
-    ///   - background: Background tint color. Set to `nil` for default white paper token.
-    ///   - borderColor: Container stroke border tint. Set to `nil` for default light gray line token.
-    ///   - borderWidth: Inner overlay outline thickness (default 1 pt).
-    ///   - content: The underlying presentation view content block.
+    ///   - title: The section title displayed above the card content.
+    ///   - alignment: The horizontal alignment applied to the card's content. Defaults to `.leading`.
+    ///   - background: The custom background color applied to the card. Defaults to `nil`, which uses `DSColor.paper`.
+    ///   - borderColor: The custom border color applied to the card. Defaults to `nil`, which uses `DSColor.line`.
+    ///   - content: The view builder that provides the content displayed inside the card.
     public init(
         title: String,
         alignment: HorizontalAlignment = .leading,
@@ -58,7 +58,10 @@ public struct DSInfoCard<Content: View>: View {
     }
 
     private var shape: RoundedRectangle {
-        RoundedRectangle(cornerRadius: DSRadius.large, style: .continuous)
+        RoundedRectangle(
+            cornerRadius: DSRadius.large,
+            style: .continuous
+        )
     }
 
     public var body: some View {
@@ -67,19 +70,25 @@ public struct DSInfoCard<Content: View>: View {
                 .font(DSFont.badge)
                 .foregroundColor(DSColor.ink60)
                 .tracking(DSTracking.upperTag)
-            
+
             VStack(alignment: alignment, spacing: DSSpacing.sm) {
                 content()
             }
             .padding(DSPadding.regular)
-            .frame(maxWidth: .infinity,
-                   alignment: Alignment(
+            .frame(
+                maxWidth: .infinity,
+                alignment: Alignment(
                     horizontal: alignment,
-                    vertical: .center))
+                    vertical: .center
+                )
+            )
             .background(background ?? DSColor.paper)
             .clipShape(shape)
             .overlay(
-                shape.strokeBorder(borderColor ?? DSColor.line, lineWidth: DSBorder.thin)
+                shape.strokeBorder(
+                    borderColor ?? DSColor.line,
+                    lineWidth: DSBorder.thin
+                )
             )
         }
     }

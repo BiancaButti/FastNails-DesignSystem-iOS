@@ -2,11 +2,10 @@ import SwiftUI
 
 // MARK: - DSOTPField
 
-/// One-time code field, rendered as separate boxes per digit.
+/// A one-time code field that renders each digit in a separate visual box.
 ///
-/// Draws `length` boxes side by side and captures input through a single
-/// hidden `TextField` behind them. Only digits are accepted, and the value
-/// is clamped to `length`.
+/// Use `DSOTPField` for verification codes and other short numeric credentials.
+/// Input is captured by a single text field, restricted to digits, limited to `length`, and automatically reported through `onComplete` when the code is complete.
 ///
 /// ```swift
 /// @State private var code = ""
@@ -20,61 +19,56 @@ import SwiftUI
 /// )
 /// ```
 ///
-/// ## Behaviour
-/// - Tapping any box focuses the hidden field and raises the numeric keyboard
-/// - A blinking caret marks the active box
-/// - Non-digit characters are filtered out as they arrive
-/// - `onComplete` fires once per completed code, not on every keystroke
-///
 /// ## Accessibility
-/// **The boxes are decoration.** The real control is the hidden text field,
-/// which stays reachable by VoiceOver — it already knows how to be a text
-/// field, announce insertions and raise the keyboard.
-///
-/// The value is read digit by digit ("1 2 3 4 5 6") so it is not spoken as
-/// one large number.
+/// The visual digit boxes are hidden from assistive technologies and the underlying text field provides the accessible interaction.
+/// The entered code is exposed digit by digit, while validation feedback is exposed as the field's accessibility hint.
 public struct DSOTPField: View {
     
     @Environment(\.dsTheme) private var theme
     
     /// The code typed so far. Digits only, at most `length` characters.
     @Binding var code: String
-    
-    /// Fires `onComplete` exactly once per completed code.
+
+    /// Tracks whether the current code has already triggered `onComplete`.
+    ///
+    /// Deleting a digit resets the completion state and allows the callback to fire again.
     @State private var completion = DSOTPFieldCompletionTracker()
-    
+
+    /// Controls focus for the underlying text field and determines whether the active digit box is displayed.
     @FocusState private var isFocused: Bool
 
-    /// Label shown above the boxes.
+    /// The label displayed above the code field and exposed as its accessibility label.
     let label: String
 
-    /// Error message shown below the field. Takes priority over `successMessage`.
+    /// An optional validation message displayed below the field using the failure tone.
+    ///
+    /// When both error and success messages are provided, the error message takes priority.
     var errorMessage: String?
 
-    /// Success message shown below the field.
+    /// An optional validation message displayed below the field using the success tone.
+    ///
+    /// This message is ignored when a non-empty `errorMessage` is provided.
     var successMessage: String?
 
-    /// Called once the code reaches `length` digits, so the caller can verify
-    /// without waiting for a button tap.
+    /// The closure executed once when the code reaches the configured `length`.
+    ///
+    /// The callback receives the complete numeric code and fires only once for each completed code.
+    /// Deleting a digit rearms the callback for the next completion.
     var onComplete: ((String) -> Void)?
 
-    /// Number of digits. Clamped to at least 1. Defaults to 6.
+    /// The number of digits displayed and accepted by the field.
+    ///
+    /// Values below `1` are automatically clamped to `1`.
     private let length: Int
 
     /// Creates a one-time code field.
-    ///
     /// - Parameters:
-    ///   - label: Text shown above the boxes and used as the field's
-    ///     accessibility label.
-    ///   - code: Binding to the entered code. Kept digits-only and clamped to
-    ///     `length`; non-digit input is filtered out as it arrives.
-    ///   - length: Number of digit boxes. Clamped to at least 1. Defaults to 6.
-    ///   - errorMessage: Message shown below the field in the failure tone.
-    ///     Takes priority over `successMessage`.
-    ///   - successMessage: Message shown below the field in the success tone.
-    ///   - onComplete: Called once with the full code the moment it reaches
-    ///     `length` digits, so the caller can verify without a button tap. Fires
-    ///     once per completed code; deleting a digit rearms it.
+    ///   - label: The text displayed above the field and used as its accessibility label.
+    ///   - code: A binding containing the entered numeric code. Non-digit characters are filtered out and the value is limited to `length` characters.
+    ///   - length: The number of digit boxes displayed and the maximum number of accepted digits. Values below `1` are clamped to `1`. Defaults to `6`.
+    ///   - errorMessage: An optional failure message displayed below the field. Takes priority over `successMessage`.
+    ///   - successMessage: An optional success message displayed below the field when no error message is present.
+    ///   - onComplete: An optional closure called once when the code reaches `length` digits. Deleting a digit allows the callback to fire again for the next completed code.
     public init(
         label: String,
         code: Binding<String>,
@@ -91,26 +85,29 @@ public struct DSOTPField: View {
         self.onComplete = onComplete
     }
 
+    /// Resolves the validation feedback currently displayed by the field.
+    ///
+    /// A non-empty error message takes precedence over a success message.
     private var feedback: (message: String, tone: DSFeedbackTone)? {
         if let errorMessage, !errorMessage.isEmpty {
             return (errorMessage, .failure)
         }
+
         if let successMessage, !successMessage.isEmpty {
             return (successMessage, .success)
         }
+
         return nil
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: DSSpacing.sm) {
-
             Text(label)
                 .font(theme.labelFont)
                 .foregroundStyle(theme.secondaryColor)
                 .accessibilityHidden(true)
 
             ZStack {
-                // Decoration. The boxes show the value; they do not hold it.
                 HStack(spacing: DSSpacing.sm) {
                     ForEach(0..<length, id: \.self) { index in
                         digitBox(at: index)
@@ -118,9 +115,6 @@ public struct DSOTPField: View {
                 }
                 .accessibilityHidden(true)
 
-                // The real control. Invisible, but reachable: it already
-                // behaves like a text field for VoiceOver and raises the
-                // keyboard on its own.
                 TextField("", text: $code)
                     .keyboardType(.numberPad)
                     .textContentType(.oneTimeCode)
@@ -130,72 +124,125 @@ public struct DSOTPField: View {
                     .tint(.clear)
                     .accessibilityLabel(label)
                     .accessibilityValue(spokenValue)
-                    .accessibilityHint(feedback?.message ?? String(localized: "otpFieldAccessibilityHint", bundle: .module))
+                    .accessibilityHint(
+                        feedback?.message
+                            ?? String(
+                                localized: "otpFieldAccessibilityHint",
+                                bundle: .module
+                            )
+                    )
                     .onChange(of: code) { newValue in
                         handleChange(newValue)
                     }
             }
             .contentShape(Rectangle())
-            .onTapGesture { isFocused = true }
+            .onTapGesture {
+                isFocused = true
+            }
 
             if let feedback {
-                DSFeedbackLabel(message: feedback.message, tone: feedback.tone)
+                DSFeedbackLabel(
+                    message: feedback.message,
+                    tone: feedback.tone
+                )
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(
+            maxWidth: .infinity,
+            alignment: .leading
+        )
     }
 
-    /// Digit by digit, so it is not read as one large number.
+    /// Returns the entered code formatted for digit-by-digit VoiceOver announcements.
     private var spokenValue: String {
         code.isEmpty
-            ? String(localized: "otpFieldAccessibilityEmpty", bundle: .module)
+            ? String(
+                localized: "otpFieldAccessibilityEmpty",
+                bundle: .module
+            )
             : code.map(String.init).joined(separator: " ")
     }
 
+    /// Sanitizes changed input and triggers completion when the code becomes complete.
+    /// - Parameter newValue: The latest value reported by the underlying text field.
     private func handleChange(_ newValue: String) {
-        let digits = DSOTPFieldInput.sanitize(newValue, length: length)
-        if code != digits { code = digits }
+        let digits = DSOTPFieldInput.sanitize(
+            newValue,
+            length: length
+        )
 
-        if completion.shouldComplete(digits, length: length) {
+        if code != digits {
+            code = digits
+        }
+
+        if completion.shouldComplete(
+            digits,
+            length: length
+        ) {
             onComplete?(digits)
         }
     }
 
     // MARK: - Digit box
 
+    /// Renders the visual representation of a single code digit.
+    /// - Parameter index: The zero-based position of the digit within the code.
     @ViewBuilder
     private func digitBox(at index: Int) -> some View {
         let characters = Array(code)
-        let character = index < characters.count ? String(characters[index]) : ""
-        // Only the next empty box is active. A full code has no active box.
-        let isCurrent = isFocused && code.count < length && index == code.count
-        let feedbackColor = feedback.map { $0.tone.color(for: theme) }
+        let character = index < characters.count
+            ? String(characters[index])
+            : ""
 
-        let border: Color = feedbackColor ?? (isCurrent ? theme.brandColor : theme.borderColor)
-        let borderWidth: CGFloat = (feedbackColor != nil || isCurrent) ? 2 : 1
+        let isCurrent =
+            isFocused &&
+            code.count < length &&
+            index == code.count
+
+        let feedbackColor = feedback.map {
+            $0.tone.color(for: theme)
+        }
+
+        let border: Color =
+            feedbackColor
+            ?? (isCurrent ? theme.brandColor : theme.borderColor)
+
+        let borderWidth: CGFloat =
+            (feedbackColor != nil || isCurrent) ? 2 : 1
 
         ZStack {
-            RoundedRectangle(cornerRadius: DSRadius.control)
-                .fill(theme.surfaceColor)
-                .overlay {
-                    RoundedRectangle(cornerRadius: DSRadius.control)
-                        .stroke(border, lineWidth: borderWidth)
-                }
+            RoundedRectangle(
+                cornerRadius: DSRadius.control
+            )
+            .fill(theme.surfaceColor)
+            .overlay {
+                RoundedRectangle(
+                    cornerRadius: DSRadius.control
+                )
+                .stroke(
+                    border,
+                    lineWidth: borderWidth
+                )
+            }
 
             if character.isEmpty && isCurrent {
                 DSOTPFieldBlinkingCaret(
                     color: theme.brandColor,
-                    height: DSSize.xhuge * 0.45)
+                    height: DSSize.xhuge * 0.45
+                )
             } else {
                 Text(character)
                     .font(DSFont.codeDigit)
-                    .foregroundStyle(feedbackColor ?? theme.titleColor)
+                    .foregroundStyle(
+                        feedbackColor ?? theme.titleColor
+                    )
             }
         }
         .frame(maxWidth: .infinity)
         .frame(height: DSSize.xhuge)
-        .animation(.easeInOut(duration: 0.15), value: isCurrent)
+        .animation(
+            .easeInOut(duration: 0.15),
+            value: isCurrent
+        )
     }
 }
-
-

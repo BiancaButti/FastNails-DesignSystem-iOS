@@ -1,59 +1,55 @@
 import SwiftUI
 
-/// A highly flexible, decoupled card component designed for Design Systems.
+// MARK: - DSMerchantCard
+
+/// A flexible card that presents merchant media, pricing information, and custom tags.
 ///
-/// `DSMerchantCard` acts as a purely visual container for merchants, salons, or products.
-/// It delegates data modeling, image fetching, and tag rendering architectures to the client application
-/// while natively handling a paginated horizontal photo carousel.
+/// Use `DSMerchantCard` to display salons, merchants, products, or similar visual listings.
+/// It supports a single media view or a paginated horizontal carousel while leaving image loading and tag presentation to the caller.
 ///
-/// ### Usage Example (Single Image)
 /// ```swift
 /// DSMerchantCard(
 ///     title: "Espaço Camila",
 ///     subtitle: "A partir de R$ 45",
 ///     textPrice: "800 m"
 /// ) {
-///     Image("salon_cover").resizable().scaledToFill()
+///     Image("salon_cover")
+///         .resizable()
+///         .scaledToFill()
 /// } tagsContent: {
-///     Text("Espaço dela").font(.caption).background(Color.gray)
-/// }
-/// ```
-///
-/// ### Usage Example (Carousel Mode)
-/// ```swift
-/// DSMerchantCard(
-///     title: "Studio Ana Lima",
-///     subtitle: "A partir de R$ 35",
-///     textPrice: "Available today",
-///     isCarousel: true
-/// ) {
-///     Image("photo_1").resizable().scaledToFill()
-///     Image("photo_2").resizable().scaledToFill()
-///     Image("photo_3").resizable().scaledToFill()
-/// } tagsContent: {
-///     Text("Premium").font(.caption)
+///     Text("Premium")
 /// }
 /// ```
 public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
+    /// The primary title displayed below the media area.
     private let title: String
+
+    /// The secondary highlighted text displayed below the title, typically used for pricing.
     private let subtitle: String
+
+    /// Optional supporting text displayed below the subtitle, such as distance or availability.
     private let textPrice: String?
+
+    /// The media content displayed at the top of the card, either as a single view or carousel pages.
     private let headerContent: HeaderContent
+
+    /// The custom content displayed below the card's textual information.
     private let tagsContent: TagsContent
+
+    /// A Boolean value that determines whether the media content is presented as a paginated carousel.
     private let isCarousel: Bool
 
-    /// The fixed height of the media area.
+    /// The fixed height of the card's media area.
     private let mediaHeight: CGFloat = 140
 
-    /// Initializes a new `DSMerchantCard`.
-    ///
+    /// Creates a `DSMerchantCard`.
     /// - Parameters:
-    ///   - title: The bold primary header text (capped to 1 line).
-    ///   - subtitle: The secondary highlighted text (renders in the brand price color).
-    ///   - textPrice: Optional tertiary label for auxiliary data (e.g., distance or dynamic availability).
-    ///   - isCarousel: When `true`, embeds header elements into a horizontal `TabView` with page indicators. Default is `false`.
-    ///   - headerContent: A `@ViewBuilder` closure supplying the card media layout (single image or multiple page elements).
-    ///   - tagsContent: A `@ViewBuilder` closure injecting the local tag elements.
+    ///   - title: The primary title displayed below the media area.
+    ///   - subtitle: The secondary highlighted text, typically used for pricing.
+    ///   - textPrice: Optional supporting text for auxiliary information such as distance or availability.
+    ///   - isCarousel: Whether the media content should be presented as a paginated horizontal carousel. Defaults to `false`.
+    ///   - headerContent: A view builder that provides the card's media content. When `isCarousel` is `true`, each child view represents a carousel page.
+    ///   - tagsContent: A view builder that provides custom tag or metadata content displayed below the textual information.
     public init(
         title: String,
         subtitle: String,
@@ -72,8 +68,6 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: .zero) {
-
-            // Media Area: applies page style automatically if isCarousel is active
             Group {
                 if isCarousel {
                     TabView {
@@ -89,7 +83,6 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
             .background(DSColor.surface)
             .clipped()
 
-            // Text Body
             VStack(alignment: .leading, spacing: DSSpacing.xs) {
                 Text(title)
                     .font(DSFont.descriptionBold)
@@ -116,12 +109,18 @@ public struct DSMerchantCard<HeaderContent: View, TagsContent: View>: View {
         .clipShape(
             RoundedRectangle(
                 cornerRadius: DSRadius.large,
-                style: .continuous))
+                style: .continuous
+            )
+        )
         .overlay(
             RoundedRectangle(
                 cornerRadius: DSRadius.large,
-                style: .continuous)
-                .stroke(DSColor.line, lineWidth: 1)
+                style: .continuous
+            )
+            .stroke(
+                DSColor.line,
+                lineWidth: 1
+            )
         )
         .environment(\.colorScheme, .light)
         .accessibilityElement(children: .contain)

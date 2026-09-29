@@ -1,22 +1,46 @@
 import SwiftUI
+
 // MARK: - DSMenuRow
 
-/// A standard list row used inside menu cards to display an icon, a title,
-/// and optional trailing status elements like indicators or counts.
+/// A standard interactive menu row that displays a leading icon, title, and optional trailing content.
+///
+/// Use `DSMenuRow` inside grouped menu containers such as ``DSMenuList`` to represent navigation
+/// or action items. The row can optionally display a badge and a trailing chevron.
+///
+/// ```swift
+/// DSMenuRow(
+///     icon: Image(systemName: "person"),
+///     title: "Profile"
+/// ) {
+///     openProfile()
+/// }
+/// ```
+///
+/// ## Accessibility
+/// The entire row is exposed as a single button and uses the provided title as its accessible label.
 public struct DSMenuRow: View {
+    /// The image or SF Symbol displayed at the leading edge of the row.
     let icon: Image
+
+    /// The primary descriptive text displayed in the row.
     let title: String
+
+    /// Optional trailing text used to display a status, count, version, or other supplementary information.
     let badgeText: String?
+
+    /// A Boolean value that determines whether the trailing navigation chevron is displayed.
     let showChevron: Bool
+
+    /// The closure executed when the row is tapped or activated.
     let action: () -> Void
 
     /// Creates a `DSMenuRow`.
     /// - Parameters:
-    ///   - icon: The image or SF Symbol to align on the leading edge.
-    ///   - title: The descriptive title text.
-    ///   - badgeText: Optional text to show as a status or count on the trailing edge (e.g. "2", "1.0.0").
-    ///   - showChevron: Whether to show the navigation arrow on the right (default `true`).
-    ///   - action: The closure to execute when the row is tapped.
+    ///   - icon: The image or SF Symbol displayed at the leading edge.
+    ///   - title: The descriptive title text displayed in the row.
+    ///   - badgeText: Optional trailing text used for a status, count, version, or other supplementary information.
+    ///   - showChevron: Whether to display the trailing navigation chevron. Defaults to `true`.
+    ///   - action: The closure executed when the row is tapped. Defaults to an empty action.
     public init(
         icon: Image,
         title: String,
@@ -37,21 +61,23 @@ public struct DSMenuRow: View {
                 icon
                     .resizable()
                     .scaledToFit()
-                    .frame(width: DSSize.large,
-                           height: DSSize.large)
-                
+                    .frame(
+                        width: DSSize.large,
+                        height: DSSize.large
+                    )
+
                 Text(title)
                     .font(.body)
                     .foregroundColor(DSColor.ink)
-                
+
                 Spacer()
-                
+
                 if let badgeText {
                     Text(badgeText)
                         .font(.subheadline)
                         .foregroundColor(DSColor.ink60)
                 }
-                
+
                 if showChevron {
                     Image(systemName: "chevron.right")
                         .font(DSFont.fieldLabel)
