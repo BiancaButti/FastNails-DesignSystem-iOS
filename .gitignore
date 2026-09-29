@@ -1,11 +1,35 @@
+# macOS
 .DS_Store
+
+# SwiftPM
+# Package.resolved É versionado de propósito (builds reproduzíveis no CI e no time)
 .build/
+/Packages
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
 
 # Xcode / SPM user-specific state
-.swiftpm/xcode/xcuserdata/
-.swiftpm/xcode/package.xcworkspace/xcuserdata/
 xcuserdata/
 *.xcuserstate
+DerivedData/
+*.xcresult
+*.moved-aside
+
+# SourceKit-LSP / editores
+.index-build/
+.sourcekit-lsp/
+.vscode/
+.idea/
+*.swp
+
+# DocC
+*.doccarchive
+.docc-build/
+
+# Ruby (generate_project.rb)
+.bundle/
+vendor/bundle/
 
 # Catálogo gerado por generate_project.rb (não versionar — é reproduzível)
 UIComponents/CatalogDemo/CatalogDemo.xcodeproj/
