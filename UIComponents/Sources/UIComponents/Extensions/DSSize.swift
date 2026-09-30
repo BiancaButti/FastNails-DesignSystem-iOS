@@ -42,6 +42,9 @@ public enum DSSize {
     /// 56 pt — jumbo. Large fields or prominent action bars.
     public static let jumbo: CGFloat = 56
     
+    /// 80 pt — avatar. Standard dimensions for profile pictures and large thumbnails.
+    public static let avatar: CGFloat = 80
+    
     /// 290 pt — containerSmall. Used to bound widths for standard content cards, narrow dialogs, or side sheets.
     public static let containerSmall: CGFloat = 290
 }
