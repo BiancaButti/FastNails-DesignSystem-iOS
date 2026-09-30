@@ -35,6 +35,8 @@ The package is built around three principles:
 ## ✨ Highlights
 
 - 🧩 **29 ready-made components** — buttons, forms, feedback, cards, navigation, search and profile UI
+=======
+- 🧩 **30+ ready-made components** — buttons, forms, feedback, cards, navigation, search and profile UI
 - 🎨 **Fully tokenized** — one `DSTheme` drives every color and font used by every component
 - ♿ **Accessible by default** — VoiceOver labels/order, Dynamic Type, and a palette with documented WCAG contrast ratios
 - 🔤 **Custom typography with automatic fallback** — three font families that gracefully fall back to system fonts until the custom `.ttf` files ship

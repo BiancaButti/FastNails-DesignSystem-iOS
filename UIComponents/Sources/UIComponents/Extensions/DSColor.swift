@@ -145,5 +145,6 @@ public enum DSColor {
     /// A light amber/orange background accent layer for warnings or pending states (Amber with 15% opacity).
     public static let warningHighlight = amber.opacity(0.15)
 
+    public static let appBackground = Color(hex: 0xFBF7F8)
 
 }
