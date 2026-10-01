@@ -231,8 +231,8 @@ public struct DSTextField: View {
             )
             .foregroundStyle(theme.secondaryColor)
             .frame(
-                width: DSSize.touchTarget,
-                height: DSSize.touchTarget
+                width: DSSize.large,
+                height: DSSize.large
             )
             .contentShape(Rectangle())
         }
