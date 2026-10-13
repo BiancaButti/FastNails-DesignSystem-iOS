@@ -291,7 +291,7 @@ public struct DSTextField: View {
         }
 
         if isFocused {
-            return theme.brandColor
+            return theme.borderColor
         }
 
         return theme.borderColor
