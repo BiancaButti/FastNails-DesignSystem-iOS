@@ -65,6 +65,19 @@ build_file = project.new(Xcodeproj::Project::Object::PBXBuildFile)
 build_file.product_ref = product_dep
 app_target.frameworks_build_phase.files << build_file
 
+# SwiftLint Run Script Phase
+swiftlint_phase = app_target.new_shell_script_build_phase('SwiftLint')
+swiftlint_phase.shell_script = <<~SCRIPT
+  if which swiftlint > /dev/null; then
+    cd "$SRCROOT/../.."
+    swiftlint
+  else
+    echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
+  fi
+SCRIPT
+# Move SwiftLint para rodar antes da compilação
+app_target.build_phases.move(swiftlint_phase, 0)
+
 # Scheme executável
 scheme = Xcodeproj::XCScheme.new
 scheme.add_build_target(app_target)
