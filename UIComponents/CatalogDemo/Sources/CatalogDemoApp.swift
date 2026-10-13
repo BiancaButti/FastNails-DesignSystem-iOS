@@ -542,7 +542,6 @@ private struct DSLinkShowcase: View {
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(white: 0.08))
         }
 }
 

@@ -84,13 +84,6 @@ public struct DSLinkNote: View {
             }
             .buttonStyle(.plain)
             .padding(DSPadding.controlPadding)
-            .background(
-                DSColor.surface,
-                in: RoundedRectangle(
-                    cornerRadius: DSRadius.control,
-                    style: .continuous
-                )
-            )
 
         case .text(let format, let links):
             Text(
@@ -100,7 +93,7 @@ public struct DSLinkNote: View {
                 )
             )
             .font(DSFont.inputSupport)
-            .foregroundStyle(.primary)
+            .foregroundStyle(DSColor.ink)
             .tint(DSColor.link)
             .multilineTextAlignment(.center)
             .environment(
@@ -118,13 +111,6 @@ public struct DSLinkNote: View {
                 }
             )
             .padding(DSPadding.controlPadding)
-            .background(
-                DSColor.surface,
-                in: RoundedRectangle(
-                    cornerRadius: DSRadius.control,
-                    style: .continuous
-                )
-            )
         }
     }
 
