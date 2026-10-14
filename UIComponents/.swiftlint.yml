@@ -1,0 +1,79 @@
+# SwiftLint Configuration
+# https://realm.github.io/SwiftLint/
+
+# Pastas a serem analisadas
+included:
+  - UIComponents/Sources
+  - UIComponents/Tests
+
+# Pastas e arquivos a serem ignorados
+excluded:
+  - .build
+  - UIComponents/CatalogDemo/CatalogDemo.xcodeproj
+  - Pods
+  - CatalogDemo/build
+  - DerivedData
+  - vendor
+  - Carthage
+
+# Regras desabilitadas
+disabled_rules:
+  - trailing_whitespace
+
+# Regras habilitadas opcionalmente
+opt_in_rules:
+  - empty_count
+  - explicit_init
+  - first_where
+  - sorted_first_last
+  - closure_spacing
+
+# Comprimento de linha
+line_length:
+  warning: 140
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+
+# Comprimento de arquivo
+file_length:
+  warning: 500
+  error: 1000
+  ignore_comment_only_lines: true
+
+# Complexidade de função
+function_body_length:
+  warning: 50
+  error: 100
+
+# Comprimento de tipo
+type_body_length:
+  warning: 300
+  error: 500
+
+# Comprimento de nome
+identifier_name:
+  min_length:
+    warning: 2
+    error: 1
+  max_length:
+    warning: 50
+    error: 60
+  excluded:
+    - id
+    - x
+    - y
+    - z
+
+# Número de argumentos em funções
+function_parameter_count:
+  warning: 6
+  error: 8
+
+# Complexidade ciclomática
+cyclomatic_complexity:
+  warning: 10
+  error: 20
+
+# Reporter usado (xcode para integração com Xcode)
+reporter: "xcode"

@@ -285,7 +285,8 @@ private struct DSTextFieldShowcase: View {
                     label: "Nome",
                     placeholder: "Como o salão vai te chamar",
                     text: $name,
-                    kind: .name
+                    kind: .name,
+                    isValid: true
                 )
             }
 
@@ -294,7 +295,8 @@ private struct DSTextFieldShowcase: View {
                     label: "E-mail",
                     placeholder: "Como o salão te avisa",
                     text: $email,
-                    kind: .email
+                    kind: .email,
+                    isValid: true
                 )
             }
 
@@ -303,7 +305,8 @@ private struct DSTextFieldShowcase: View {
                     label: "Endereço",
                     placeholder: "Rua e número",
                     text: $address,
-                    kind: .address
+                    kind: .address,
+                    isValid: true
                 )
             }
 
@@ -313,7 +316,8 @@ private struct DSTextFieldShowcase: View {
                     placeholder: "Como o salão te avisa",
                     text: .constant("bianca@"),
                     kind: .email,
-                    errorMessage: showErrors ? "Falta o final do e-mail, depois do @." : nil
+                    errorMessage: showErrors ? "Falta o final do e-mail, depois do @." : nil,
+                    isValid: true
                 )
             }
 
@@ -322,7 +326,8 @@ private struct DSTextFieldShowcase: View {
                     DSTextField(
                         label: "Nova senha",
                         text: $newPassword,
-                        kind: .password(.new)
+                        kind: .password(.new),
+                        isValid: true
                     )
                     DSPasswordRequirements(requirements: [
                         .init(id: "length",
@@ -542,7 +547,6 @@ private struct DSLinkShowcase: View {
             }
             .padding()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(white: 0.08))
         }
 }
 
