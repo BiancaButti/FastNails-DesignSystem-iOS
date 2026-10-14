@@ -93,6 +93,8 @@ public struct DSTextField: View {
     ///
     /// An empty string or `nil` hides the feedback label.
     var errorMessage: String?
+    
+    var isValid: Bool = false
 
     /// Called when the field loses focus.
     ///
@@ -118,6 +120,7 @@ public struct DSTextField: View {
         text: Binding<String>,
         kind: DSTextFieldKind = .name,
         errorMessage: String? = nil,
+        isValid: Bool,
         onLostFocus: @escaping () -> Void = {}
     ) {
         self.label = label
@@ -125,6 +128,7 @@ public struct DSTextField: View {
         self._text = text
         self.kind = kind
         self.errorMessage = errorMessage
+        self.isValid = isValid
         self.onLostFocus = onLostFocus
     }
 
@@ -283,7 +287,11 @@ public struct DSTextField: View {
     /// requirements, focus, and finally the default border color.
     private var borderColor: Color {
         if hasError {
-            return theme.errorColor
+            return theme.errorColor  
+        }
+
+        if isValid && !kind.isSecure && !text.isEmpty {
+            return theme.successColor
         }
 
         if passwordRequirementsMet {
@@ -291,7 +299,7 @@ public struct DSTextField: View {
         }
 
         if isFocused {
-            return theme.borderColor
+            return theme.brandColor
         }
 
         return theme.borderColor
@@ -303,9 +311,10 @@ public struct DSTextField: View {
     /// has satisfied its password requirements.
     private var borderWidth: CGFloat {
         hasError
+            || isValid
             || passwordRequirementsMet
             || isFocused
             ? DSBorder.heavy
-            : DSBorder.thin
+            : DSBorder.thin    
     }
 }
